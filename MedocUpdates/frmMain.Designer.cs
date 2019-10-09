@@ -38,6 +38,7 @@
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.flowDownloads = new System.Windows.Forms.FlowLayoutPanel();
+			this.labelLocalVersion = new System.Windows.Forms.Label();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -108,11 +109,22 @@
 			this.flowDownloads.Size = new System.Drawing.Size(661, 100);
 			this.flowDownloads.TabIndex = 3;
 			// 
+			// labelLocalVersion
+			// 
+			this.labelLocalVersion.AutoSize = true;
+			this.labelLocalVersion.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.labelLocalVersion.Location = new System.Drawing.Point(38, 226);
+			this.labelLocalVersion.Name = "labelLocalVersion";
+			this.labelLocalVersion.Size = new System.Drawing.Size(182, 18);
+			this.labelLocalVersion.TabIndex = 4;
+			this.labelLocalVersion.Text = "LOCAL VERSION HERE";
+			// 
 			// frmMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(685, 325);
+			this.Controls.Add(this.labelLocalVersion);
 			this.Controls.Add(this.flowDownloads);
 			this.Controls.Add(this.labelVersion);
 			this.Controls.Add(this.menuStrip1);
@@ -139,6 +151,7 @@
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
 		private System.Windows.Forms.FlowLayoutPanel flowDownloads;
+		private System.Windows.Forms.Label labelLocalVersion;
 	}
 }
 

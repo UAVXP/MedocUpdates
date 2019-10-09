@@ -1,5 +1,8 @@
 ﻿Telegram connection
-Interval control
+Checking interval control
 
 [HKLM(server)\HKCU]\SOFTWARE\IntellectService\BusinessDoc1\PATH
 [HKLM(server)\HKCU]\SOFTWARE\Wow6432Node\IntellectService\BusinessDoc1\PATH
+
+MedocInternal.cachedVersion - this needs to be removed when we will be able to download and run updates
+Or better should be the way to force update (invalidate) this

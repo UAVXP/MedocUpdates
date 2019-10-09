@@ -12,6 +12,7 @@ namespace MedocUpdates
 {
 	class MedocInternal
 	{
+		string cachedVersion;
 		public string LocalVersion
 		{
 			get
@@ -24,10 +25,17 @@ namespace MedocUpdates
 					return key.GetSubKeyNames()[0]; // FIXME: Might be wrong maybe? What if there would be many subkeys before the version one?
 				*/
 
-				string version = "";
-				GetDSTVersion(out version);
-				return version;
+				if (cachedVersion.Equals(""))
+				{
+					GetDSTVersion(out cachedVersion);
+				}
+				return cachedVersion;
 			}
+		}
+
+		public MedocInternal()
+		{
+			this.cachedVersion = "";
 		}
 
 		internal bool GetInstallationPath(out string path)
@@ -179,15 +187,12 @@ namespace MedocUpdates
 					continue;
 			}
 
-			version = value; // Always take the latest value
-
+			// Always take the latest value
 			Regex regex = new Regex(@"\d{2}.\d{2}.\d{3}");
-			if (!regex.IsMatch(version))
-			{
-				version = "";
+			if (!regex.IsMatch(value))
 				return false;
-			}
 
+			version = value;
 
 			return true;
 		}

@@ -42,14 +42,19 @@ namespace MedocUpdates
 			Environment.Exit(0);
 		}
 
-		private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
+		private void CheckingRoutine()
 		{
 			labelVersion.Text = "Checking...";
 			bool success = medoc.RefreshDoc();
 			if (success)
 			{
 				string version = medoc.GetLatestVersion();
+				//version = "11.00.000";
 				labelVersion.Text = "Latest version: " + version;
+
+				string localversion = localmedoc.LocalVersion;
+				//localversion = "11.02.999";
+				labelLocalVersion.Text = "Latest local version: " + localversion;
 
 				flowDownloads.Controls.Clear();
 				MedocDownloadItem[] items;
@@ -59,10 +64,10 @@ namespace MedocUpdates
 					foreach (MedocDownloadItem item in items)
 					{
 						DownloadButton btn = new DownloadButton(item);
-						btn.IsHighlighted = (version.Equals(item.version));
+						btn.IsHighlighted = false; // TODO
 						flowDownloads.Controls.Add(btn);
 
-						Console.WriteLine("Added {0}", item.link);
+					//	Console.WriteLine("Added {0}", item.link);
 					}
 				}
 			}
@@ -72,27 +77,14 @@ namespace MedocUpdates
 			}
 		}
 
+		private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			CheckingRoutine();
+		}
+
 		private void frmMain_Load(object sender, EventArgs e)
 		{
-			medoc.RefreshDoc();
-			string version = medoc.GetLatestVersion();
-			labelVersion.Text = "Latest version: " + version;
-
-			MedocDownloadItem[] items;
-			bool success = medoc.GetItems(out items);
-			if (success)
-			{
-				foreach (MedocDownloadItem item in items)
-				{
-					DownloadButton btn = new DownloadButton(item);
-					btn.IsHighlighted = (version.Equals(item.version));
-					flowDownloads.Controls.Add(btn);
-
-					Console.WriteLine("Added {0}", item.link);
-				}
-			}
-
-			Console.WriteLine(localmedoc.LocalVersion);
+			CheckingRoutine();
 		}
 	}
 }
