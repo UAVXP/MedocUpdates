@@ -52,6 +52,9 @@ namespace MedocUpdates
 				//version = "11.00.000";
 				labelVersion.Text = "Latest version: " + version;
 
+				MedocVersion test = new MedocVersion(version);
+
+
 				string localversion = localmedoc.LocalVersion;
 				//localversion = "11.02.999";
 				labelLocalVersion.Text = "Latest local version: " + localversion;
