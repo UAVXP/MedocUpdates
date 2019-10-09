@@ -76,13 +76,23 @@ namespace MedocUpdates
 		public static bool operator ==(MedocVersion ver1,
 										 MedocVersion ver2)
 		{
-			return false; // TODO
+			if (ver1.rawfirst == ver2.rawfirst &&
+				ver1.rawsecond == ver2.rawsecond &&
+				ver1.rawthird == ver2.rawthird)
+				return true;
+
+			return false;
 		}
 
 		public static bool operator !=(MedocVersion ver1,
 										 MedocVersion ver2)
 		{
-			return false; // TODO
+			if (ver1.rawfirst != ver2.rawfirst ||
+				ver1.rawsecond != ver2.rawsecond ||
+				ver1.rawthird != ver2.rawthird)
+				return true;
+
+			return false;
 		}
 	}
 	public class MedocVersioning
