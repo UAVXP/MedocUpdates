@@ -76,6 +76,30 @@ namespace MedocUpdates
 			return download.InnerText;
 		}
 
+		internal bool GetItems(out MedocDownloadItem[] items)
+		{
+			items = null;
+
+			HtmlNodeCollection downloadsItems = DownloadsItems();
+			if (downloadsItems == null)
+				return false;
+
+			items = new MedocDownloadItem[downloadsItems.Count];
+
+			int i = 0;
+			foreach(HtmlNode node in downloadsItems)
+			{
+				MedocDownloadItem item = new MedocDownloadItem();
+				item.version = GetVersion(node);
+				item.link = GetDownload(node);
+
+				items[i] = item;
+				i++;
+			}
+
+			return (i == downloadsItems.Count);
+		}
+
 		internal string GetLatestVersion()
 		{
 			HtmlNodeCollection downloadsItems = DownloadsItems();

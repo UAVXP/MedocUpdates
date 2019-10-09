@@ -61,6 +61,19 @@ namespace MedocUpdates
 			medoc.RefreshDoc();
 			string version = medoc.GetLatestVersion();
 			labelVersion.Text = "Latest version: " + version;
+
+			MedocDownloadItem[] items;
+			bool success = medoc.GetItems(out items);
+			if (success)
+			{
+				foreach (MedocDownloadItem item in items)
+				{
+					DownloadButton btn = new DownloadButton(item);
+					flowDownloads.Controls.Add(btn);
+
+					Console.WriteLine("Added {0}", item.link);
+				}
+			}
 		}
 	}
 }

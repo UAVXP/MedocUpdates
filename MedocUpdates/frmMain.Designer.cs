@@ -37,6 +37,7 @@
 			this.labelVersion = new System.Windows.Forms.Label();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.flowDownloads = new System.Windows.Forms.FlowLayoutPanel();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -99,11 +100,20 @@
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "File";
 			// 
+			// flowDownloads
+			// 
+			this.flowDownloads.AutoScroll = true;
+			this.flowDownloads.Location = new System.Drawing.Point(12, 72);
+			this.flowDownloads.Name = "flowDownloads";
+			this.flowDownloads.Size = new System.Drawing.Size(661, 100);
+			this.flowDownloads.TabIndex = 3;
+			// 
 			// frmMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(685, 325);
+			this.Controls.Add(this.flowDownloads);
 			this.Controls.Add(this.labelVersion);
 			this.Controls.Add(this.menuStrip1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -128,6 +138,7 @@
 		private System.Windows.Forms.Label labelVersion;
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+		private System.Windows.Forms.FlowLayoutPanel flowDownloads;
 	}
 }
 
