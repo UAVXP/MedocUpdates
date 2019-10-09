@@ -35,49 +35,88 @@ namespace MedocUpdates
 			return (doc != null);
 		}
 
-		internal HtmlNodeCollection DownloadItems()
-		{
-			return null;
-		}
-		internal string GetLatestVersion()
+		internal HtmlNodeCollection DownloadsItems()
 		{
 			if (doc == null)
-				return "";
+				return null;
 
 			if (doc.ParseErrors != null && doc.ParseErrors.Count() > 0)
-				return "";
+				return null;
 
 			if (doc.DocumentNode == null)
-				return "";
+				return null;
 
 			HtmlNode docNode = doc.DocumentNode;
 			if (!docNode.HasChildNodes)
-				return "";
+				return null;
 
 			//	string selector = "//div[@class='download-dist-specification-item-box']/div[@class='col-sm-*']";
 			//	string selector = "//div[contains(@class,'col-sm-')]";
 			string selector = "//div[@class='download-items']";
 			HtmlNode downloads = docNode.SelectSingleNode(selector);
 			if (downloads == null)
-				return "";
+				return null;
 
 			if (!downloads.HasChildNodes)
-				return "";
+				return null;
 
 			HtmlNodeCollection downloadsItems = downloads.SelectNodes(".//div[@class='download-dist-specification-item']");
+			return downloadsItems;
+		}
+
+		internal string GetVersion(HtmlNode node)
+		{
+			HtmlNode download = node.SelectSingleNode(".//span[@class='js-update-num']");
+			if (download == null)
+				return "";
+
+			if (!download.HasChildNodes)
+				return "";
+
+			return download.InnerText;
+		}
+
+		internal string GetLatestVersion()
+		{
+			HtmlNodeCollection downloadsItems = DownloadsItems();
 			if (downloadsItems == null)
 				return "";
 
-			HtmlNode latestDownload = downloadsItems[0].SelectSingleNode(".//span[@class='js-update-num']");
-			if (latestDownload == null)
+			string version = GetVersion( downloadsItems[0] );
+
+			Console.WriteLine("{0}", version);
+
+			return version;
+		}
+
+
+		internal string GetDownload(HtmlNode node)
+		{
+			HtmlNode download = node.SelectSingleNode(".//div[@class='download-dist-specification-item-box-btn']");
+			if (download == null)
 				return "";
 
-			if (!latestDownload.HasChildNodes)
+			if (!download.HasChildNodes)
 				return "";
 
-			Console.WriteLine("{0}", latestDownload.InnerText);
+			HtmlNode link = download.SelectSingleNode(".//a[@class='main-btn']");
+			if (link == null)
+				return "";
 
-			return latestDownload.InnerText;
+			return link.GetAttributeValue("href", "<no link>");
+		}
+
+		internal string GetLatestDownload()
+		{
+			HtmlNodeCollection downloadsItems = DownloadsItems();
+			if (downloadsItems == null)
+				return "";
+
+			string downloadStr = GetDownload(downloadsItems[0]);
+
+			Console.WriteLine("{0}", downloadStr);
+
+			return downloadStr;
 		}
 	}
 }
