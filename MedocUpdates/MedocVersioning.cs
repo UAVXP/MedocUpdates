@@ -61,38 +61,52 @@ namespace MedocUpdates
 			this.Version = version;
 		}
 
+		public static int Comparison(MedocVersion ver1, MedocVersion ver2)
+		{
+			if (ver1.rawfirst < ver2.rawfirst || ver1.rawsecond < ver2.rawsecond || ver1.rawthird < ver2.rawthird)
+				return -1;
+			else if (ver1.rawfirst == ver2.rawfirst && ver1.rawsecond == ver2.rawsecond && ver1.rawthird == ver2.rawthird)
+				return 0;
+			else if (ver1.rawfirst > ver2.rawfirst || ver1.rawsecond > ver2.rawsecond || ver1.rawthird > ver2.rawthird)
+				return 1;
+
+			return 0;
+		}
+
 		public static bool operator <(MedocVersion ver1,
 										 MedocVersion ver2)
 		{
-			return false; // TODO
+			return Comparison(ver1, ver2) < 0;
 		}
 
 		public static bool operator >(MedocVersion ver1,
 										 MedocVersion ver2)
 		{
-			return false; // TODO
+			return Comparison(ver1, ver2) > 0;
+		}
+
+		public static bool operator <=(MedocVersion ver1,
+										 MedocVersion ver2)
+		{
+			return Comparison(ver1, ver2) <= 0;
+		}
+
+		public static bool operator >=(MedocVersion ver1,
+										 MedocVersion ver2)
+		{
+			return Comparison(ver1, ver2) >= 0;
 		}
 
 		public static bool operator ==(MedocVersion ver1,
 										 MedocVersion ver2)
 		{
-			if (ver1.rawfirst == ver2.rawfirst &&
-				ver1.rawsecond == ver2.rawsecond &&
-				ver1.rawthird == ver2.rawthird)
-				return true;
-
-			return false;
+			return Comparison(ver1, ver2) == 0;
 		}
 
 		public static bool operator !=(MedocVersion ver1,
 										 MedocVersion ver2)
 		{
-			if (ver1.rawfirst != ver2.rawfirst ||
-				ver1.rawsecond != ver2.rawsecond ||
-				ver1.rawthird != ver2.rawthird)
-				return true;
-
-			return false;
+			return Comparison(ver1, ver2) != 0;
 		}
 	}
 	public class MedocVersioning

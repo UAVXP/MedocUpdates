@@ -49,15 +49,20 @@ namespace MedocUpdates
 			if (success)
 			{
 				string version = medoc.GetLatestVersion();
-				//version = "11.00.000";
+				version = "11.00.000";
 				labelVersion.Text = "Latest version: " + version;
 
 				MedocVersion test = new MedocVersion(version);
 
 
 				string localversion = localmedoc.LocalVersion;
-				//localversion = "11.02.999";
+				localversion = "11.02.999";
 				labelLocalVersion.Text = "Latest local version: " + localversion;
+
+				MedocVersion test2 = new MedocVersion(localversion);
+
+				MedocVersion test3 = new MedocVersion("11.01.022");
+				MedocVersion test4 = new MedocVersion("11.01.023");
 
 				flowDownloads.Controls.Clear();
 				MedocDownloadItem[] items;
