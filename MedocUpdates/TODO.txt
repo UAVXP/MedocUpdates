@@ -1,2 +1,5 @@
 ﻿Telegram connection
 Interval control
+
+[HKLM(server)\HKCU]\SOFTWARE\IntellectService\BusinessDoc1\PATH
+[HKLM(server)\HKCU]\SOFTWARE\Wow6432Node\IntellectService\BusinessDoc1\PATH

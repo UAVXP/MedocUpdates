@@ -63,6 +63,7 @@
     </Compile>
     <Compile Include="MedocAPI.cs" />
     <Compile Include="MedocDownloadItem.cs" />
+    <Compile Include="MedocInternal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="DownloadButton.resx">

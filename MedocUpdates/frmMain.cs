@@ -13,6 +13,7 @@ namespace MedocUpdates
 	public partial class frmMain : Form
 	{
 		MedocAPI medoc = new MedocAPI();
+		MedocInternal localmedoc = new MedocInternal();
 
 		public frmMain()
 		{
@@ -90,6 +91,8 @@ namespace MedocUpdates
 					Console.WriteLine("Added {0}", item.link);
 				}
 			}
+
+			Console.WriteLine(localmedoc.LocalVersion);
 		}
 	}
 }
