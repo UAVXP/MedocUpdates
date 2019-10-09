@@ -60,6 +60,30 @@ namespace MedocUpdates
 		{
 			this.Version = version;
 		}
+
+		public static bool operator <(MedocVersion ver1,
+										 MedocVersion ver2)
+		{
+			return false; // TODO
+		}
+
+		public static bool operator >(MedocVersion ver1,
+										 MedocVersion ver2)
+		{
+			return false; // TODO
+		}
+
+		public static bool operator ==(MedocVersion ver1,
+										 MedocVersion ver2)
+		{
+			return false; // TODO
+		}
+
+		public static bool operator !=(MedocVersion ver1,
+										 MedocVersion ver2)
+		{
+			return false; // TODO
+		}
 	}
 	public class MedocVersioning
 	{
