@@ -49,6 +49,21 @@ namespace MedocUpdates
 			{
 				string version = medoc.GetLatestVersion();
 				labelVersion.Text = "Latest version: " + version;
+
+				flowDownloads.Controls.Clear();
+				MedocDownloadItem[] items;
+				success = medoc.GetItems(out items);
+				if (success)
+				{
+					foreach (MedocDownloadItem item in items)
+					{
+						DownloadButton btn = new DownloadButton(item);
+						btn.IsHighlighted = (version.Equals(item.version));
+						flowDownloads.Controls.Add(btn);
+
+						Console.WriteLine("Added {0}", item.link);
+					}
+				}
 			}
 			else
 			{
@@ -69,6 +84,7 @@ namespace MedocUpdates
 				foreach (MedocDownloadItem item in items)
 				{
 					DownloadButton btn = new DownloadButton(item);
+					btn.IsHighlighted = (version.Equals(item.version));
 					flowDownloads.Controls.Add(btn);
 
 					Console.WriteLine("Added {0}", item.link);

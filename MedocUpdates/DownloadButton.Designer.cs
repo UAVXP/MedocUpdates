@@ -61,7 +61,8 @@
 			this.Controls.Add(this.labelVersion);
 			this.Controls.Add(this.linkLabel1);
 			this.Name = "DownloadButton";
-			this.Size = new System.Drawing.Size(221, 88);
+			this.Size = new System.Drawing.Size(201, 88);
+			this.Load += new System.EventHandler(this.DownloadButton_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
