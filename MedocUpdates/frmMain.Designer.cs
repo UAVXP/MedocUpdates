@@ -41,6 +41,7 @@
 			this.labelLocalVersion = new System.Windows.Forms.Label();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.timerUpdate = new System.Windows.Forms.Timer(this.components);
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
@@ -139,6 +140,11 @@
 			this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
 			this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
 			// 
+			// timerUpdate
+			// 
+			this.timerUpdate.Interval = 10000;
+			this.timerUpdate.Tick += new System.EventHandler(this.timerUpdate_Tick);
+			// 
 			// frmMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -177,6 +183,7 @@
 		private System.Windows.Forms.Label labelLocalVersion;
 		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+		private System.Windows.Forms.Timer timerUpdate;
 	}
 }
 

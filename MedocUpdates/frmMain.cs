@@ -18,7 +18,6 @@ namespace MedocUpdates
 
 		public frmMain()
 		{
-			log.Write("Initializing the main frame");
 			InitializeComponent();
 		}
 
@@ -51,7 +50,6 @@ namespace MedocUpdates
 
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			log.Write("Shutting down the application");
 			Application.Exit();
 		}
 
@@ -118,6 +116,13 @@ namespace MedocUpdates
 		}
 
 		private void frmMain_Load(object sender, EventArgs e)
+		{
+			CheckingRoutine();
+
+			timerUpdate.Start();
+		}
+
+		private void timerUpdate_Tick(object sender, EventArgs e)
 		{
 			CheckingRoutine();
 		}
