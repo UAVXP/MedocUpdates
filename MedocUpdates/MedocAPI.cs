@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using HtmlAgilityPack;
-using System.Windows.Forms;
+//using System.Windows.Forms;
 
 namespace MedocUpdates
 {
@@ -13,24 +13,31 @@ namespace MedocUpdates
 	{
 		HtmlWeb web;
 		HtmlAgilityPack.HtmlDocument doc;
+		Log log = new Log();
 
 		internal MedocAPI()
 		{
 			web = new HtmlWeb();
 			web.UsingCache = false;
 
-		//	RefreshDoc();
+			//	RefreshDoc();
+
+			log.Write("MedocAPI: Initializing");
 		}
 
 		internal bool RefreshDoc()
 		{
+			doc = null;
 			try
 			{
+				log.Write("MedocAPI: Trying to load a medoc.ua download webpage");
 				doc = web.Load("https://www.medoc.ua/uk/download");
 			}
 			catch(Exception ex)
 			{
-				MessageBox.Show("Cannot retrieve downloads from the website!\n"+ex.Message, "Critical error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				string errormsg = "Cannot retrieve downloads from the website!\n" + ex.Message;
+			//	MessageBox.Show(errormsg, "Critical error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				log.Write("MedocAPI: " + errormsg);
 			}
 			return (doc != null);
 		}
@@ -38,27 +45,49 @@ namespace MedocUpdates
 		internal HtmlNodeCollection DownloadsItems()
 		{
 			if (doc == null)
+			{
+				log.Write("MedocAPI: Web document wasn't initialized");
 				return null;
+			}
 
 			if (doc.ParseErrors != null && doc.ParseErrors.Count() > 0)
+			{
+				log.Write("MedocAPI: Parsing errors occured");
+				foreach(HtmlParseError error in doc.ParseErrors)
+				{
+					log.Write(error.SourceText);
+				}
 				return null;
+			}
 
 			if (doc.DocumentNode == null)
+			{
+				log.Write("MedocAPI: Cannot find main document node");
 				return null;
+			}
 
 			HtmlNode docNode = doc.DocumentNode;
 			if (!docNode.HasChildNodes)
+			{
+				log.Write("MedocAPI: Document contains only it's body");
 				return null;
+			}
 
 			//	string selector = "//div[@class='download-dist-specification-item-box']/div[@class='col-sm-*']";
 			//	string selector = "//div[contains(@class,'col-sm-')]";
 			string selector = "//div[@class='download-items']";
 			HtmlNode downloads = docNode.SelectSingleNode(selector);
 			if (downloads == null)
+			{
+				log.Write("MedocAPI: Cannot find download-items node. Is it the download page?");
 				return null;
+			}
 
 			if (!downloads.HasChildNodes)
+			{
+				log.Write("MedocAPI: download-items node doesn't contain child nodes");
 				return null;
+			}
 
 			HtmlNodeCollection downloadsItems = downloads.SelectNodes(".//div[@class='download-dist-specification-item']");
 			return downloadsItems;
@@ -68,10 +97,16 @@ namespace MedocUpdates
 		{
 			HtmlNode download = node.SelectSingleNode(".//span[@class='js-update-num']");
 			if (download == null)
+			{
+				log.Write("MedocAPI: Download info node doesn't exist");
 				return "";
+			}
 
 			if (!download.HasChildNodes)
+			{
+				log.Write("MedocAPI: Download info node doesn't contain a update version");
 				return "";
+			}
 
 			return download.InnerText;
 		}
@@ -82,7 +117,10 @@ namespace MedocUpdates
 
 			HtmlNodeCollection downloadsItems = DownloadsItems();
 			if (downloadsItems == null)
+			{
+				log.Write("MedocAPI: Cannot get items from the download-items");
 				return false;
+			}
 
 			items = new MedocDownloadItem[downloadsItems.Count];
 
@@ -104,7 +142,10 @@ namespace MedocUpdates
 		{
 			HtmlNodeCollection downloadsItems = DownloadsItems();
 			if (downloadsItems == null)
+			{
+				log.Write("MedocAPI: Cannot get items from the download-items");
 				return "";
+			}
 
 			string version = GetVersion( downloadsItems[0] );
 
@@ -118,14 +159,23 @@ namespace MedocUpdates
 		{
 			HtmlNode download = node.SelectSingleNode(".//div[@class='download-dist-specification-item-box-btn']");
 			if (download == null)
+			{
+				log.Write("MedocAPI: Cannot get a download link for " + node.GetAttributeValue("class", "<unknown class>"));
 				return "";
+			}
 
 			if (!download.HasChildNodes)
+			{
+				log.Write("MedocAPI: Download link node doesn't contain any external links");
 				return "";
+			}
 
 			HtmlNode link = download.SelectSingleNode(".//a[@class='main-btn']");
 			if (link == null)
+			{
+				log.Write("MedocAPI: Download node doesn't contain a download button");
 				return "";
+			}
 
 			return link.GetAttributeValue("href", "<no link>");
 		}
@@ -134,7 +184,10 @@ namespace MedocUpdates
 		{
 			HtmlNodeCollection downloadsItems = DownloadsItems();
 			if (downloadsItems == null)
+			{
+				log.Write("MedocAPI: Cannot get the first download node");
 				return "";
+			}
 
 			string downloadStr = GetDownload(downloadsItems[0]);
 

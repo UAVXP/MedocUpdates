@@ -8,7 +8,8 @@ namespace MedocUpdates
 {
 	public class MedocDownloadItem
 	{
-		public string version;
+	//	public string version;
+		public MedocVersion version;
 		public string link;
 	}
 }

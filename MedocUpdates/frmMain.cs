@@ -14,10 +14,17 @@ namespace MedocUpdates
 	{
 		MedocAPI medoc = new MedocAPI();
 		MedocInternal localmedoc = new MedocInternal();
+		Log log = new Log();
 
 		public frmMain()
 		{
+			log.Write("Initializing the main frame");
 			InitializeComponent();
+		}
+
+		private void Status(string message)
+		{
+			toolStripStatusLabel1.Text = message;
 		}
 
 		private void trayIcon_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -33,38 +40,49 @@ namespace MedocUpdates
 
 		private void ShowMainFrame()
 		{
+			this.Visible = true;
 			this.Show();
-			this.Focus();
+
+			if(this.CanFocus)
+				this.Focus();
+
+			log.Write("Restoring main frame");
 		}
 
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			Environment.Exit(0);
+			log.Write("Shutting down the application");
+			Application.Exit();
 		}
 
 		private void CheckingRoutine()
 		{
+			// Cleaning up a bit
+			flowDownloads.Controls.Clear();
+
 			labelVersion.Text = "Checking...";
+			log.Write("Checking for updates on the medoc.ua server");
+
 			bool success = medoc.RefreshDoc();
 			if (success)
 			{
 				string version = medoc.GetLatestVersion();
-				version = "11.00.000";
+				//version = "11.01.023";
 				labelVersion.Text = "Latest version: " + version;
 
-				MedocVersion test = new MedocVersion(version);
+				//MedocVersion test = new MedocVersion(version);
+
+				//MedocVersion test2 = "11.01.024";
+				//MedocVersion test3 = "11.01.023";
 
 
 				string localversion = localmedoc.LocalVersion;
-				localversion = "11.02.999";
+				//localversion = "11.01.021";
 				labelLocalVersion.Text = "Latest local version: " + localversion;
 
-				MedocVersion test2 = new MedocVersion(localversion);
+				log.Write(labelVersion.Text);
+				log.Write(labelLocalVersion.Text);
 
-				MedocVersion test3 = new MedocVersion("11.01.022");
-				MedocVersion test4 = new MedocVersion("11.01.023");
-
-				flowDownloads.Controls.Clear();
 				MedocDownloadItem[] items;
 				success = medoc.GetItems(out items);
 				if (success)
@@ -72,16 +90,25 @@ namespace MedocUpdates
 					foreach (MedocDownloadItem item in items)
 					{
 						DownloadButton btn = new DownloadButton(item);
-						btn.IsHighlighted = false; // TODO
+						btn.IsHighlighted = (item.version > localversion); // TODO
 						flowDownloads.Controls.Add(btn);
 
 					//	Console.WriteLine("Added {0}", item.link);
 					}
 				}
+
+				Status("Done");
+
+				if (localversion != version)
+				{
+					trayIcon.ShowBalloonTip(5000, "M.E.Doc update has been released!", labelVersion.Text, ToolTipIcon.Info);
+				}
 			}
 			else
 			{
 				labelVersion.Text = "Something went wrong";
+				log.Write("Cannot connect to medoc.ua");
+				Status("Cannot connect to medoc.ua");
 			}
 		}
 

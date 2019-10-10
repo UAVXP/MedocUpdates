@@ -23,8 +23,6 @@ namespace MedocUpdates
 
 			this.item = item;
 			this.labelVersion.Text = item.version;
-
-			
 		}
 
 		private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
