@@ -126,5 +126,11 @@ namespace MedocUpdates
 		{
 			CheckingRoutine();
 		}
+
+		private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			frmSettings settings = new frmSettings();
+			settings.ShowDialog();
+		}
 	}
 }
