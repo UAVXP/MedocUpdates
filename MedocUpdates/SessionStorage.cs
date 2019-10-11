@@ -33,6 +33,12 @@ namespace MedocUpdates
 		{
 			IFormatter formatter = new BinaryFormatter();
 			Stream filestream = new FileStream("settings.dat", FileMode.Create, FileAccess.Write);
+			if (filestream == null)
+			{
+				log.Write("SessionStorage: Cannot save session storage. Check your permissions");
+				return;
+			}
+
 			formatter.Serialize(filestream, inside);
 			filestream.Close();
 		}
@@ -41,7 +47,17 @@ namespace MedocUpdates
 		{
 			IFormatter formatter = new BinaryFormatter();
 			Stream filestream = new FileStream("settings.dat", FileMode.OpenOrCreate, FileAccess.Read);
-			if(filestream == null || filestream.Length <= 0)
+			if (filestream == null)
+			{
+				log.Write("SessionStorage: Cannot load session storage file. Check your permissions");
+
+				// Initializing and saving a default values
+				Save();
+
+				return;
+			}
+
+			if (filestream.Length <= 0)
 			{
 				log.Write("SessionStorage: Cannot load saved session");
 				filestream.Close();
