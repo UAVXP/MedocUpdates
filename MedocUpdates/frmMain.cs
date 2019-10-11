@@ -14,7 +14,6 @@ namespace MedocUpdates
 	{
 		MedocAPI medoc = new MedocAPI();
 		MedocInternal localmedoc = new MedocInternal();
-		Log log = new Log();
 
 		public frmMain()
 		{
@@ -54,7 +53,7 @@ namespace MedocUpdates
 			if(this.CanFocus)
 				this.Focus();
 
-			log.Write("Restoring main frame");
+			Log.Write("Restoring main frame");
 		}
 
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -68,7 +67,7 @@ namespace MedocUpdates
 			flowDownloads.Controls.Clear();
 
 			labelVersion.Text = "Checking...";
-			log.Write("Checking for updates on the medoc.ua server");
+			Log.Write("Checking for updates on the medoc.ua server");
 
 			bool success = medoc.RefreshDoc();
 			if (success)
@@ -87,8 +86,8 @@ namespace MedocUpdates
 				//localversion = "11.01.021";
 				labelLocalVersion.Text = "Latest local version: " + localversion;
 
-				log.Write(labelVersion.Text);
-				log.Write(labelLocalVersion.Text);
+				Log.Write(labelVersion.Text);
+				Log.Write(labelLocalVersion.Text);
 
 				MedocDownloadItem[] items;
 				success = medoc.GetItems(out items);
@@ -114,7 +113,7 @@ namespace MedocUpdates
 			else
 			{
 				labelVersion.Text = "Something went wrong";
-				log.Write("Cannot connect to medoc.ua");
+				Log.Write("Cannot connect to medoc.ua");
 				Status("Cannot connect to medoc.ua");
 			}
 		}

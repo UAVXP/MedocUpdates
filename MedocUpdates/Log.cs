@@ -9,29 +9,19 @@ using System.Reflection;
 
 namespace MedocUpdates
 {
-	public class Log
+	public static class Log
 	{
-		private string m_exePath = String.Empty;
-		private string m_logPath = String.Empty;
+		private static string m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+		private static string m_logPath = m_exePath + "\\mu_logs\\" + String.Format("log_{0}.txt", DateTime.Now.ToString("yyyy-MM-dd"));
 
-		public Log()
+		public static void Init()
 		{
-			m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
-			string filename = String.Format("log_{0}.txt", DateTime.Now.ToString("yyyy-MM-dd"));
-			m_logPath = m_exePath + "\\mu_logs\\" + filename;
-
 			string logDirectory = Path.GetDirectoryName(m_logPath);
 			if (!Directory.Exists(logDirectory))
 				Directory.CreateDirectory(logDirectory);
 		}
 
-		public Log(string logMessage) : base()
-		{
-			Write(logMessage);
-		}
-
-		public void Write(string logMessage)
+		public static void Write(string logMessage)
 		{
 			// TODO: Implement different log levels (every message, standard, a little bit)
 			try
@@ -57,7 +47,7 @@ namespace MedocUpdates
 			}
 		}
 
-		public void LogInternal(string logMessage, TextWriter txtWriter)
+		public static void LogInternal(string logMessage, TextWriter txtWriter)
 		{
 			try
 			{

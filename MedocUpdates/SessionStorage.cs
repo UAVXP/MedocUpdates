@@ -23,7 +23,6 @@ namespace MedocUpdates
 		private static string m_settingsPath = m_exePath + "\\mu.dat";
 
 		public static Inside inside = new Inside();
-		static Log log = new Log();
 
 		public static event EventHandler NotificationDelayChanged = delegate { };
 		public static void NotificationDelayChangedFunc(object sender)
@@ -37,7 +36,7 @@ namespace MedocUpdates
 			Stream filestream = new FileStream(m_settingsPath, FileMode.Create, FileAccess.Write);
 			if (filestream == null)
 			{
-				log.Write("SessionStorage: Cannot save session storage. Check your permissions");
+				Log.Write("SessionStorage: Cannot save session storage. Check your permissions");
 				return;
 			}
 
@@ -51,7 +50,7 @@ namespace MedocUpdates
 			Stream filestream = new FileStream(m_settingsPath, FileMode.OpenOrCreate, FileAccess.Read);
 			if (filestream == null)
 			{
-				log.Write("SessionStorage: Cannot load session storage file. Check your permissions");
+				Log.Write("SessionStorage: Cannot load session storage file. Check your permissions");
 
 				// Initializing and saving a default values
 				Save();
@@ -61,7 +60,7 @@ namespace MedocUpdates
 
 			if (filestream.Length <= 0)
 			{
-				log.Write("SessionStorage: Cannot load saved session");
+				Log.Write("SessionStorage: Cannot load saved session");
 				filestream.Close();
 
 				// Initializing and saving a default values
