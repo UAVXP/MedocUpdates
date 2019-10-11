@@ -120,11 +120,32 @@ namespace MedocUpdates
 			CheckingRoutine();
 
 			timerUpdate.Start();
+			SessionStorage.NotificationDelayChanged += frmMain_NotificationDelayChanged;
 		}
 
 		private void timerUpdate_Tick(object sender, EventArgs e)
 		{
 			CheckingRoutine();
+
+		/* We need to update timer interval immediately, so I've implemented an event
+			if(SessionStorage.NotificationDelay == 0)
+				timerUpdate.Stop();
+			else
+			{
+				timerUpdate.Interval = (int)SessionStorage.NotificationDelay;
+				timerUpdate.Start();
+			}
+		*/
+		}
+
+		private void frmMain_NotificationDelayChanged(object sender, EventArgs e)
+		{
+			timerUpdate.Interval = (int)SessionStorage.NotificationDelay + 1; // Wow, first hack
+
+			if (SessionStorage.NotificationDelay == 0)
+				timerUpdate.Stop();
+			else
+				timerUpdate.Start();
 		}
 
 		private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -136,7 +157,9 @@ namespace MedocUpdates
 		private void delayNotificationsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			frmNotificationsDelay delay = new frmNotificationsDelay();
+			delay.Delay = SessionStorage.NotificationDelay; // timerUpdate.Interval
 			delay.ShowDialog();
+			Console.WriteLine(SessionStorage.NotificationDelay);
 		}
 	}
 }

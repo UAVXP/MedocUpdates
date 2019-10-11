@@ -10,3 +10,5 @@ Or better should be the way to force update (invalidate) this
 Logging every operation (like parsing, checking for updates, etc.)
 Compile under the lowest .NET Framework (.NET Framework 4.7.2) as possibly as I can get
 	Not needed, the server supports that
+
+Convert Log class to static one?

@@ -12,7 +12,21 @@ namespace MedocUpdates
 {
 	public partial class TimeChooser : UserControl
 	{
-		public TimeSpan Delay { get; set; }
+		private TimeSpan delay;
+		public TimeSpan Delay
+		{
+			get { return delay; }
+			set
+			{
+				delay = value;
+				TimeChanged.Invoke(this, new EventArgs());
+
+				// Updating UI
+				nudHours.Value = delay.Hours;
+				nudMinutes.Value = delay.Minutes;
+				nudSeconds.Value = delay.Seconds;
+			}
+		}
 
 	//	public event EventHandler<TimeChangedEventArgs> TimeChanged = delegate { };
 		public event EventHandler TimeChanged = delegate { };
@@ -48,7 +62,6 @@ namespace MedocUpdates
 			TimeSpan ts = new TimeSpan(hours, this.Delay.Minutes, this.Delay.Seconds);
 			this.Delay = ts;
 
-			TimeChanged.Invoke(this, new EventArgs());
 			HoursChanged.Invoke(this, new EventArgs());
 		}
 
@@ -58,7 +71,6 @@ namespace MedocUpdates
 			TimeSpan ts = new TimeSpan(this.Delay.Hours, minutes, this.Delay.Seconds);
 			this.Delay = ts;
 
-			TimeChanged.Invoke(this, new EventArgs());
 			MinutesChanged.Invoke(this, new EventArgs());
 		}
 
@@ -68,7 +80,6 @@ namespace MedocUpdates
 			TimeSpan ts = new TimeSpan(this.Delay.Hours, this.Delay.Minutes, seconds);
 			this.Delay = ts;
 
-			TimeChanged.Invoke(this, new EventArgs());
 			SecondsChanged.Invoke(this, new EventArgs());
 		}
 	}
