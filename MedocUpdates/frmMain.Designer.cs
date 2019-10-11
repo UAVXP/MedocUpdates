@@ -37,13 +37,14 @@
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.labelVersion = new System.Windows.Forms.Label();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.flowDownloads = new System.Windows.Forms.FlowLayoutPanel();
 			this.labelLocalVersion = new System.Windows.Forms.Label();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.timerUpdate = new System.Windows.Forms.Timer(this.components);
-			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.delayNotificationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
@@ -62,22 +63,22 @@
 			// 
 			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.checkForUpdatesToolStripMenuItem,
+            this.delayNotificationsToolStripMenuItem,
             this.exitToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.OwnerItem = this.fileToolStripMenuItem;
-			this.contextMenuStrip1.Size = new System.Drawing.Size(171, 48);
+			this.contextMenuStrip1.Size = new System.Drawing.Size(182, 92);
 			// 
 			// checkForUpdatesToolStripMenuItem
 			// 
 			this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
-			this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+			this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
 			this.checkForUpdatesToolStripMenuItem.Text = "Check for updates";
 			this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
 			this.exitToolStripMenuItem.Text = "Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
@@ -108,6 +109,21 @@
 			this.menuStrip1.Size = new System.Drawing.Size(685, 24);
 			this.menuStrip1.TabIndex = 2;
 			this.menuStrip1.Text = "menuStrip1";
+			// 
+			// editToolStripMenuItem
+			// 
+			this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.settingsToolStripMenuItem});
+			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+			this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+			this.editToolStripMenuItem.Text = "Edit";
+			// 
+			// settingsToolStripMenuItem
+			// 
+			this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+			this.settingsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+			this.settingsToolStripMenuItem.Text = "Settings";
+			this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
 			// 
 			// flowDownloads
 			// 
@@ -148,20 +164,12 @@
 			this.timerUpdate.Interval = 10000;
 			this.timerUpdate.Tick += new System.EventHandler(this.timerUpdate_Tick);
 			// 
-			// editToolStripMenuItem
+			// delayNotificationsToolStripMenuItem
 			// 
-			this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.settingsToolStripMenuItem});
-			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-			this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-			this.editToolStripMenuItem.Text = "Edit";
-			// 
-			// settingsToolStripMenuItem
-			// 
-			this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-			this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.settingsToolStripMenuItem.Text = "Settings";
-			this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+			this.delayNotificationsToolStripMenuItem.Name = "delayNotificationsToolStripMenuItem";
+			this.delayNotificationsToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+			this.delayNotificationsToolStripMenuItem.Text = "Delay notifications...";
+			this.delayNotificationsToolStripMenuItem.Click += new System.EventHandler(this.delayNotificationsToolStripMenuItem_Click);
 			// 
 			// frmMain
 			// 
@@ -204,6 +212,7 @@
 		private System.Windows.Forms.Timer timerUpdate;
 		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem delayNotificationsToolStripMenuItem;
 	}
 }
 

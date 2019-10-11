@@ -132,5 +132,11 @@ namespace MedocUpdates
 			frmSettings settings = new frmSettings();
 			settings.ShowDialog();
 		}
+
+		private void delayNotificationsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			frmNotificationsDelay delay = new frmNotificationsDelay();
+			delay.ShowDialog();
+		}
 	}
 }
