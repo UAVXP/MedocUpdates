@@ -13,6 +13,8 @@ namespace MedocUpdates
 	class MedocInternal
 	{
 		string cachedVersion;
+		int dstVersionCount;
+
 		public string LocalVersion
 		{
 			get
@@ -27,13 +29,20 @@ namespace MedocUpdates
 
 				if (cachedVersion.Equals(""))
 				{
-					GetDSTVersion(out cachedVersion);
+					Log.Write("MedocInternal: Retrieving local version");
+					GetDSTVersion(out cachedVersion); // TODO: Do a fallback way - through Software\\M.E.Doc\\M.E.Doc subkey name
 				}
 				return cachedVersion;
 			}
 		}
 
 		public MedocInternal()
+		{
+			this.cachedVersion = "";
+			this.dstVersionCount = 0;
+		}
+
+		private void InvalidateCache()
 		{
 			this.cachedVersion = "";
 		}
@@ -49,32 +58,76 @@ namespace MedocUpdates
 			};
 
 			RegistryKey key;
-			key = Registry.LocalMachine.OpenSubKey(regPaths[0]);
-			if (key != null)
+
+			foreach(string regPath in regPaths)
 			{
-				path = key.GetValue("PATH").ToString();
-				return true;
+				key = Registry.LocalMachine.OpenSubKey(regPath);
+				if (key != null)
+				{
+					object keyValue = key.GetValue("PATH");
+					if(keyValue == null)
+						return false;
+
+					path = keyValue.ToString();
+					return true;
+				}
 			}
 
-			key = Registry.LocalMachine.OpenSubKey(regPaths[1]);
-			if (key != null)
+			foreach (string regPath in regPaths)
 			{
-				path = key.GetValue("PATH").ToString();
-				return true;
+				key = Registry.CurrentUser.OpenSubKey(regPath);
+				if (key != null)
+				{
+					object keyValue = key.GetValue("PATH");
+					if (keyValue == null)
+						return false;
+
+					path = keyValue.ToString();
+					return true;
+				}
 			}
 
-			key = Registry.CurrentUser.OpenSubKey(regPaths[0]);
-			if (key != null)
+			return false;
+		}
+
+		internal bool GetAppdataPath(out string path)
+		{
+			path = "";
+
+			// Getting an installation path
+			string[] regPaths = new string[2] {
+				"SOFTWARE\\IntellectService\\BusinessDoc1",
+				"SOFTWARE\\Wow6432Node\\IntellectService\\BusinessDoc1",
+			};
+
+			RegistryKey key;
+
+			foreach (string regPath in regPaths)
 			{
-				path = key.GetValue("PATH").ToString();
-				return true;
+				key = Registry.LocalMachine.OpenSubKey(regPath);
+				if (key != null)
+				{
+					object keyValue = key.GetValue("APPDATA");
+					if (keyValue == null)
+						return false;
+
+					path = keyValue.ToString();
+					return true;
+				}
 			}
 
-			key = Registry.CurrentUser.OpenSubKey(regPaths[1]);
-			if (key != null)
+			foreach (string regPath in regPaths)
 			{
-				path = key.GetValue("PATH").ToString();
-				return true;
+				key = Registry.CurrentUser.OpenSubKey(regPath);
+				if (key != null)
+				{
+					object keyValue = key.GetValue("APPDATA");
+					if (keyValue == null)
+						return false;
+
+					path = keyValue.ToString();
+					return true;
+				}
 			}
 
 			return false;
@@ -84,12 +137,30 @@ namespace MedocUpdates
 		{
 			filename = "";
 
+			string logPath = "";
+
+			// Usually server/HKLM
 			string installPath = "";
-			if (!GetInstallationPath(out installPath))
-				return false;
+			bool installPathFound = GetInstallationPath(out installPath);
+
+			// Usually client/HKCU
+			string appdataPath = "";
+			bool appdataPathFound = GetAppdataPath(out appdataPath);
+
+			if(installPathFound && Directory.Exists(installPath + "\\LOG"))
+				logPath = installPath + "\\LOG";
+
+			if (appdataPathFound && Directory.Exists(appdataPath + "\\LOG"))
+				logPath = appdataPath + "\\LOG";
 
 			DateTime lastdt = DateTime.MinValue;
-			string[] files = Directory.GetFiles(installPath, "update_*.log", SearchOption.AllDirectories);
+			string[] files = Directory.GetFiles(logPath, "update_*.log", SearchOption.TopDirectoryOnly);
+			if(files.Length <= 0)
+			{
+				// Probably never updated?
+				return false;
+			}
+
 			foreach (string file in files)
 			{
 				DateTime dt = lastdt;
@@ -169,6 +240,7 @@ namespace MedocUpdates
 			catch { }
 
 			string value = "";
+			int newDSTVersionCount = 0;
 			for (int i = 0; i < file.Length; i++ )
 			{
 				string line = file[i];
@@ -185,6 +257,15 @@ namespace MedocUpdates
 				bool foundDSTVersion = GetValue(line, ": ", out value);
 				if (!foundDSTVersion)
 					continue;
+
+				newDSTVersionCount++;
+			}
+
+			// FIXME: This doesn't work! GetDSTVersion is not called if cachedVersion is present
+			if (newDSTVersionCount != this.dstVersionCount) // Invalidate cache then
+			{
+				InvalidateCache();
+				this.dstVersionCount = newDSTVersionCount;
 			}
 
 			// Always take the latest value
