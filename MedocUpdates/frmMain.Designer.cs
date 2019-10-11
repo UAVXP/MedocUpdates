@@ -66,7 +66,7 @@
             this.delayNotificationsToolStripMenuItem,
             this.exitToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(182, 92);
+			this.contextMenuStrip1.Size = new System.Drawing.Size(182, 70);
 			// 
 			// checkForUpdatesToolStripMenuItem
 			// 

@@ -110,6 +110,16 @@ namespace MedocUpdates
 			}
 		}
 
+		private void TimerRoutine()
+		{
+			timerUpdate.Interval = (int)SessionStorage.inside.NotificationDelay + 1; // Wow, first hack
+
+			if (SessionStorage.inside.NotificationDelay == 0)
+				timerUpdate.Stop();
+			else
+				timerUpdate.Start();
+		}
+
 		private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			CheckingRoutine();
@@ -119,7 +129,10 @@ namespace MedocUpdates
 		{
 			CheckingRoutine();
 
-			timerUpdate.Start();
+			SessionStorage.Restore();
+
+			TimerRoutine();
+
 			SessionStorage.NotificationDelayChanged += frmMain_NotificationDelayChanged;
 		}
 
@@ -127,25 +140,14 @@ namespace MedocUpdates
 		{
 			CheckingRoutine();
 
-		/* We need to update timer interval immediately, so I've implemented an event
-			if(SessionStorage.NotificationDelay == 0)
-				timerUpdate.Stop();
-			else
-			{
-				timerUpdate.Interval = (int)SessionStorage.NotificationDelay;
-				timerUpdate.Start();
-			}
-		*/
+			TimerRoutine();
 		}
 
 		private void frmMain_NotificationDelayChanged(object sender, EventArgs e)
 		{
-			timerUpdate.Interval = (int)SessionStorage.NotificationDelay + 1; // Wow, first hack
+			TimerRoutine();
 
-			if (SessionStorage.NotificationDelay == 0)
-				timerUpdate.Stop();
-			else
-				timerUpdate.Start();
+			SessionStorage.Save();
 		}
 
 		private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -157,9 +159,9 @@ namespace MedocUpdates
 		private void delayNotificationsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			frmNotificationsDelay delay = new frmNotificationsDelay();
-			delay.Delay = SessionStorage.NotificationDelay; // timerUpdate.Interval
+			delay.Delay = SessionStorage.inside.NotificationDelay; // timerUpdate.Interval
 			delay.ShowDialog();
-			Console.WriteLine(SessionStorage.NotificationDelay);
+			Console.WriteLine(SessionStorage.inside.NotificationDelay);
 		}
 	}
 }

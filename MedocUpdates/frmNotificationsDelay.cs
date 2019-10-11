@@ -80,7 +80,7 @@ namespace MedocUpdates
 
 		private void btnDone_Click(object sender, EventArgs e)
 		{
-			SessionStorage.NotificationDelay = this.Delay;
+			SessionStorage.inside.NotificationDelay = this.Delay;
 			SessionStorage.NotificationDelayChangedFunc(this);
 			this.Close();
 		}
