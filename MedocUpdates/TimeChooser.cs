@@ -12,9 +12,7 @@ namespace MedocUpdates
 {
 	public partial class TimeChooser : UserControl
 	{
-		public int Hours { get; set; }
-		public int Minutes { get; set; }
-		public int Seconds { get; set; }
+		public TimeSpan Delay { get; set; }
 
 	//	public event EventHandler<TimeChangedEventArgs> TimeChanged = delegate { };
 		public event EventHandler TimeChanged = delegate { };
@@ -26,31 +24,29 @@ namespace MedocUpdates
 		{
 			InitializeComponent();
 
-			this.Hours = 0;
-			this.Minutes = 0;
-			this.Seconds = 0;
+			this.Delay = new TimeSpan();
 		}
 
 		public TimeChooser(int hours, int minutes, int seconds) : base()
 		{
-			this.Hours = hours;
-			this.Minutes = minutes;
-			this.Seconds = seconds;
-		}
-
-		public int ToMilliseconds()
-		{
-			return this.Hours * this.Minutes * this.Seconds * 1000; // TODO: Is wrong
+			this.Delay = new TimeSpan(hours, minutes, seconds);
 		}
 
 		public override string ToString()
 		{
-			return String.Format("{0}:{1}:{2}", this.Hours.ToString("D"), this.Minutes.ToString("D2"), this.Seconds.ToString("D2"));
+			return this.Delay.ToString();
+		}
+
+		public double ToMilliseconds()
+		{
+			return this.Delay.TotalMilliseconds;
 		}
 
 		private void nudHours_ValueChanged(object sender, EventArgs e)
 		{
-			this.Hours = Decimal.ToInt32(nudHours.Value);
+			int hours = Decimal.ToInt32(nudHours.Value);
+			TimeSpan ts = new TimeSpan(hours, this.Delay.Minutes, this.Delay.Seconds);
+			this.Delay = ts;
 
 			TimeChanged.Invoke(this, new EventArgs());
 			HoursChanged.Invoke(this, new EventArgs());
@@ -58,7 +54,9 @@ namespace MedocUpdates
 
 		private void nudMinutes_ValueChanged(object sender, EventArgs e)
 		{
-			this.Minutes = Decimal.ToInt32(nudMinutes.Value);
+			int minutes = Decimal.ToInt32(nudMinutes.Value);
+			TimeSpan ts = new TimeSpan(this.Delay.Hours, minutes, this.Delay.Seconds);
+			this.Delay = ts;
 
 			TimeChanged.Invoke(this, new EventArgs());
 			MinutesChanged.Invoke(this, new EventArgs());
@@ -66,7 +64,9 @@ namespace MedocUpdates
 
 		private void nudSeconds_ValueChanged(object sender, EventArgs e)
 		{
-			this.Seconds = Decimal.ToInt32(nudSeconds.Value);
+			int seconds = Decimal.ToInt32(nudSeconds.Value);
+			TimeSpan ts = new TimeSpan(this.Delay.Hours, this.Delay.Minutes, seconds);
+			this.Delay = ts;
 
 			TimeChanged.Invoke(this, new EventArgs());
 			SecondsChanged.Invoke(this, new EventArgs());
