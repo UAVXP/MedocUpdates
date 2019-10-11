@@ -56,6 +56,7 @@
 			this.trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("trayIcon.Icon")));
 			this.trayIcon.Text = "Medoc Updates";
 			this.trayIcon.Visible = true;
+			this.trayIcon.BalloonTipClicked += new System.EventHandler(this.trayIcon_BalloonTipClicked);
 			this.trayIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.trayIcon_MouseClick);
 			this.trayIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.trayIcon_MouseDoubleClick);
 			// 
@@ -137,7 +138,7 @@
 			// 
 			this.labelLocalVersion.AutoSize = true;
 			this.labelLocalVersion.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.labelLocalVersion.Location = new System.Drawing.Point(38, 226);
+			this.labelLocalVersion.Location = new System.Drawing.Point(42, 225);
 			this.labelLocalVersion.Name = "labelLocalVersion";
 			this.labelLocalVersion.Size = new System.Drawing.Size(182, 18);
 			this.labelLocalVersion.TabIndex = 4;
@@ -186,6 +187,7 @@
 			this.Name = "frmMain";
 			this.Text = "Medoc Updates";
 			this.Load += new System.EventHandler(this.frmMain_Load);
+			this.Resize += new System.EventHandler(this.frmMain_Resize);
 			this.contextMenuStrip1.ResumeLayout(false);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();

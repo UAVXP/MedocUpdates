@@ -17,11 +17,12 @@ namespace MedocUpdates
 		[Serializable]
 		public class Inside
 		{
-			public double NotificationDelay = 0;
+			public double NotificationDelay = 1 * 60 * 60 * 1000; // Default notification delay - 1 hour
 		}
 
 		public static Inside inside = new Inside();
-		
+		static Log log = new Log();
+
 		public static event EventHandler NotificationDelayChanged = delegate { };
 		public static void NotificationDelayChangedFunc(object sender)
 		{
@@ -39,8 +40,21 @@ namespace MedocUpdates
 		public static void Restore()
 		{
 			IFormatter formatter = new BinaryFormatter();
-			Stream filestream = new FileStream("settings.dat", FileMode.Open, FileAccess.Read);
+			Stream filestream = new FileStream("settings.dat", FileMode.OpenOrCreate, FileAccess.Read);
+			if(filestream == null || filestream.Length <= 0)
+			{
+				log.Write("SessionStorage: Cannot load saved session");
+				filestream.Close();
+
+				// Initializing and saving a default values
+				Save();
+
+				return;
+			}
+
 			SessionStorage.Inside test = (SessionStorage.Inside)formatter.Deserialize(filestream);
+			filestream.Close();
+
 			inside = test;
 		}
 	}

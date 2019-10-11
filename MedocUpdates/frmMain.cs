@@ -37,9 +37,18 @@ namespace MedocUpdates
 				ShowMainFrame();
 		}
 
+		private void trayIcon_BalloonTipClicked(object sender, EventArgs e)
+		{
+			ShowMainFrame();
+		}
+
 		private void ShowMainFrame()
 		{
 			this.Visible = true;
+
+			if(this.WindowState == FormWindowState.Minimized)
+				this.WindowState = FormWindowState.Normal;
+
 			this.Show();
 
 			if(this.CanFocus)
@@ -162,6 +171,11 @@ namespace MedocUpdates
 			delay.Delay = SessionStorage.inside.NotificationDelay; // timerUpdate.Interval
 			delay.ShowDialog();
 			Console.WriteLine(SessionStorage.inside.NotificationDelay);
+		}
+
+		private void frmMain_Resize(object sender, EventArgs e)
+		{
+			this.ShowInTaskbar = (this.WindowState != FormWindowState.Minimized);
 		}
 	}
 }
