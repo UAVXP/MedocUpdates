@@ -41,7 +41,7 @@ namespace MedocUpdates
 			botClient.StartReceiving();
 		}
 
-		private void OnMessageReceived(object sender, MessageEventArgs e)
+		private async void OnMessageReceived(object sender, MessageEventArgs e)
 		{
 			Message message = e.Message;
 			if (message == null)
@@ -55,7 +55,22 @@ namespace MedocUpdates
 				return;
 
 			string lastMessage = message.Text.Trim().Split(' ')[0];
-			if (lastMessage == "/hello")
+			if(lastMessage == "/start")
+			{
+				//InlineKeyboardMarkup inlineKeyboard = new InlineKeyboardMarkup(new[]
+				//{
+				//	new [] // first row
+    //                {
+				//		InlineKeyboardButton.WithCallbackData("Subscribe")
+				//	}
+				//});
+
+				//await botClient.SendTextMessageAsync(
+				//		chat.Id,
+				//		"Choose",
+				//		replyMarkup: inlineKeyboard);
+			}
+			else if (lastMessage == "/hello")
 			{
 				if(SessionStorage.inside.TelegramUserIDs.IndexOf(chat.Id) >= 0)
 				{
