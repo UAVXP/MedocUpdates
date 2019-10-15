@@ -9,13 +9,42 @@ using System.Reflection;
 
 namespace MedocUpdates
 {
+	public static class LogLevel
+	{
+		public const int BASIC = 0;
+		public const int NORMAL = 1;
+		public const int EXPERT = 2;
+		public const int MAXLOGLEVELS = EXPERT + 1;
+	}
+
 	public static class Log
 	{
 		private static string m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 		private static string m_logPath = m_exePath + "\\mu_logs\\" + String.Format("log_{0}.txt", DateTime.Now.ToString("yyyy-MM-dd"));
+		private static int m_logLevel = LogLevel.BASIC;
 
 		public static void Init()
 		{
+			string[] args = Environment.GetCommandLineArgs();
+			if(args.Length <= 0)
+				LogFallbackInternal("Log: Something went wrong with the application arguments");
+			if(args[0].Equals(""))
+				LogFallbackInternal("Log: Cannot find filename in application arguments");
+
+			// TODO: Refactor this
+			int logLevelArg = Array.FindIndex(args, element => element.StartsWith("-loglevel", StringComparison.Ordinal));
+			if(logLevelArg > 0) // Skip the first argument (a filename)
+			{
+				string logLevelStr = args[logLevelArg+1];
+				int logLevel = m_logLevel;
+				if (int.TryParse(logLevelStr, out logLevel))
+				{
+					if(logLevel >= LogLevel.BASIC && logLevel < LogLevel.MAXLOGLEVELS)
+						m_logLevel = logLevel;
+				}
+			}
+
+			// Make sure log directory does exist
 			string logDirectory = Path.GetDirectoryName(m_logPath);
 			if (!Directory.Exists(logDirectory))
 				Directory.CreateDirectory(logDirectory);
@@ -23,7 +52,14 @@ namespace MedocUpdates
 
 		public static void Write(string logMessage)
 		{
-			// TODO: Implement different log levels (every message, standard, a little bit)
+			Write(LogLevel.BASIC, logMessage);
+		}
+
+		public static void Write(int logLevel, string logMessage)
+		{
+			if(logLevel > m_logLevel)
+				return;
+
 			try
 			{
 				using (StreamWriter w = File.AppendText(m_logPath))

@@ -53,7 +53,7 @@ namespace MedocUpdates
 			if(this.CanFocus)
 				this.Focus();
 
-			Log.Write("Restoring main frame");
+			Log.Write(LogLevel.NORMAL, "Restoring main frame");
 		}
 
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)

@@ -15,7 +15,6 @@ namespace MedocUpdates
 		int rawsecond;
 		int rawthird;
 
-		// TODO: Rename those fields
 		string first;
 		string second;
 		string third;

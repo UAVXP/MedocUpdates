@@ -32,7 +32,7 @@ namespace MedocUpdates
 				GetDSTVersion(out tempVersion);
 				if (cachedVersion.Equals(""))
 				{
-					Log.Write("MedocInternal: Retrieving local version");
+					Log.Write(LogLevel.NORMAL, "MedocInternal: Retrieving local version");
 					cachedVersion = tempVersion;
 				}
 				return cachedVersion;
@@ -70,7 +70,7 @@ namespace MedocUpdates
 					object keyValue = key.GetValue("PATH");
 					if(keyValue == null)
 					{
-						Log.Write("MedocInternal: Cannot find PATH in HKLM");
+						Log.Write(LogLevel.EXPERT, "MedocInternal: Cannot find PATH in HKLM");
 						return false;
 					}
 
@@ -87,7 +87,7 @@ namespace MedocUpdates
 					object keyValue = key.GetValue("PATH");
 					if (keyValue == null)
 					{
-						Log.Write("MedocInternal: Cannot find PATH in HKCU");
+						Log.Write(LogLevel.EXPERT, "MedocInternal: Cannot find PATH in HKCU");
 						return false;
 					}
 
@@ -96,7 +96,7 @@ namespace MedocUpdates
 				}
 			}
 
-			Log.Write("MedocInternal: Cannot get the PATH path from registry");
+			Log.Write(LogLevel.NORMAL, "MedocInternal: Cannot get the PATH path from registry");
 			return false;
 		}
 
@@ -120,7 +120,7 @@ namespace MedocUpdates
 					object keyValue = key.GetValue("APPDATA");
 					if (keyValue == null)
 					{
-						Log.Write("MedocInternal: Cannot find APPDATA in HKLM");
+						Log.Write(LogLevel.EXPERT, "MedocInternal: Cannot find APPDATA in HKLM");
 						return false;
 					}
 
@@ -137,7 +137,7 @@ namespace MedocUpdates
 					object keyValue = key.GetValue("APPDATA");
 					if (keyValue == null)
 					{
-						Log.Write("MedocInternal: Cannot find APPDATA in HKCU");
+						Log.Write(LogLevel.EXPERT, "MedocInternal: Cannot find APPDATA in HKCU");
 						return false;
 					}
 
@@ -146,7 +146,7 @@ namespace MedocUpdates
 				}
 			}
 
-			Log.Write("MedocInternal: Cannot get the APPDATA path from registry");
+			Log.Write(LogLevel.NORMAL, "MedocInternal: Cannot get the APPDATA path from registry");
 			return false;
 		}
 
@@ -172,7 +172,7 @@ namespace MedocUpdates
 
 			if(logPath.Trim().Length <= 0)
 			{
-				Log.Write("MedocInternal: Cannot find the main application install path");
+				Log.Write("MedocInternal: Cannot find M.E.Doc install path");
 				return false;
 			}
 
@@ -261,7 +261,10 @@ namespace MedocUpdates
 			{
 				file = File.ReadAllLines(logfile);
 			}
-			catch { }
+			catch(Exception ex)
+			{
+				Log.Write(LogLevel.NORMAL, "Cannot read a latest log file\r\n" + ex.Message);
+			}
 
 			string value = "";
 			int newDSTVersionCount = 0;
@@ -276,7 +279,7 @@ namespace MedocUpdates
 				// next line should be the version now
 				if ((i+1) >= file.Length)
 				{
-					Log.Write("MedocInternal: " + logfile + ": unexpected EOF");
+					Log.Write(LogLevel.EXPERT, "MedocInternal: " + logfile + ": unexpected EOF");
 					continue;
 				}
 
@@ -291,10 +294,11 @@ namespace MedocUpdates
 
 			if (newDSTVersionCount != this.dstVersionCount) // Invalidate cache then
 			{
+				if(this.dstVersionCount != 0) // Just to make sure this won't appear on the application start
+					Log.Write("MedocInternal: Newer local version is detected");
+
 				InvalidateCache();
 				this.dstVersionCount = newDSTVersionCount;
-
-				Log.Write("MedocInternal: Newer local version is detected");
 			}
 
 			// Always take the latest value

@@ -36,7 +36,7 @@ namespace MedocUpdates
 			Stream filestream = new FileStream(m_settingsPath, FileMode.Create, FileAccess.Write);
 			if (filestream == null)
 			{
-				Log.Write("SessionStorage: Cannot save session storage. Check your permissions");
+				Log.Write(LogLevel.NORMAL, "SessionStorage: Cannot save session storage. Check your permissions");
 				return;
 			}
 
@@ -50,7 +50,7 @@ namespace MedocUpdates
 			Stream filestream = new FileStream(m_settingsPath, FileMode.OpenOrCreate, FileAccess.Read);
 			if (filestream == null)
 			{
-				Log.Write("SessionStorage: Cannot load session storage file. Check your permissions");
+				Log.Write(LogLevel.NORMAL, "SessionStorage: Cannot load session storage file. Check your permissions");
 
 				// Initializing and saving a default values
 				Save();
@@ -60,7 +60,7 @@ namespace MedocUpdates
 
 			if (filestream.Length <= 0)
 			{
-				Log.Write("SessionStorage: Cannot load saved session");
+				Log.Write(LogLevel.NORMAL, "SessionStorage: Cannot load saved session");
 				filestream.Close();
 
 				// Initializing and saving a default values
