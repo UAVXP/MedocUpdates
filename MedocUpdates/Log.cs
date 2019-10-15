@@ -44,6 +44,7 @@ namespace MedocUpdates
 			}
 			catch (Exception ex)
 			{
+				LogFallbackInternal(ex.Message);
 			}
 		}
 
@@ -55,7 +56,13 @@ namespace MedocUpdates
 			}
 			catch (Exception ex)
 			{
+				LogFallbackInternal(ex.Message);
 			}
+		}
+
+		public static void LogFallbackInternal(string logMessage)
+		{
+			Console.Error.WriteLine(logMessage);
 		}
 	}
 }
