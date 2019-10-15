@@ -14,6 +14,7 @@ namespace MedocUpdates
 	{
 		MedocAPI medoc = new MedocAPI();
 		MedocInternal localmedoc = new MedocInternal();
+		Telegram telegram = new Telegram();
 
 		public frmMain()
 		{
@@ -109,6 +110,8 @@ namespace MedocUpdates
 				{
 					trayIcon.ShowBalloonTip(5000, "M.E.Doc update has been released!", labelVersion.Text, ToolTipIcon.Info);
 				}
+
+				telegram.SendMessageAll(labelVersion.Text);
 			}
 			else
 			{
@@ -136,8 +139,6 @@ namespace MedocUpdates
 		private void frmMain_Load(object sender, EventArgs e)
 		{
 			CheckingRoutine();
-
-			SessionStorage.Restore();
 
 			TimerRoutine();
 

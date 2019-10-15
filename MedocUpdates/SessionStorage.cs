@@ -19,10 +19,25 @@ namespace MedocUpdates
 			public double NotificationDelay = 1 * 60 * 60 * 1000; // Default notification delay - 1 hour
 		}
 
+		[Serializable]
+		public class Inside_v2
+		{
+			public double NotificationDelay = 1 * 60 * 60 * 1000; // Default notification delay - 1 hour
+			public List<long> TelegramUserIDs = new List<long>();
+			public int coolID = 3;
+
+			public static implicit operator Inside_v2(Inside v)
+			{
+				Inside_v2 inside_v2 = new Inside_v2();
+				inside_v2.NotificationDelay = v.NotificationDelay;
+				return inside_v2;
+			}
+		}
+
 		private static string m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 		private static string m_settingsPath = m_exePath + "\\mu.dat";
 
-		public static Inside inside = new Inside();
+		public static Inside_v2 inside = new Inside_v2();
 
 		public static event EventHandler NotificationDelayChanged = delegate { };
 		public static void NotificationDelayChangedFunc(object sender)
@@ -69,10 +84,32 @@ namespace MedocUpdates
 				return;
 			}
 
-			SessionStorage.Inside test = (SessionStorage.Inside)formatter.Deserialize(filestream);
-			filestream.Close();
 
-			inside = test;
+			SessionStorage.Inside_v2 temp = new Inside_v2();
+
+			try
+			{
+				object deserialized = formatter.Deserialize(filestream);
+				Type insideType = deserialized.GetType();
+
+				switch (insideType.Name)
+				{
+				case "Inside":
+					temp = (SessionStorage.Inside)deserialized;
+					break;
+				case "Inside_v2":
+					temp = (SessionStorage.Inside_v2)deserialized;
+					break;
+				}
+			}
+			catch (SerializationException ex)
+			{
+				Log.Write(LogLevel.NORMAL, "SessionStorage: Cannot retrieve settings - wrong file structure\r\n" + ex.Message);
+			}
+
+			filestream.Close();
+			
+			inside = temp;
 		}
 	}
 }

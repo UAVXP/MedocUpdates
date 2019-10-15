@@ -16,12 +16,14 @@ namespace MedocUpdates
         {
 			Log.Init();
 			Log.Write("MedocUpdates: Initializing...");
+			SessionStorage.Restore();
 
 			Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain());
 
 			Log.Write("MedocUpdates: Shutting down the application");
+			SessionStorage.Save();
 		}
     }
 }

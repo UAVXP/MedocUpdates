@@ -15,6 +15,17 @@ namespace MedocUpdates
 		public const int NORMAL = 1;
 		public const int EXPERT = 2;
 		public const int MAXLOGLEVELS = EXPERT + 1;
+
+		// TODO: Refactor
+		public static int Clamp(int input, int min, int max)
+		{
+			if (input.CompareTo(min) < 0)
+				return min;
+			else if (input.CompareTo(max) > 0)
+				return max;
+
+			return input;
+		}
 	}
 
 	public static class Log
@@ -39,8 +50,7 @@ namespace MedocUpdates
 				int logLevel = m_logLevel;
 				if (int.TryParse(logLevelStr, out logLevel))
 				{
-					if(logLevel >= LogLevel.BASIC && logLevel < LogLevel.MAXLOGLEVELS)
-						m_logLevel = logLevel;
+					m_logLevel = LogLevel.Clamp(logLevel, LogLevel.BASIC, LogLevel.MAXLOGLEVELS);
 				}
 			}
 
