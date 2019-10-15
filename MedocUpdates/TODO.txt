@@ -1,4 +1,6 @@
 ﻿Telegram connection
+	userID-username relation class
+
 +Checking interval control
 
 [HKLM(server)\HKCU]\SOFTWARE\IntellectService\BusinessDoc1\PATH
