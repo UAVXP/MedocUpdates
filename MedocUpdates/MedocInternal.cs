@@ -27,10 +27,13 @@ namespace MedocUpdates
 					return key.GetSubKeyNames()[0]; // FIXME: Might be wrong maybe? What if there would be many subkeys before the version one?
 				*/
 
+				// TODO: Do a fallback way - through Software\\M.E.Doc\\M.E.Doc subkey name
+				string tempVersion = "";
+				GetDSTVersion(out tempVersion);
 				if (cachedVersion.Equals(""))
 				{
 					Log.Write("MedocInternal: Retrieving local version");
-					GetDSTVersion(out cachedVersion); // TODO: Do a fallback way - through Software\\M.E.Doc\\M.E.Doc subkey name
+					cachedVersion = tempVersion;
 				}
 				return cachedVersion;
 			}
@@ -66,7 +69,10 @@ namespace MedocUpdates
 				{
 					object keyValue = key.GetValue("PATH");
 					if(keyValue == null)
+					{
+						Log.Write("MedocInternal: Cannot find PATH in HKLM");
 						return false;
+					}
 
 					path = keyValue.ToString();
 					return true;
@@ -80,13 +86,17 @@ namespace MedocUpdates
 				{
 					object keyValue = key.GetValue("PATH");
 					if (keyValue == null)
+					{
+						Log.Write("MedocInternal: Cannot find PATH in HKCU");
 						return false;
+					}
 
 					path = keyValue.ToString();
 					return true;
 				}
 			}
 
+			Log.Write("MedocInternal: Cannot get the PATH path from registry");
 			return false;
 		}
 
@@ -109,7 +119,10 @@ namespace MedocUpdates
 				{
 					object keyValue = key.GetValue("APPDATA");
 					if (keyValue == null)
+					{
+						Log.Write("MedocInternal: Cannot find APPDATA in HKLM");
 						return false;
+					}
 
 					path = keyValue.ToString();
 					return true;
@@ -123,13 +136,17 @@ namespace MedocUpdates
 				{
 					object keyValue = key.GetValue("APPDATA");
 					if (keyValue == null)
+					{
+						Log.Write("MedocInternal: Cannot find APPDATA in HKCU");
 						return false;
+					}
 
 					path = keyValue.ToString();
 					return true;
 				}
 			}
 
+			Log.Write("MedocInternal: Cannot get the APPDATA path from registry");
 			return false;
 		}
 
@@ -153,11 +170,18 @@ namespace MedocUpdates
 			if (appdataPathFound && Directory.Exists(appdataPath + "\\LOG"))
 				logPath = appdataPath + "\\LOG";
 
+			if(logPath.Trim().Length <= 0)
+			{
+				Log.Write("MedocInternal: Cannot find the main application install path");
+				return false;
+			}
+
 			DateTime lastdt = DateTime.MinValue;
 			string[] files = Directory.GetFiles(logPath, "update_*.log", SearchOption.TopDirectoryOnly);
 			if(files.Length <= 0)
 			{
 				// Probably never updated?
+				Log.Write("MedocInternal: M.E.Doc should have been updated at least once (can't find update_*.log)");
 				return false;
 			}
 
@@ -251,7 +275,11 @@ namespace MedocUpdates
 
 				// next line should be the version now
 				if ((i+1) >= file.Length)
+				{
+					Log.Write("MedocInternal: " + logfile + ": unexpected EOF");
 					continue;
+				}
+
 				line = file[i+1];
 
 				bool foundDSTVersion = GetValue(line, ": ", out value);
@@ -261,17 +289,21 @@ namespace MedocUpdates
 				newDSTVersionCount++;
 			}
 
-			// FIXME: This doesn't work! GetDSTVersion is not called if cachedVersion is present
 			if (newDSTVersionCount != this.dstVersionCount) // Invalidate cache then
 			{
 				InvalidateCache();
 				this.dstVersionCount = newDSTVersionCount;
+
+				Log.Write("MedocInternal: Newer local version is detected");
 			}
 
 			// Always take the latest value
 			Regex regex = new Regex(@"\d{2}.\d{2}.\d{3}");
 			if (!regex.IsMatch(value))
+			{
+				Log.Write("MedocInternal: Update version doesn't match the expected pattern (xx.xx.xxx)");
 				return false;
+			}
 
 			version = value;
 
