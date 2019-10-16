@@ -17,3 +17,9 @@ Logging every operation (like parsing, checking for updates, etc.)
 +Convert Log class to static one?
 
 Log/MedocTelegram app args extraction to external class (ParsedArgs)
+	class ArgsPair
+	{
+		string token;
+		string arg;
+	}
+	Then ArgsPair list
