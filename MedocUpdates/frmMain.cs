@@ -109,9 +109,15 @@ namespace MedocUpdates
 				if (localversion != version)
 				{
 					trayIcon.ShowBalloonTip(5000, "M.E.Doc update has been released!", labelVersion.Text, ToolTipIcon.Info);
+#if !DEBUG
+				//	telegram.SendMessageAll(labelVersion.Text); // FIXME: Uncomment this
+#endif
 				}
 
+#if DEBUG
+				// FIXME: Sending this everytime just to make sure Telegram connection is working
 				telegram.SendMessageAll(labelVersion.Text);
+#endif
 			}
 			else
 			{
