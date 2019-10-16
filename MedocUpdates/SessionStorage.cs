@@ -23,8 +23,7 @@ namespace MedocUpdates
 		public class Inside_v2
 		{
 			public double NotificationDelay = 1 * 60 * 60 * 1000; // Default notification delay - 1 hour
-			public List<long> TelegramUserIDs = new List<long>();
-			public int coolID = 3;
+			public List<MedocTelegramUser> TelegramUsers = new List<MedocTelegramUser>();
 
 			public static implicit operator Inside_v2(Inside v)
 			{

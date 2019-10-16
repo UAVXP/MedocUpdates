@@ -14,7 +14,7 @@ namespace MedocUpdates
 	{
 		MedocAPI medoc = new MedocAPI();
 		MedocInternal localmedoc = new MedocInternal();
-		Telegram telegram = new Telegram();
+		MedocTelegram telegram = new MedocTelegram();
 
 		public frmMain()
 		{
