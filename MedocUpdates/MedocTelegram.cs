@@ -78,24 +78,52 @@ namespace MedocUpdates
 		{
 			string[] args = Environment.GetCommandLineArgs();
 			if (args.Length <= 0)
-				Log.LogFallbackInternal("Log: Something went wrong with the application arguments");
+				Log.Write("MedocTelegram: Something went wrong with the application arguments");
 			if (args[0].Equals(""))
-				Log.LogFallbackInternal("Log: Cannot find filename in application arguments");
+				Log.Write("MedocTelegram: Cannot find filename in application arguments");
 
 			// TODO: Refactor this
 			int tokenArg = Array.FindIndex(args, element => element.StartsWith("-token", StringComparison.Ordinal));
 			if (tokenArg > 0) // Skip the first argument (a filename)
 			{
+				if((tokenArg + 1) >= args.Length)
+				{
+					Log.Write(LogLevel.NORMAL, "MedocTelegram: Unexpected end of the \"-token\" argument");
+					return;
+				}
+
 				string tokenStr = args[tokenArg + 1];
+				if(tokenStr.Length <= 0)
+				{
+					Log.Write(LogLevel.NORMAL, "MedocTelegram: Cannot set \"-token\" - wrong argument");
+					return;
+				}
 				botToken = tokenStr;
+
+				Log.Write("MedocTelegram: Token was set to " + tokenStr.Substring(0, 3) + "..."); // Print only first 3 symbols - just to make sure
 			}
 
-			botClient = new TelegramBotClient(botToken);
-			Console.WriteLine(botClient.GetMeAsync().Result.Username);
+			try
+			{
+				botClient = new TelegramBotClient(botToken);
+			}
+			catch(Exception ex)
+			{
+				Log.Write("MedocTelegram: Cannot create TelegramBotClient object\r\n" + ex.Message);
+				return;
+			}
+
+		//	Console.WriteLine(botClient.GetMeAsync().Result.Username);
 
 			botClient.OnMessage += OnMessageReceived;
 			botClient.OnCallbackQuery += OnCallbackQueryReceived;
 			botClient.StartReceiving();
+
+			if(SessionStorage.inside.TelegramUsers == null) // May be rare
+			{
+				Log.Write(LogLevel.EXPERT, "MedocTelegram: Internal user list is null");
+				return;
+			}
 		}
 
 		public bool IsSubscribed(MedocTelegramUser user)
@@ -106,13 +134,19 @@ namespace MedocUpdates
 		public bool Subscribe(MedocTelegramUser user)
 		{
 			if(IsSubscribed(user))
+			{
+				Log.Write(LogLevel.NORMAL, "MedocTelegram: Cannot subscribe @" + user.Username + " - already subscribed");
 				return false;
+			}
 
 			SessionStorage.inside.TelegramUsers.Add(user);
 
 			// Double check
 			if (!IsSubscribed(user))
+			{
+				Log.Write(LogLevel.NORMAL, "MedocTelegram: Cannot subscribe @" + user.Username + " - something wrong with internal user list");
 				return false;
+			}
 
 			return true;
 		}
@@ -120,14 +154,23 @@ namespace MedocUpdates
 		public bool Unsubscribe(MedocTelegramUser user)
 		{
 			if (!IsSubscribed(user))
+			{
+				Log.Write(LogLevel.NORMAL, "MedocTelegram: Cannot unsubscribe @" + user.Username + " - already not subscribed");
 				return false;
+			}
 
 			if(!SessionStorage.inside.TelegramUsers.Remove(user))
+			{
+				Log.Write(LogLevel.NORMAL, "MedocTelegram: Cannot unsubscribe " + user.Username + " - something wrong with internal user list");
 				return false;
+			}
 
 			// Does this user still subscribed?
 			if (IsSubscribed(user))
+			{
+				Log.Write(LogLevel.NORMAL, "MedocTelegram: Cannot unsubscribe " + user.Username + " - user list still has this user in it");
 				return false;
+			}
 
 			return true;
 		}
@@ -136,18 +179,30 @@ namespace MedocUpdates
 		{
 			Message message = e.Message;
 			if (message == null)
+			{
+				Log.Write(LogLevel.EXPERT, "MedocTelegram: OnMessageReceived(): Message is null");
 				return;
+			}
 
 			if(message.Type != MessageType.Text)
+			{
+				Log.Write(LogLevel.EXPERT, "MedocTelegram: OnMessageReceived(): Message type is not a text (" + message.Type + ")");
 				return;
+			}
 
 			Chat chat = message.Chat;
 			if(chat == null)
+			{
+				Log.Write(LogLevel.EXPERT, "MedocTelegram: OnMessageReceived(): Chat object is null");
 				return;
+			}
 
 			MedocTelegramUser user = message.From;
 			if(user == null)
+			{
+				Log.Write(LogLevel.EXPERT, "MedocTelegram: OnMessageReceived(): User object is null");
 				return;
+			}
 
 			string lastMessage = message.Text.Trim().Split(' ')[0];
 			if(lastMessage == "/start")
@@ -188,22 +243,24 @@ namespace MedocUpdates
 				bool success = Subscribe(user);
 				if(!success)
 				{
-					SendMessage(chat.Id, "Cannot subscribe - you're probably subscribed already\r\nUse /start to make sure");
+					SendMessage(user, "Cannot subscribe - you're probably subscribed already\r\nUse /start to make sure"); // chat.Id?
 					return;
 				}
 
-				SendMessage(chat.Id, "You have been subscribed to M.E.Doc updates.");
+				SendMessage(user, "You have been subscribed to M.E.Doc updates."); // chat.Id?
+				Log.Write(LogLevel.NORMAL, "MedocTelegram: OnMessageReceived(): User @" + user.Username + " is subscribed through the chat command");
 			}
 			else if(lastMessage == "/unsub")
 			{
 				bool success = Unsubscribe(user);
 				if (!success)
 				{
-					SendMessage(chat.Id, "Cannot unsubscribe - you're probably unsubscribed already.\r\nUse /start to make sure");
+					SendMessage(user, "Cannot unsubscribe - you're probably unsubscribed already.\r\nUse /start to make sure"); // chat.Id?
 					return;
 				}
 
-				SendMessage(chat.Id, "You have been unsubscribed to M.E.Doc updates.");
+				SendMessage(user, "You have been unsubscribed to M.E.Doc updates."); // chat.Id?
+				Log.Write(LogLevel.NORMAL, "MedocTelegram: OnMessageReceived(): User @" + user.Username + " is unsubscribed through the chat command");
 			}
 		}
 
@@ -222,11 +279,12 @@ namespace MedocUpdates
 				bool success = Subscribe(user);
 				if (!success)
 				{
-					SendMessage(callbackQuery.Message.Chat.Id, "Something went wrong with subscribing you to the updates");
+					SendMessage(user, "Something went wrong with subscribing you to the updates");
 					return;
 				}
 
-				SendMessage(callbackQuery.Message.Chat.Id, "You have been subscribed to M.E.Doc updates.");
+				SendMessage(user, "You have been subscribed to M.E.Doc updates.");
+				Log.Write(LogLevel.NORMAL, "MedocTelegram: OnMessageReceived(): User @" + user.Username + " is subscribed through the keyboard button");
 			}
 			else if(data == "Unsubscribe")
 			{
@@ -237,27 +295,28 @@ namespace MedocUpdates
 				bool success = Unsubscribe(user);
 				if (!success)
 				{
-					SendMessage(callbackQuery.Message.Chat.Id, "Something went wrong with unsubscribing you from the updates");
+					SendMessage(user, "Something went wrong with unsubscribing you from the updates");
 					return;
 				}
 
-				SendMessage(callbackQuery.Message.Chat.Id, "You have been unsubscribed to M.E.Doc updates.");
+				SendMessage(user, "You have been unsubscribed to M.E.Doc updates.");
+				Log.Write(LogLevel.NORMAL, "MedocTelegram: OnMessageReceived(): User @" + user.Username + " is unsubscribed through the keyboard button");
 			}
 		}
 
-		public async void SendMessage(long userID, string textmessage)
+		public async void SendMessage(MedocTelegramUser user, string textmessage)
 		{
 			try
 			{
-				Message message = await botClient.SendTextMessageAsync(chatId: userID,
+				await botClient.SendTextMessageAsync(chatId: user.Id,
 					text: textmessage,
 					parseMode: ParseMode.Default,
 					disableNotification: false
 				);
 			}
-			catch(ApiRequestException ex)
+			catch(Exception ex)
 			{
-				Log.Write(String.Format("Telegram: Sending message to {0} has been failed\r\n{1}", userID, ex.Message));
+				Log.Write(LogLevel.NORMAL, "MedocTelegram: Sending message to @" + user.Username + " has been failed\r\n" + ex.Message);
 			}
 }
 
@@ -265,7 +324,7 @@ namespace MedocUpdates
 		{
 			foreach (MedocTelegramUser savedUser in SessionStorage.inside.TelegramUsers)
 			{
-				SendMessage(savedUser.Id, textmessage);
+				SendMessage(savedUser, textmessage);
 			}
 		}
 	}
