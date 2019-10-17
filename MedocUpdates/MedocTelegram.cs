@@ -150,6 +150,8 @@ namespace MedocUpdates
 				return false;
 			}
 
+			// TODO: Should I call SessionStorage.Save() immediately here?
+
 			return true;
 		}
 
@@ -173,6 +175,8 @@ namespace MedocUpdates
 				Log.Write(LogLevel.NORMAL, "MedocTelegram: Cannot unsubscribe " + user.Username + " - user list still has this user in it");
 				return false;
 			}
+
+			// TODO: Should I call SessionStorage.Save() immediately here?
 
 			return true;
 		}

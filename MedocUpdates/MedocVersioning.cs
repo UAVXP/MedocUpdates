@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define PARSE_VERSION_USING_REGEX
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,11 +33,13 @@ namespace MedocUpdates
 				if (value.Length <= 0 || value.Length > "xx.xx.xxx".Length)
 					throw new Exception("Wrong version passed");
 
-				// TODO: Do this with Regex
-				//	Regex regex = new Regex(@"\d{2}.\d{2}.\d{3}");
-				//	string[] values = regex.Split(value);
-
+#if PARSE_VERSION_USING_REGEX
+				//Regex regex = new Regex(@"\d{2}.\d{2}.\d{3}");
+				Regex regex = new Regex(@"\D+");
+				string[] values = regex.Split(value);
+#else
 				string[] values = value.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
+#endif
 				if (values.Length <= 0 || values.Length > 3)
 					throw new Exception("Cannot parse version");
 
