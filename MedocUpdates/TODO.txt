@@ -19,3 +19,5 @@ Logging every operation (like parsing, checking for updates, etc.)
 Log/MedocTelegram app args extraction to external class (ParsedArgs)
 +Storage Telegram token in SessionStorage
 +Be able to set log level and Telegram token from the UI (app args ones will be just needed to override those)
+
++Use string version only at the MedocVersion variable initializing

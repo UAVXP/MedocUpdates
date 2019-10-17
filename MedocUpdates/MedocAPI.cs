@@ -92,7 +92,7 @@ namespace MedocUpdates
 			return downloadsItems;
 		}
 
-		internal string GetVersion(HtmlNode node)
+		internal MedocVersion GetVersion(HtmlNode node)
 		{
 			HtmlNode download = node.SelectSingleNode(".//span[@class='js-update-num']");
 			if (download == null)
@@ -107,7 +107,7 @@ namespace MedocUpdates
 				return "";
 			}
 
-			return download.InnerText;
+			return (MedocVersion)download.InnerText; // Added explicit conversion for convenience
 		}
 
 		internal bool GetItems(out MedocDownloadItem[] items)
@@ -137,7 +137,7 @@ namespace MedocUpdates
 			return (i == downloadsItems.Count);
 		}
 
-		internal string GetLatestVersion()
+		internal MedocVersion GetLatestVersion()
 		{
 			HtmlNodeCollection downloadsItems = DownloadsItems();
 			if (downloadsItems == null)
@@ -146,7 +146,7 @@ namespace MedocUpdates
 				return "";
 			}
 
-			string version = GetVersion( downloadsItems[0] );
+			MedocVersion version = GetVersion( downloadsItems[0] );
 
 			Console.WriteLine("{0}", version);
 

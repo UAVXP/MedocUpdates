@@ -75,7 +75,7 @@ namespace MedocUpdates
 			bool success = medoc.RefreshDoc();
 			if (success)
 			{
-				string version = medoc.GetLatestVersion();
+				MedocVersion version = medoc.GetLatestVersion();
 				//version = "11.01.023";
 				labelVersion.Text = "Latest version: " + version;
 
@@ -85,7 +85,7 @@ namespace MedocUpdates
 				//MedocVersion test3 = "11.01.023";
 
 
-				string localversion = localmedoc.LocalVersion;
+				MedocVersion localversion = localmedoc.LocalVersion;
 				//localversion = "11.01.021";
 				labelLocalVersion.Text = "Latest local version: " + localversion;
 

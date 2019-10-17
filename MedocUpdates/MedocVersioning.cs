@@ -54,7 +54,7 @@ namespace MedocUpdates
 			}
 		}
 
-		MedocVersion()
+		public MedocVersion()
 		{
 			this.rawfirst = 0;
 			this.rawsecond = 0;
@@ -154,6 +154,17 @@ namespace MedocUpdates
 		public static implicit operator string(MedocVersion v)
 		{
 			return v.Version;
+		}
+
+		public bool IsEmpty()
+		{
+			return	(this.rawfirst == 0 &&
+					this.rawsecond == 0 &&
+					this.rawthird == 0) ||
+
+					(this.first == "" &&
+					this.second == "" &&
+					this.third == "");
 		}
 	}
 }

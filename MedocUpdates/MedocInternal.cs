@@ -12,7 +12,7 @@ namespace MedocUpdates
 {
 	class MedocInternal
 	{
-		string cachedVersion;
+		MedocVersion cachedVersion;
 		int dstVersionCount;
 
 		public string LocalVersion
@@ -28,9 +28,9 @@ namespace MedocUpdates
 				*/
 
 				// TODO: Do a fallback way - through Software\\M.E.Doc\\M.E.Doc subkey name
-				string tempVersion = "";
+				MedocVersion tempVersion = new MedocVersion();
 				GetDSTVersion(out tempVersion);
-				if (cachedVersion.Equals(""))
+				if (cachedVersion.IsEmpty())
 				{
 					Log.Write(LogLevel.NORMAL, "MedocInternal: Retrieving local version");
 					cachedVersion = tempVersion;
@@ -41,13 +41,13 @@ namespace MedocUpdates
 
 		public MedocInternal()
 		{
-			this.cachedVersion = "";
+			this.cachedVersion = new MedocVersion();
 			this.dstVersionCount = 0;
 		}
 
 		private void InvalidateCache()
 		{
-			this.cachedVersion = "";
+			this.cachedVersion = new MedocVersion();
 		}
 
 		internal bool GetInstallationPath(out string path)
@@ -248,9 +248,9 @@ namespace MedocUpdates
 			return false;
 		}
 
-		internal bool GetDSTVersion(out string version)
+		internal bool GetDSTVersion(out MedocVersion version)
 		{
-			version = "";
+			version = new MedocVersion();
 
 			string logfile = "";
 			if (!GetLatestLog(out logfile))
@@ -309,7 +309,7 @@ namespace MedocUpdates
 				return false;
 			}
 
-			version = value;
+			version = (MedocVersion)value; // Added explicit conversion for convenience
 
 			return true;
 		}
