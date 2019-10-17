@@ -16,6 +16,8 @@ namespace MedocUpdates
 		MedocInternal localmedoc = new MedocInternal();
 		MedocTelegram telegram = new MedocTelegram();
 
+		bool isMinimizedMessageShown = false;
+
 		public frmMain()
 		{
 			InitializeComponent();
@@ -108,10 +110,14 @@ namespace MedocUpdates
 
 				if (localversion != version)
 				{
-					trayIcon.ShowBalloonTip(5000, "M.E.Doc update has been released!", labelVersion.Text, ToolTipIcon.Info);
+					trayIcon.ShowBalloonTip(5000, "M.E.Doc update has been released!", labelVersion.Text + "\r\n" + labelLocalVersion.Text, ToolTipIcon.Info);
 #if !DEBUG
 				//	telegram.SendMessageAll(labelVersion.Text); // FIXME: Uncomment this
 #endif
+				}
+				else
+				{
+					trayIcon.ShowBalloonTip(5000, "No updates for M.E.Doc", labelVersion.Text + "\r\n" + labelLocalVersion.Text, ToolTipIcon.Info);
 				}
 
 #if DEBUG
@@ -182,6 +188,12 @@ namespace MedocUpdates
 		private void frmMain_Resize(object sender, EventArgs e)
 		{
 			this.ShowInTaskbar = (this.WindowState != FormWindowState.Minimized);
+
+			if(!this.ShowInTaskbar && !isMinimizedMessageShown)
+			{
+				trayIcon.ShowBalloonTip(5000, "Medoc Updates window has been minimized", "You can reach Medoc Updates through the tray icon now", ToolTipIcon.Info);
+				isMinimizedMessageShown = true;
+			}
 		}
 	}
 }

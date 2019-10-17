@@ -324,6 +324,7 @@ namespace MedocUpdates
 
 		public void SendMessageAll(string textmessage)
 		{
+			Log.Write(LogLevel.NORMAL, "MedocTelegram: Sending message to all users\r\n" + textmessage);
 			foreach (MedocTelegramUser savedUser in SessionStorage.inside.TelegramUsers)
 			{
 				SendMessage(savedUser, textmessage);
