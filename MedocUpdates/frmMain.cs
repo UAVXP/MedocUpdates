@@ -107,17 +107,22 @@ namespace MedocUpdates
 				}
 
 				Status("Done");
+				trayIcon.Text = labelVersion.Text + "\r\n" + labelLocalVersion.Text;
 
 				if (localversion != version)
 				{
-					trayIcon.ShowBalloonTip(5000, "M.E.Doc update has been released!", labelVersion.Text + "\r\n" + labelLocalVersion.Text, ToolTipIcon.Info);
+					trayIcon.ShowBalloonTip(5000, "M.E.Doc update has been released!",	labelVersion.Text + "\r\n" +
+																						labelLocalVersion.Text, ToolTipIcon.Info);
 #if !DEBUG
 				//	telegram.SendMessageAll(labelVersion.Text); // FIXME: Uncomment this
 #endif
 				}
 				else
 				{
-					trayIcon.ShowBalloonTip(5000, "No updates for M.E.Doc", labelVersion.Text + "\r\n" + labelLocalVersion.Text, ToolTipIcon.Info);
+					if(this.WindowState != FormWindowState.Minimized)
+						trayIcon.ShowBalloonTip(5000, "No updates for M.E.Doc", "Minimize the app to deny \"no updates\" notifications\r\n" +
+																				labelVersion.Text + "\r\n" +
+																				labelLocalVersion.Text, ToolTipIcon.Info);
 				}
 
 #if DEBUG

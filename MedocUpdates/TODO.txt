@@ -21,3 +21,6 @@ Log/MedocTelegram app args extraction to external class (ParsedArgs)
 +Be able to set log level and Telegram token from the UI (app args ones will be just needed to override those)
 
 +Use string version only at the MedocVersion variable initializing
+"Disable all notifications" setting
+Various notifications control (enable/disable)
+Rename "Delay notifications" to "Checking updates interval"

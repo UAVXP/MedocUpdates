@@ -276,7 +276,11 @@ namespace MedocUpdates
 			string data = callbackQuery.Data;
 			MedocTelegramUser user = callbackQuery.From;
 
-			if(data == "Subscribe")
+			// MedocTelegram.SendMessage used chat ID before, and not the user ID
+			// I hope this will not frick up non-single user chats (channel/group ones)
+			// But I think channel/group chats just can use inline commands?
+
+			if (data == "Subscribe")
 			{
 				await botClient.AnswerCallbackQueryAsync(
 					callbackQuery.Id,
