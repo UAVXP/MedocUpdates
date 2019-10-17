@@ -200,19 +200,30 @@ namespace MedocUpdates
 
 		public async void SendUpdateButton(MedocTelegramUser user)
 		{
-			InlineKeyboardMarkup inlineKeyboard = new InlineKeyboardMarkup(new[]
-			{
-				new [] // first row
-				{
-					InlineKeyboardButton.WithCallbackData("Update")
-					// TODO: Make Cancel button
-				}
-			});
+			//InlineKeyboardMarkup inlineKeyboard = new InlineKeyboardMarkup(new[]
+			//{
+			//	new [] // first row
+			//	{
+			//		InlineKeyboardButton.WithCallbackData("Update")
+			//		// TODO: Make Cancel button
+			//	}
+			//});
+
+			//await botClient.SendTextMessageAsync(
+			//			user.Id,
+			//			"Are you going to initiate an update sequence?",
+			//			replyMarkup: inlineKeyboard);
+
+			ReplyKeyboardMarkup ReplyKeyboard = new[]
+					{
+						new[] { "Update", "Cancel" },
+						new[] { "/start", "Cancel" },
+					};
 
 			await botClient.SendTextMessageAsync(
-						user.Id,
-						"Are you going to initiate an update sequence?",
-						replyMarkup: inlineKeyboard);
+				user.Id,
+				"Choose",
+				replyMarkup: ReplyKeyboard);
 		}
 
 		public void SendMessageAll(string textmessage)
