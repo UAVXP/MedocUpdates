@@ -24,3 +24,5 @@ Log/MedocTelegram app args extraction to external class (ParsedArgs)
 "Disable all notifications" setting
 Various notifications control (enable/disable)
 Rename "Delay notifications" to "Checking updates interval"
+Make updates to M.E.Doc server through the keyboard button in Telegram message
+	When someone pressed the button - it should be disabled/removed from other subscribers (or just does nothing on press)

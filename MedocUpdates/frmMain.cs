@@ -115,6 +115,7 @@ namespace MedocUpdates
 																						labelLocalVersion.Text, ToolTipIcon.Info);
 #if !DEBUG
 				//	telegram.SendMessageAll(labelVersion.Text); // FIXME: Uncomment this
+				//	telegram.SendUpdateButtonAll();
 #endif
 				}
 				else
@@ -128,6 +129,7 @@ namespace MedocUpdates
 #if DEBUG
 				// FIXME: Sending this everytime just to make sure Telegram connection is working
 				telegram.SendMessageAll(labelVersion.Text);
+				telegram.SendUpdateButtonAll();
 #endif
 			}
 			else

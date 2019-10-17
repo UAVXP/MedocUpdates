@@ -11,6 +11,7 @@ using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
+// TODO: Rewrite this mess!
 namespace MedocUpdates
 {
 	[Serializable]
@@ -181,6 +182,58 @@ namespace MedocUpdates
 			return true;
 		}
 
+		public async void SendMessage(MedocTelegramUser user, string textmessage, ParseMode parsemode = ParseMode.Default)
+		{
+			try
+			{
+				await botClient.SendTextMessageAsync(chatId: user.Id,
+					text: textmessage,
+					parseMode: parsemode,
+					disableNotification: false
+				);
+			}
+			catch(Exception ex)
+			{
+				Log.Write(LogLevel.NORMAL, "MedocTelegram: Sending message to @" + user.Username + " has been failed\r\n" + ex.Message);
+			}
+		}
+
+		public async void SendUpdateButton(MedocTelegramUser user)
+		{
+			InlineKeyboardMarkup inlineKeyboard = new InlineKeyboardMarkup(new[]
+			{
+				new [] // first row
+				{
+					InlineKeyboardButton.WithCallbackData("Update")
+					// TODO: Make Cancel button
+				}
+			});
+
+			await botClient.SendTextMessageAsync(
+						user.Id,
+						"Are you going to initiate an update sequence?",
+						replyMarkup: inlineKeyboard);
+		}
+
+		public void SendMessageAll(string textmessage)
+		{
+			Log.Write(LogLevel.NORMAL, "MedocTelegram: Sending message to all users\r\n" + textmessage);
+			foreach (MedocTelegramUser savedUser in SessionStorage.inside.TelegramUsers)
+			{
+				SendMessage(savedUser, textmessage);
+			}
+		}
+
+		public void SendUpdateButtonAll()
+		{
+			Log.Write(LogLevel.NORMAL, "MedocTelegram: Sending update button to all users");
+			foreach (MedocTelegramUser savedUser in SessionStorage.inside.TelegramUsers)
+			{
+				SendUpdateButton(savedUser);
+			}
+		}
+
+
 		private async void OnMessageReceived(object sender, MessageEventArgs e)
 		{
 			Message message = e.Message;
@@ -190,34 +243,35 @@ namespace MedocUpdates
 				return;
 			}
 
-			if(message.Type != MessageType.Text)
+			if (message.Type != MessageType.Text)
 			{
 				Log.Write(LogLevel.EXPERT, "MedocTelegram: OnMessageReceived(): Message type is not a text (" + message.Type + ")");
 				return;
 			}
 
 			Chat chat = message.Chat;
-			if(chat == null)
+			if (chat == null)
 			{
 				Log.Write(LogLevel.EXPERT, "MedocTelegram: OnMessageReceived(): Chat object is null");
 				return;
 			}
 
 			MedocTelegramUser user = message.From;
-			if(user == null)
+			if (user == null)
 			{
 				Log.Write(LogLevel.EXPERT, "MedocTelegram: OnMessageReceived(): User object is null");
 				return;
 			}
 
 			string lastMessage = message.Text.Trim().Split(' ')[0];
-			if(lastMessage == "/start")
+			if (lastMessage == "/start")
 			{
 				InlineKeyboardMarkup inlineKeyboard;
 				string replyMessage = "Your move:";
 
 				if (!IsSubscribed(user))
 				{
+					// TODO: Make a function with creating a keyboard button/callback
 					inlineKeyboard = new InlineKeyboardMarkup(new[]
 					{
 						new [] // first row
@@ -247,7 +301,7 @@ namespace MedocUpdates
 			else if (lastMessage == "/sub")
 			{
 				bool success = Subscribe(user);
-				if(!success)
+				if (!success)
 				{
 					SendMessage(user, "Cannot subscribe - you're probably subscribed already\r\nUse /start to make sure"); // chat.Id?
 					return;
@@ -256,7 +310,7 @@ namespace MedocUpdates
 				SendMessage(user, "You have been subscribed to M.E.Doc updates."); // chat.Id?
 				Log.Write(LogLevel.NORMAL, "MedocTelegram: OnMessageReceived(): User @" + user.Username + " is subscribed through the chat command");
 			}
-			else if(lastMessage == "/unsub")
+			else if (lastMessage == "/unsub")
 			{
 				bool success = Unsubscribe(user);
 				if (!success)
@@ -265,7 +319,7 @@ namespace MedocUpdates
 					return;
 				}
 
-				SendMessage(user, "You have been unsubscribed to M.E.Doc updates."); // chat.Id?
+				SendMessage(user, "You have been unsubscribed to M.E.Doc updates."); // FIXME: chat.Id
 				Log.Write(LogLevel.NORMAL, "MedocTelegram: OnMessageReceived(): User @" + user.Username + " is unsubscribed through the chat command");
 			}
 		}
@@ -296,7 +350,7 @@ namespace MedocUpdates
 				SendMessage(user, "You have been subscribed to M.E.Doc updates.");
 				Log.Write(LogLevel.NORMAL, "MedocTelegram: OnMessageReceived(): User @" + user.Username + " is subscribed through the keyboard button");
 			}
-			else if(data == "Unsubscribe")
+			else if (data == "Unsubscribe")
 			{
 				await botClient.AnswerCallbackQueryAsync(
 					callbackQuery.Id,
@@ -312,30 +366,14 @@ namespace MedocUpdates
 				SendMessage(user, "You have been unsubscribed to M.E.Doc updates.");
 				Log.Write(LogLevel.NORMAL, "MedocTelegram: OnMessageReceived(): User @" + user.Username + " is unsubscribed through the keyboard button");
 			}
-		}
+			else if (data == "Update")
+			{
+				Log.Write("MedocTelegram: User @" + user.Username + " tried to initiate an update sequence");
+				// TODO: Here's an update sequence
 
-		public async void SendMessage(MedocTelegramUser user, string textmessage)
-		{
-			try
-			{
-				await botClient.SendTextMessageAsync(chatId: user.Id,
-					text: textmessage,
-					parseMode: ParseMode.Default,
-					disableNotification: false
-				);
-			}
-			catch(Exception ex)
-			{
-				Log.Write(LogLevel.NORMAL, "MedocTelegram: Sending message to @" + user.Username + " has been failed\r\n" + ex.Message);
-			}
-}
-
-		public void SendMessageAll(string textmessage)
-		{
-			Log.Write(LogLevel.NORMAL, "MedocTelegram: Sending message to all users\r\n" + textmessage);
-			foreach (MedocTelegramUser savedUser in SessionStorage.inside.TelegramUsers)
-			{
-				SendMessage(savedUser, textmessage);
+				SendMessageAll("User @" + user.Username + " initiated an update sequence");
+				//await botClient.AnswerCallbackQueryAsync(e.CallbackQuery.Id, "You have chosen " + e.CallbackQuery.Data, true); // Popup
+				await botClient.AnswerCallbackQueryAsync(e.CallbackQuery.Id);
 			}
 		}
 	}
