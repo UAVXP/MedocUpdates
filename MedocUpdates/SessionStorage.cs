@@ -24,6 +24,8 @@ namespace MedocUpdates
 		{
 			public double NotificationDelay = 1 * 60 * 60 * 1000; // Default notification delay - 1 hour
 			public List<MedocTelegramUser> TelegramUsers = new List<MedocTelegramUser>();
+			public bool LogsEnabled = true;
+			public int LoggingLevel = LogLevel.BASIC; // LogLevel
 
 			public static implicit operator Inside_v2(Inside v)
 			{
@@ -39,9 +41,21 @@ namespace MedocUpdates
 		public static Inside_v2 inside = new Inside_v2();
 
 		public static event EventHandler NotificationDelayChanged = delegate { };
+		public static event EventHandler LogsEnabledChanged = delegate { };
+		public static event EventHandler LoggingLevelChanged = delegate { };
+
+		// TODO: Maybe do this in properties and not calling ...ChangedFunc?
 		public static void NotificationDelayChangedFunc(object sender)
 		{
 			NotificationDelayChanged.Invoke(sender, new EventArgs());
+		}
+		public static void LogsEnabledChangedFunc(object sender)
+		{
+			LogsEnabledChanged.Invoke(sender, new EventArgs());
+		}
+		public static void LoggingLevelChangedFunc(object sender)
+		{
+			LoggingLevelChanged.Invoke(sender, new EventArgs());
 		}
 
 		public static void Save()

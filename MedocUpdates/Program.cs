@@ -14,9 +14,10 @@ namespace MedocUpdates
         [STAThread]
         static void Main()
         {
+			SessionStorage.Restore();
+
 			Log.Init();
 			Log.Write("MedocUpdates: Initializing...");
-			SessionStorage.Restore();
 
 			Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

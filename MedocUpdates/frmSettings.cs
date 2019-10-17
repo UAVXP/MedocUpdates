@@ -12,45 +12,55 @@ namespace MedocUpdates
 {
 	public partial class frmSettings : Form
 	{
-		private UpdateTime[] updateTimes = new UpdateTime[]
+		private class LogLevelHelper
 		{
-			new UpdateTime("Every 5 minutes", 5 * 60 * 1000),
-			new UpdateTime("Every 30 minutes", 30 * 60 * 1000),
-			new UpdateTime("Every 1 hour", 1 * 60 * 60 * 1000),
-			new UpdateTime("Every 2 hours", 2 * 60 * 60 * 1000),
-			new UpdateTime("Every 5 hours", 5 * 60 * 60 * 1000),
-			new UpdateTime("Every 12 hours", 12 * 60 * 60 * 1000),
-			new UpdateTime("Every 24 hours", 24 * 60 * 60 * 1000),
-		};
+			public int Level { get; set; } // LogLevel
+			public string Name { get; set; }
+		}
 
+		private List<LogLevelHelper> logLevels = new List<LogLevelHelper>();
 		public frmSettings()
 		{
 			InitializeComponent();
+
+			for(int i = LogLevel.BASIC; i < LogLevel.MAXLOGLEVELS; i++)
+			{
+				logLevels.Add( new LogLevelHelper() { Level = i, Name = LogLevel.GetName(i) });
+			}
 		}
 
 		private void frmSettings_Load(object sender, EventArgs e)
 		{
-			foreach(UpdateTime ut in updateTimes)
+			cbLogs.Checked = SessionStorage.inside.LogsEnabled;
+
+			cmbLogLevels.Enabled = cbLogs.Checked;
+			cmbLogLevels.DisplayMember = "Name";
+			cmbLogLevels.ValueMember = "Level";
+			cmbLogLevels.DataSource = logLevels;
+			cmbLogLevels.SelectedIndex = SessionStorage.inside.LoggingLevel;
+		}
+
+		private void btnSave_Click(object sender, EventArgs e)
+		{
+			if(SessionStorage.inside.LogsEnabled != cbLogs.Checked)
 			{
-				cbUpdateTimes.Items.Add(ut.desc);
+				SessionStorage.inside.LogsEnabled = cbLogs.Checked;
+				SessionStorage.LogsEnabledChangedFunc(this);
 			}
+
+			if (SessionStorage.inside.LoggingLevel != (int)cmbLogLevels.SelectedValue) // LogLevel
+			{
+				SessionStorage.inside.LoggingLevel = (int)cmbLogLevels.SelectedValue; // LogLevel
+				SessionStorage.LoggingLevelChangedFunc(this);
+			}
+
+			SessionStorage.Save();
+			this.Close();
 		}
 
-		private void cbUpdateChecks_CheckedChanged(object sender, EventArgs e)
+		private void cbLogs_CheckedChanged(object sender, EventArgs e)
 		{
-			cbUpdateTimes.Enabled = cbUpdateChecks.Checked;
-		}
-	}
-
-	class UpdateTime
-	{
-		public string desc;
-		public int value;
-
-		public UpdateTime(string desc, int value)
-		{
-			this.desc = desc;
-			this.value = value;
+			cmbLogLevels.Enabled = cbLogs.Checked;
 		}
 	}
 }

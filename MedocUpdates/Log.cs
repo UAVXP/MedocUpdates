@@ -26,13 +26,29 @@ namespace MedocUpdates
 
 			return input;
 		}
+
+		public static string GetName(int level)
+		{
+			switch(level)
+			{
+			case LogLevel.BASIC:
+				return "Basic";
+			case LogLevel.NORMAL:
+				return "Normal";
+			case LogLevel.EXPERT:
+				return "Expert";
+			default:
+				return "";
+			}
+		}
 	}
 
 	public static class Log
 	{
 		private static string m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 		private static string m_logPath = m_exePath + "\\mu_logs\\" + String.Format("log_{0}.txt", DateTime.Now.ToString("yyyy-MM-dd"));
-		private static int m_logLevel = LogLevel.BASIC;
+		private static bool m_Enabled = SessionStorage.inside.LogsEnabled;
+		private static int m_logLevel = SessionStorage.inside.LoggingLevel;
 
 		public static void Init()
 		{
@@ -79,6 +95,9 @@ namespace MedocUpdates
 
 		public static void Write(int logLevel, string logMessage)
 		{
+			if(!m_Enabled)
+				return;
+
 			if(logLevel > m_logLevel)
 				return;
 
