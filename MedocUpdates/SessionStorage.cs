@@ -26,6 +26,7 @@ namespace MedocUpdates
 			public List<MedocTelegramUser> TelegramUsers = new List<MedocTelegramUser>();
 			public bool LogsEnabled = true;
 			public int LoggingLevel = LogLevel.BASIC; // LogLevel
+			public string TelegramToken = "";
 
 			public static implicit operator Inside_v2(Inside v)
 			{
@@ -43,8 +44,11 @@ namespace MedocUpdates
 		public static event EventHandler NotificationDelayChanged = delegate { };
 		public static event EventHandler LogsEnabledChanged = delegate { };
 		public static event EventHandler LoggingLevelChanged = delegate { };
+		public static event EventHandler TelegramTokenChanged = delegate { };
 
 		// TODO: Maybe do this in properties and not calling ...ChangedFunc?
+		// Actually, then I cannot use sender object
+		// Or INotifyPropertyChanged
 		public static void NotificationDelayChangedFunc(object sender)
 		{
 			NotificationDelayChanged.Invoke(sender, new EventArgs());
@@ -56,6 +60,10 @@ namespace MedocUpdates
 		public static void LoggingLevelChangedFunc(object sender)
 		{
 			LoggingLevelChanged.Invoke(sender, new EventArgs());
+		}
+		public static void TelegramTokenChangedFunc(object sender)
+		{
+			TelegramTokenChanged.Invoke(sender, new EventArgs());
 		}
 
 		public static void Save()

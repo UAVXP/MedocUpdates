@@ -33,10 +33,13 @@
 			this.cmbLogLevels = new System.Windows.Forms.ComboBox();
 			this.lblLogLevels = new System.Windows.Forms.Label();
 			this.cbLogs = new System.Windows.Forms.CheckBox();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.gbTelegram = new System.Windows.Forms.GroupBox();
 			this.btnSave = new System.Windows.Forms.Button();
 			this.btnCancel = new System.Windows.Forms.Button();
+			this.tbTelegramToken = new System.Windows.Forms.TextBox();
+			this.lblTelegramToken = new System.Windows.Forms.Label();
 			this.gbLogLevels.SuspendLayout();
+			this.gbTelegram.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// gbLogLevels
@@ -80,19 +83,21 @@
 			this.cbLogs.UseVisualStyleBackColor = true;
 			this.cbLogs.CheckedChanged += new System.EventHandler(this.cbLogs_CheckedChanged);
 			// 
-			// groupBox2
+			// gbTelegram
 			// 
-			this.groupBox2.Location = new System.Drawing.Point(12, 99);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(234, 100);
-			this.groupBox2.TabIndex = 1;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "groupBox2";
+			this.gbTelegram.Controls.Add(this.lblTelegramToken);
+			this.gbTelegram.Controls.Add(this.tbTelegramToken);
+			this.gbTelegram.Location = new System.Drawing.Point(12, 99);
+			this.gbTelegram.Name = "gbTelegram";
+			this.gbTelegram.Size = new System.Drawing.Size(234, 55);
+			this.gbTelegram.TabIndex = 1;
+			this.gbTelegram.TabStop = false;
+			this.gbTelegram.Text = "Telegram";
 			// 
 			// btnSave
 			// 
 			this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnSave.Location = new System.Drawing.Point(250, 231);
+			this.btnSave.Location = new System.Drawing.Point(275, 166);
 			this.btnSave.Name = "btnSave";
 			this.btnSave.Size = new System.Drawing.Size(75, 23);
 			this.btnSave.TabIndex = 2;
@@ -103,21 +108,38 @@
 			// btnCancel
 			// 
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCancel.Location = new System.Drawing.Point(331, 231);
+			this.btnCancel.Location = new System.Drawing.Point(356, 166);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
 			this.btnCancel.TabIndex = 3;
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = true;
+			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+			// 
+			// tbTelegramToken
+			// 
+			this.tbTelegramToken.Location = new System.Drawing.Point(62, 19);
+			this.tbTelegramToken.Name = "tbTelegramToken";
+			this.tbTelegramToken.Size = new System.Drawing.Size(150, 20);
+			this.tbTelegramToken.TabIndex = 0;
+			// 
+			// lblTelegramToken
+			// 
+			this.lblTelegramToken.AutoSize = true;
+			this.lblTelegramToken.Location = new System.Drawing.Point(15, 22);
+			this.lblTelegramToken.Name = "lblTelegramToken";
+			this.lblTelegramToken.Size = new System.Drawing.Size(41, 13);
+			this.lblTelegramToken.TabIndex = 1;
+			this.lblTelegramToken.Text = "Token:";
 			// 
 			// frmSettings
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(418, 266);
+			this.ClientSize = new System.Drawing.Size(443, 201);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnSave);
-			this.Controls.Add(this.groupBox2);
+			this.Controls.Add(this.gbTelegram);
 			this.Controls.Add(this.gbLogLevels);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "frmSettings";
@@ -125,6 +147,8 @@
 			this.Load += new System.EventHandler(this.frmSettings_Load);
 			this.gbLogLevels.ResumeLayout(false);
 			this.gbLogLevels.PerformLayout();
+			this.gbTelegram.ResumeLayout(false);
+			this.gbTelegram.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -132,11 +156,13 @@
 		#endregion
 
 		private System.Windows.Forms.GroupBox gbLogLevels;
-		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.GroupBox gbTelegram;
 		private System.Windows.Forms.ComboBox cmbLogLevels;
 		private System.Windows.Forms.Label lblLogLevels;
 		private System.Windows.Forms.CheckBox cbLogs;
 		private System.Windows.Forms.Button btnSave;
 		private System.Windows.Forms.Button btnCancel;
+		private System.Windows.Forms.Label lblTelegramToken;
+		private System.Windows.Forms.TextBox tbTelegramToken;
 	}
 }

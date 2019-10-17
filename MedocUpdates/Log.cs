@@ -83,7 +83,8 @@ namespace MedocUpdates
 				int logLevel = m_logLevel;
 				if (int.TryParse(logLevelStr, out logLevel))
 				{
-					m_logLevel = LogLevel.Clamp(logLevel, LogLevel.BASIC, LogLevel.MAXLOGLEVELS);
+					m_logLevel = LogLevel.Clamp(logLevel, LogLevel.BASIC, LogLevel.MAXLOGLEVELS - 1);
+					Log.Write(LogLevel.NORMAL, "Log: Level was forcibly set to " + LogLevel.GetName(m_logLevel));
 				}
 			}
 		}

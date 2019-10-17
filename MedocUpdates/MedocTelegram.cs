@@ -76,6 +76,8 @@ namespace MedocUpdates
 
 		public MedocTelegram()
 		{
+			botToken = SessionStorage.inside.TelegramToken;
+
 			string[] args = Environment.GetCommandLineArgs();
 			if (args.Length <= 0)
 				Log.Write("MedocTelegram: Something went wrong with the application arguments");
@@ -100,7 +102,7 @@ namespace MedocUpdates
 				}
 				botToken = tokenStr;
 
-				Log.Write("MedocTelegram: Token was set to " + tokenStr.Substring(0, 3) + "..."); // Print only first 3 symbols - just to make sure
+				Log.Write("MedocTelegram: Token was forcibly set to " + tokenStr.Substring(0, 3) + "..."); // Print only first 3 symbols - just to make sure
 			}
 
 			try

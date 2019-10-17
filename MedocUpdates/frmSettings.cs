@@ -38,6 +38,13 @@ namespace MedocUpdates
 			cmbLogLevels.ValueMember = "Level";
 			cmbLogLevels.DataSource = logLevels;
 			cmbLogLevels.SelectedIndex = SessionStorage.inside.LoggingLevel;
+
+			tbTelegramToken.Text = SessionStorage.inside.TelegramToken;
+		}
+
+		private void cbLogs_CheckedChanged(object sender, EventArgs e)
+		{
+			cmbLogLevels.Enabled = cbLogs.Checked;
 		}
 
 		private void btnSave_Click(object sender, EventArgs e)
@@ -54,13 +61,19 @@ namespace MedocUpdates
 				SessionStorage.LoggingLevelChangedFunc(this);
 			}
 
+			if (SessionStorage.inside.TelegramToken != tbTelegramToken.Text)
+			{
+				SessionStorage.inside.TelegramToken = tbTelegramToken.Text;
+				SessionStorage.TelegramTokenChangedFunc(this);
+			}
+
 			SessionStorage.Save();
 			this.Close();
 		}
 
-		private void cbLogs_CheckedChanged(object sender, EventArgs e)
+		private void btnCancel_Click(object sender, EventArgs e)
 		{
-			cmbLogLevels.Enabled = cbLogs.Checked;
+			this.Close();
 		}
 	}
 }
