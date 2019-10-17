@@ -67,6 +67,9 @@ namespace MedocUpdates
 				SessionStorage.TelegramTokenChangedFunc(this);
 			}
 
+			Log.SetEnabled(SessionStorage.inside.LogsEnabled);
+			Log.SetLevel(SessionStorage.inside.LoggingLevel);
+
 			SessionStorage.Save();
 			this.Close();
 		}

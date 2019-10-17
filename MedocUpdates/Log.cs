@@ -89,6 +89,25 @@ namespace MedocUpdates
 			}
 		}
 
+		// FIXME: Why not property?
+		public static void SetEnabled(bool enabled)
+		{
+			if(!enabled)
+				Log.Write("Log: State changed to Disabled");
+
+			m_Enabled = enabled;
+
+			if (enabled)
+				Log.Write("Log: State changed to Enabled");
+		}
+
+		// FIXME: Why not property?
+		public static void SetLevel(int level) // LogLevel
+		{
+			Log.Write("Log: Level set to " + LogLevel.GetName(m_logLevel));
+			m_logLevel = level;
+		}
+
 		public static void Write(string logMessage)
 		{
 			Write(LogLevel.BASIC, logMessage);
