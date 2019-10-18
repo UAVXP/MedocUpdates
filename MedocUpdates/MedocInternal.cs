@@ -16,9 +16,6 @@ namespace MedocUpdates
 {
 	class MedocInternal
 	{
-		MedocVersion cachedVersion;
-		int dstVersionCount;
-
 		public string LocalVersion
 		{
 			get
@@ -40,26 +37,12 @@ namespace MedocUpdates
 				//return test;
 
 				// TODO: Do a fallback way - through Software\\M.E.Doc\\M.E.Doc subkey name
+				// TODO: Make a proper cache for this? Maybe by time or something else
 				MedocVersion tempVersion = new MedocVersion();
 				GetDSTVersion(out tempVersion);
-				if (cachedVersion.IsEmpty())
-				{
-					Log.Write(LogLevel.NORMAL, "MedocInternal: Retrieving local version");
-					cachedVersion = tempVersion;
-				}
-				return cachedVersion;
+				Log.Write(LogLevel.NORMAL, "MedocInternal: Retrieving local version");
+				return tempVersion;
 			}
-		}
-
-		public MedocInternal()
-		{
-			this.cachedVersion = new MedocVersion();
-			this.dstVersionCount = 0;
-		}
-
-		private void InvalidateCache()
-		{
-			this.cachedVersion = new MedocVersion();
 		}
 
 		internal bool GetInstallationPath(out string path)
@@ -277,7 +260,6 @@ namespace MedocUpdates
 			}
 
 			string value = "";
-			int newDSTVersionCount = 0;
 			for (int i = 0; i < file.Length; i++)
 			{
 				string line = file[i];
@@ -298,17 +280,6 @@ namespace MedocUpdates
 				bool foundDSTVersion = GetValue(line, ": ", out value);
 				if (!foundDSTVersion)
 					continue;
-
-				newDSTVersionCount++;
-			}
-
-			if (newDSTVersionCount > this.dstVersionCount) // Invalidate cache then
-			{
-				if (this.dstVersionCount != 0) // Just to make sure this won't appear on the application start
-					Log.Write("MedocInternal: Newer local version is detected");
-
-				InvalidateCache();
-				this.dstVersionCount = newDSTVersionCount;
 			}
 
 			return value;
