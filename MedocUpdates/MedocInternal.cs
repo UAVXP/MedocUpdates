@@ -8,6 +8,10 @@ using Microsoft.Win32;
 using System.IO;
 using System.Text.RegularExpressions;
 
+//using DMF.Config;
+//using ZvitClientInterface;
+//using ZvitClientInterface.Client;
+
 namespace MedocUpdates
 {
 	class MedocInternal
@@ -26,6 +30,14 @@ namespace MedocUpdates
 
 					return key.GetSubKeyNames()[0]; // FIXME: Might be wrong maybe? What if there would be many subkeys before the version one?
 				*/
+
+				// M.E.Doc direct integration test
+				//DMFEnvironment env = new DMFEnvironment();
+				//ObjectProvider obj = new ObjectProvider(env);
+				//DMFEnvironment.CurrEnvironment.Provider = new ObjectProvider(env);
+				//ObjectProvider obj = new ObjectProvider(DMFEnvironment.CurrEnvironment);
+				//string test = Globals.PrgVersion;
+				//return test;
 
 				// TODO: Do a fallback way - through Software\\M.E.Doc\\M.E.Doc subkey name
 				MedocVersion tempVersion = new MedocVersion();
@@ -150,9 +162,9 @@ namespace MedocUpdates
 			return false;
 		}
 
-		internal bool GetLatestLog(out string filename)
+		internal bool GetLatestLogs(out string[] allLogFiles)
 		{
-			filename = "";
+			allLogFiles = new string[0];
 
 			string logPath = "";
 
@@ -185,6 +197,9 @@ namespace MedocUpdates
 				return false;
 			}
 
+			allLogFiles = files;
+
+		/* NOTE: Not needed anymore
 			foreach (string file in files)
 			{
 				DateTime dt = lastdt;
@@ -206,6 +221,7 @@ namespace MedocUpdates
 					}
 				}
 			}
+		*/
 
 			return true;
 		}
@@ -248,27 +264,21 @@ namespace MedocUpdates
 			return false;
 		}
 
-		internal bool GetDSTVersion(out MedocVersion version)
+		internal string ReadLogFile(string filename)
 		{
-			version = new MedocVersion();
-
-			string logfile = "";
-			if (!GetLatestLog(out logfile))
-				return false;
-
 			string[] file = new string[] { };
 			try
 			{
-				file = File.ReadAllLines(logfile);
+				file = File.ReadAllLines(filename);
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				Log.Write(LogLevel.NORMAL, "Cannot read a latest log file\r\n" + ex.Message);
 			}
 
 			string value = "";
 			int newDSTVersionCount = 0;
-			for (int i = 0; i < file.Length; i++ )
+			for (int i = 0; i < file.Length; i++)
 			{
 				string line = file[i];
 
@@ -277,13 +287,13 @@ namespace MedocUpdates
 					continue;
 
 				// next line should be the version now
-				if ((i+1) >= file.Length)
+				if ((i + 1) >= file.Length)
 				{
-					Log.Write(LogLevel.EXPERT, "MedocInternal: " + logfile + ": unexpected EOF");
+					Log.Write(LogLevel.EXPERT, "MedocInternal: " + filename + ": unexpected EOF");
 					continue;
 				}
 
-				line = file[i+1];
+				line = file[i + 1];
 
 				bool foundDSTVersion = GetValue(line, ": ", out value);
 				if (!foundDSTVersion)
@@ -292,13 +302,44 @@ namespace MedocUpdates
 				newDSTVersionCount++;
 			}
 
-			if (newDSTVersionCount != this.dstVersionCount) // Invalidate cache then
+			if (newDSTVersionCount > this.dstVersionCount) // Invalidate cache then
 			{
-				if(this.dstVersionCount != 0) // Just to make sure this won't appear on the application start
+				if (this.dstVersionCount != 0) // Just to make sure this won't appear on the application start
 					Log.Write("MedocInternal: Newer local version is detected");
 
 				InvalidateCache();
 				this.dstVersionCount = newDSTVersionCount;
+			}
+
+			return value;
+		}
+
+		internal bool GetDSTVersion(out MedocVersion version)
+		{
+			version = new MedocVersion();
+
+			string[] allLogFiles = new string[0];
+			if (!GetLatestLogs(out allLogFiles))
+				return false;
+
+			string value = "";
+			for (int i = allLogFiles.Length - 1; i >= 0; i--)
+			{
+				string logFile = allLogFiles[i];
+				if(logFile.Trim().Length <= 0)
+				{
+					Log.Write(LogLevel.EXPERT, "MedocInternal: Unexpected log list searching error");
+					continue;
+				}
+
+				value = ReadLogFile(logFile);
+
+				// Check if the latest log contains DSTVERSION at all
+				// If not - then check all the previous
+				if (value.Trim().Length > 0)
+					break;
+
+				Log.Write(LogLevel.NORMAL, "MedocInternal: Cannot find DSTVERSION key in " + logFile);
 			}
 
 			// Always take the latest value
