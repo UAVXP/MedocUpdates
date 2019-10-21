@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Reflection;
+using Syroot.Windows.IO;
 
 namespace MedocUpdates
 {
@@ -46,7 +47,7 @@ namespace MedocUpdates
 			public bool LogsEnabled = true;
 			public int LoggingLevel = LogLevel.BASIC; // LogLevel
 			public string TelegramToken = "";
-			public string DownloadFolderPath = "\\mu_downloads";
+			public string DownloadsFolderPath = new KnownFolder(KnownFolderType.Downloads).Path;
 
 			public static implicit operator Inside_v3(Inside_v2 v)
 			{
@@ -80,6 +81,7 @@ namespace MedocUpdates
 		public static event EventHandler LogsEnabledChanged = delegate { };
 		public static event EventHandler LoggingLevelChanged = delegate { };
 		public static event EventHandler TelegramTokenChanged = delegate { };
+		public static event EventHandler DownloadsFolderPathChanged = delegate { };
 
 		// TODO: Maybe do this in properties and not calling ...ChangedFunc?
 		// Actually, then I cannot use sender object
@@ -99,6 +101,10 @@ namespace MedocUpdates
 		public static void TelegramTokenChangedFunc(object sender)
 		{
 			TelegramTokenChanged.Invoke(sender, new EventArgs());
+		}
+		public static void DownloadsFolderPathChangedFunc(object sender)
+		{
+			DownloadsFolderPathChanged.Invoke(sender, new EventArgs());
 		}
 
 		public static void Save()

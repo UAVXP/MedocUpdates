@@ -34,12 +34,18 @@
 			this.lblLogLevels = new System.Windows.Forms.Label();
 			this.cbLogs = new System.Windows.Forms.CheckBox();
 			this.gbTelegram = new System.Windows.Forms.GroupBox();
+			this.lblTelegramToken = new System.Windows.Forms.Label();
+			this.tbTelegramToken = new System.Windows.Forms.TextBox();
 			this.btnSave = new System.Windows.Forms.Button();
 			this.btnCancel = new System.Windows.Forms.Button();
-			this.tbTelegramToken = new System.Windows.Forms.TextBox();
-			this.lblTelegramToken = new System.Windows.Forms.Label();
+			this.gbDownloads = new System.Windows.Forms.GroupBox();
+			this.tbDownloadsPath = new System.Windows.Forms.TextBox();
+			this.lblDownloadPath = new System.Windows.Forms.Label();
+			this.btnDownloadsPathBrowse = new System.Windows.Forms.Button();
+			this.fbdDownloadPath = new Ookii.Dialogs.WinForms.VistaFolderBrowserDialog();
 			this.gbLogLevels.SuspendLayout();
 			this.gbTelegram.SuspendLayout();
+			this.gbDownloads.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// gbLogLevels
@@ -94,10 +100,26 @@
 			this.gbTelegram.TabStop = false;
 			this.gbTelegram.Text = "Telegram";
 			// 
+			// lblTelegramToken
+			// 
+			this.lblTelegramToken.AutoSize = true;
+			this.lblTelegramToken.Location = new System.Drawing.Point(15, 22);
+			this.lblTelegramToken.Name = "lblTelegramToken";
+			this.lblTelegramToken.Size = new System.Drawing.Size(41, 13);
+			this.lblTelegramToken.TabIndex = 1;
+			this.lblTelegramToken.Text = "Token:";
+			// 
+			// tbTelegramToken
+			// 
+			this.tbTelegramToken.Location = new System.Drawing.Point(62, 19);
+			this.tbTelegramToken.Name = "tbTelegramToken";
+			this.tbTelegramToken.Size = new System.Drawing.Size(150, 20);
+			this.tbTelegramToken.TabIndex = 0;
+			// 
 			// btnSave
 			// 
 			this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnSave.Location = new System.Drawing.Point(275, 166);
+			this.btnSave.Location = new System.Drawing.Point(587, 169);
 			this.btnSave.Name = "btnSave";
 			this.btnSave.Size = new System.Drawing.Size(75, 23);
 			this.btnSave.TabIndex = 2;
@@ -108,7 +130,7 @@
 			// btnCancel
 			// 
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCancel.Location = new System.Drawing.Point(356, 166);
+			this.btnCancel.Location = new System.Drawing.Point(668, 169);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
 			this.btnCancel.TabIndex = 3;
@@ -116,27 +138,54 @@
 			this.btnCancel.UseVisualStyleBackColor = true;
 			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
 			// 
-			// tbTelegramToken
+			// gbDownloads
 			// 
-			this.tbTelegramToken.Location = new System.Drawing.Point(62, 19);
-			this.tbTelegramToken.Name = "tbTelegramToken";
-			this.tbTelegramToken.Size = new System.Drawing.Size(150, 20);
-			this.tbTelegramToken.TabIndex = 0;
+			this.gbDownloads.Controls.Add(this.btnDownloadsPathBrowse);
+			this.gbDownloads.Controls.Add(this.lblDownloadPath);
+			this.gbDownloads.Controls.Add(this.tbDownloadsPath);
+			this.gbDownloads.Location = new System.Drawing.Point(252, 12);
+			this.gbDownloads.Name = "gbDownloads";
+			this.gbDownloads.Size = new System.Drawing.Size(489, 81);
+			this.gbDownloads.TabIndex = 4;
+			this.gbDownloads.TabStop = false;
+			this.gbDownloads.Text = "Download settings";
 			// 
-			// lblTelegramToken
+			// tbDownloadsPath
 			// 
-			this.lblTelegramToken.AutoSize = true;
-			this.lblTelegramToken.Location = new System.Drawing.Point(15, 22);
-			this.lblTelegramToken.Name = "lblTelegramToken";
-			this.lblTelegramToken.Size = new System.Drawing.Size(41, 13);
-			this.lblTelegramToken.TabIndex = 1;
-			this.lblTelegramToken.Text = "Token:";
+			this.tbDownloadsPath.Location = new System.Drawing.Point(109, 17);
+			this.tbDownloadsPath.Name = "tbDownloadsPath";
+			this.tbDownloadsPath.Size = new System.Drawing.Size(363, 20);
+			this.tbDownloadsPath.TabIndex = 0;
+			// 
+			// lblDownloadPath
+			// 
+			this.lblDownloadPath.AutoSize = true;
+			this.lblDownloadPath.Location = new System.Drawing.Point(16, 20);
+			this.lblDownloadPath.Name = "lblDownloadPath";
+			this.lblDownloadPath.Size = new System.Drawing.Size(87, 13);
+			this.lblDownloadPath.TabIndex = 1;
+			this.lblDownloadPath.Text = "Downloads path:";
+			// 
+			// btnDownloadsPathBrowse
+			// 
+			this.btnDownloadsPathBrowse.Location = new System.Drawing.Point(397, 43);
+			this.btnDownloadsPathBrowse.Name = "btnDownloadsPathBrowse";
+			this.btnDownloadsPathBrowse.Size = new System.Drawing.Size(75, 23);
+			this.btnDownloadsPathBrowse.TabIndex = 2;
+			this.btnDownloadsPathBrowse.Text = "Browse...";
+			this.btnDownloadsPathBrowse.UseVisualStyleBackColor = true;
+			this.btnDownloadsPathBrowse.Click += new System.EventHandler(this.btnDownloadPathBrowse_Click);
+			// 
+			// fbdDownloadPath
+			// 
+			this.fbdDownloadPath.RootFolder = System.Environment.SpecialFolder.MyComputer;
 			// 
 			// frmSettings
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(443, 201);
+			this.ClientSize = new System.Drawing.Size(755, 204);
+			this.Controls.Add(this.gbDownloads);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnSave);
 			this.Controls.Add(this.gbTelegram);
@@ -149,6 +198,8 @@
 			this.gbLogLevels.PerformLayout();
 			this.gbTelegram.ResumeLayout(false);
 			this.gbTelegram.PerformLayout();
+			this.gbDownloads.ResumeLayout(false);
+			this.gbDownloads.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -164,5 +215,10 @@
 		private System.Windows.Forms.Button btnCancel;
 		private System.Windows.Forms.Label lblTelegramToken;
 		private System.Windows.Forms.TextBox tbTelegramToken;
+		private System.Windows.Forms.GroupBox gbDownloads;
+		private System.Windows.Forms.Button btnDownloadsPathBrowse;
+		private System.Windows.Forms.Label lblDownloadPath;
+		private System.Windows.Forms.TextBox tbDownloadsPath;
+		private Ookii.Dialogs.WinForms.VistaFolderBrowserDialog fbdDownloadPath;
 	}
 }

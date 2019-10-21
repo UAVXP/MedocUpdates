@@ -40,6 +40,9 @@ namespace MedocUpdates
 			cmbLogLevels.SelectedIndex = SessionStorage.inside.LoggingLevel;
 
 			tbTelegramToken.Text = SessionStorage.inside.TelegramToken;
+
+			tbDownloadsPath.Text = SessionStorage.inside.DownloadsFolderPath;
+			fbdDownloadPath.SelectedPath = tbDownloadsPath.Text;
 		}
 
 		private void cbLogs_CheckedChanged(object sender, EventArgs e)
@@ -67,6 +70,12 @@ namespace MedocUpdates
 				SessionStorage.TelegramTokenChangedFunc(this);
 			}
 
+			if (SessionStorage.inside.DownloadsFolderPath != tbDownloadsPath.Text)
+			{
+				SessionStorage.inside.DownloadsFolderPath = tbDownloadsPath.Text;
+				SessionStorage.DownloadsFolderPathChangedFunc(this);
+			}
+
 			Log.SetEnabled(SessionStorage.inside.LogsEnabled);
 			Log.SetLevel(SessionStorage.inside.LoggingLevel);
 
@@ -77,6 +86,16 @@ namespace MedocUpdates
 		private void btnCancel_Click(object sender, EventArgs e)
 		{
 			this.Close();
+		}
+
+		private void btnDownloadPathBrowse_Click(object sender, EventArgs e)
+		{
+			//DialogResult result = fbdDownloadPath.ShowDialog();
+			DialogResult result = fbdDownloadPath.ShowDialog();
+			if (result == DialogResult.Cancel)
+				return;
+
+			tbDownloadsPath.Text = fbdDownloadPath.SelectedPath;
 		}
 	}
 }
