@@ -58,7 +58,9 @@ namespace MedocUpdates
 
 		private void llblDownloadRun_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			if(File.Exists(this.updateFilename))
+			llblDownloadRun.Enabled = false;
+
+			if (File.Exists(this.updateFilename))
 			{
 				RunUpdate();
 				return;
@@ -71,24 +73,24 @@ namespace MedocUpdates
 				return;
 			}
 
-			llblDownloadRun.Enabled = false;
-
 			webclient = new WebClient();
 			webclient.DownloadFileCompleted += WebClient_DownloadFileCompleted;
 			webclient.DownloadProgressChanged += WebClient_DownloadProgressChanged;
 
 			Uri fileURI = new Uri(item.link);
-			webclient.DownloadFileAsync(fileURI, Path.Combine(SessionStorage.inside.DownloadsFolderPath, this.zipFilename));
+			webclient.DownloadFileAsync(fileURI, this.zipFilename);
 
 			pbDownloadRun.Visible = true;
 		}
 
 		private void RunUpdate()
 		{
-			//Process.Start(Path.Combine(SessionStorage.inside.DownloadsFolderPath, this.updateFilename));
+			// FIXME: Are those even needed? frmMain is updating after installing an update anyways
+			llblDownloadRun.Enabled = true;
+			pbDownloadRun.Visible = false;
 
 			Process proc = new Process();
-			proc.StartInfo = new ProcessStartInfo(Path.Combine(SessionStorage.inside.DownloadsFolderPath, this.updateFilename));
+			proc.StartInfo = new ProcessStartInfo(this.updateFilename);
 			proc.Start();
 			proc.WaitForExit();
 
@@ -102,16 +104,13 @@ namespace MedocUpdates
 
 			//ZipArchiveEntry entry = arch.GetEntry(this.updateFilename);
 			//Stream stream = entry.Open();
+			arch.ExtractToDirectory(SessionStorage.inside.DownloadsFolderPath);
 
-			if (!File.Exists(Path.Combine(SessionStorage.inside.DownloadsFolderPath, this.updateFilename)))
-				arch.ExtractToDirectory(SessionStorage.inside.DownloadsFolderPath);
+			arch.Dispose();
 		}
 
 		private void WebClient_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
 		{
-			llblDownloadRun.Enabled = true;
-			pbDownloadRun.Visible = false;
-
 			UnpackUpdate();
 
 			RunUpdate();
