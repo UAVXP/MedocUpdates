@@ -86,6 +86,7 @@
     <Compile Include="MedocAPI.cs" />
     <Compile Include="MedocDownloadItem.cs" />
     <Compile Include="MedocInternal.cs" />
+    <Compile Include="MedocNetwork.cs" />
     <Compile Include="MedocVersioning.cs" />
     <Compile Include="ParsedArgs.cs" />
     <Compile Include="Program.cs" />

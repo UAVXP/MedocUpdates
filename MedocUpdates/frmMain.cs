@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.Threading;
+
 namespace MedocUpdates
 {
 	public partial class frmMain : Form
@@ -16,11 +18,21 @@ namespace MedocUpdates
 		MedocInternal localmedoc = new MedocInternal();
 		MedocTelegram telegram = new MedocTelegram();
 
+
+		MedocNetwork network;
+		public delegate void RefreshVersionStatus();
+		public RefreshVersionStatus NetworkCheckingDelegate;
+
+
 		bool isMinimizedMessageShown = false;
 
 		public frmMain()
 		{
 			InitializeComponent();
+
+			// Network checking
+			network = new MedocNetwork(this);
+			NetworkCheckingDelegate = new RefreshVersionStatus(CheckingRoutine);
 		}
 
 		private void Status(string message)
@@ -162,6 +174,7 @@ namespace MedocUpdates
 			TimerRoutine();
 
 			SessionStorage.NotificationDelayChanged += frmMain_NotificationDelayChanged;
+			network.NetworkIsUp += Network_NetworkIsUp;
 		}
 
 		private void timerUpdate_Tick(object sender, EventArgs e)
@@ -176,6 +189,11 @@ namespace MedocUpdates
 			TimerRoutine();
 
 			SessionStorage.Save();
+		}
+
+		private void Network_NetworkIsUp(object sender, EventArgs e)
+		{
+			new Thread(new ThreadStart(network.Run)).Start();
 		}
 
 		private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
