@@ -29,6 +29,8 @@ Rename "Delay notifications" to "Checking updates interval"
 	+Update installation program needs to be operated
 
 +Need to get previous update_*.log, if the latest one doesn't contain DSTVERSION in it. Also should do it recursively
-Setting for downloads folder - to download and run updates immediately through the application
++Setting for downloads folder - to download and run updates immediately through the application
 
 +Callback on Internet connection became online
+
+Settings: Enable/disable .upd file removing after update installation
