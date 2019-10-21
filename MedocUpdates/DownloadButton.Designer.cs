@@ -28,20 +28,22 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+			this.llblDownload = new System.Windows.Forms.LinkLabel();
 			this.labelVersion = new System.Windows.Forms.Label();
+			this.llblDownloadRun = new System.Windows.Forms.LinkLabel();
+			this.pbDownloadRun = new System.Windows.Forms.ProgressBar();
 			this.SuspendLayout();
 			// 
-			// linkLabel1
+			// llblDownload
 			// 
-			this.linkLabel1.AutoSize = true;
-			this.linkLabel1.Location = new System.Drawing.Point(16, 48);
-			this.linkLabel1.Name = "linkLabel1";
-			this.linkLabel1.Size = new System.Drawing.Size(55, 13);
-			this.linkLabel1.TabIndex = 0;
-			this.linkLabel1.TabStop = true;
-			this.linkLabel1.Text = "Download";
-			this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+			this.llblDownload.AutoSize = true;
+			this.llblDownload.Location = new System.Drawing.Point(16, 48);
+			this.llblDownload.Name = "llblDownload";
+			this.llblDownload.Size = new System.Drawing.Size(55, 13);
+			this.llblDownload.TabIndex = 0;
+			this.llblDownload.TabStop = true;
+			this.llblDownload.Text = "Download";
+			this.llblDownload.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
 			// 
 			// labelVersion
 			// 
@@ -53,13 +55,34 @@
 			this.labelVersion.TabIndex = 2;
 			this.labelVersion.Text = "VERSION HERE";
 			// 
+			// llblDownloadRun
+			// 
+			this.llblDownloadRun.AutoSize = true;
+			this.llblDownloadRun.Location = new System.Drawing.Point(90, 48);
+			this.llblDownloadRun.Name = "llblDownloadRun";
+			this.llblDownloadRun.Size = new System.Drawing.Size(94, 13);
+			this.llblDownloadRun.TabIndex = 3;
+			this.llblDownloadRun.TabStop = true;
+			this.llblDownloadRun.Text = "Download and run";
+			this.llblDownloadRun.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llblDownloadRun_LinkClicked);
+			// 
+			// pbDownloadRun
+			// 
+			this.pbDownloadRun.Location = new System.Drawing.Point(8, 64);
+			this.pbDownloadRun.Name = "pbDownloadRun";
+			this.pbDownloadRun.Size = new System.Drawing.Size(188, 10);
+			this.pbDownloadRun.TabIndex = 4;
+			this.pbDownloadRun.Visible = false;
+			// 
 			// DownloadButton
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Info;
+			this.Controls.Add(this.pbDownloadRun);
+			this.Controls.Add(this.llblDownloadRun);
 			this.Controls.Add(this.labelVersion);
-			this.Controls.Add(this.linkLabel1);
+			this.Controls.Add(this.llblDownload);
 			this.Name = "DownloadButton";
 			this.Size = new System.Drawing.Size(201, 88);
 			this.Load += new System.EventHandler(this.DownloadButton_Load);
@@ -70,7 +93,9 @@
 
 		#endregion
 
-		private System.Windows.Forms.LinkLabel linkLabel1;
+		private System.Windows.Forms.LinkLabel llblDownload;
 		private System.Windows.Forms.Label labelVersion;
+		private System.Windows.Forms.LinkLabel llblDownloadRun;
+		private System.Windows.Forms.ProgressBar pbDownloadRun;
 	}
 }

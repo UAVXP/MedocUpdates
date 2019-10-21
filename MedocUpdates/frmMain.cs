@@ -113,6 +113,7 @@ namespace MedocUpdates
 					{
 						DownloadButton btn = new DownloadButton(item);
 						btn.IsHighlighted = (item.version > localversion); // TODO
+						btn.FileDownloadedAndRunned += Btn_FileDownloadedAndRunned;
 						flowDownloads.Controls.Add(btn);
 
 					//	Console.WriteLine("Added {0}", item.link);
@@ -195,6 +196,11 @@ namespace MedocUpdates
 		private void Network_NetworkIsUp(object sender, EventArgs e)
 		{
 			new Thread(new ThreadStart(network.Run)).Start();
+		}
+
+		private void Btn_FileDownloadedAndRunned(object sender, EventArgs e)
+		{
+			CheckingRoutine();
 		}
 
 		private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
