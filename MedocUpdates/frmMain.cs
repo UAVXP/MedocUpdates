@@ -19,6 +19,7 @@ namespace MedocUpdates
 		MedocTelegram telegram = new MedocTelegram();
 
 
+		// https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.control.invoke?redirectedfrom=MSDN&view=netframework-4.7.2#System_Windows_Forms_Control_Invoke_System_Delegate_
 		MedocNetwork network;
 		public delegate void RefreshVersionStatus();
 		public RefreshVersionStatus NetworkCheckingDelegate;
