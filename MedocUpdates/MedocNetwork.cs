@@ -79,7 +79,7 @@ namespace MedocUpdates
 			}
 			catch(Exception ex)
 			{
-				Log.Write(LogLevel.EXPERT, "MedocNetwork: Cannot reach the default gateway address");
+				Log.Write(LogLevel.EXPERT, "MedocNetwork: Cannot reach the default gateway address\r\n" + ex.Message);
 			}
 		}
 	}

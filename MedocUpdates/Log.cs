@@ -113,6 +113,14 @@ namespace MedocUpdates
 			Write(LogLevel.BASIC, logMessage);
 		}
 
+		public static void Write(int logLevel, bool forceConsole, string logMessage)
+		{
+			if(forceConsole)
+				Console.WriteLine(logMessage); // TODO: Make the same EOL stuff as in Write
+
+			Write(LogLevel.BASIC, logMessage);
+		}
+
 		public static void Write(int logLevel, string logMessage)
 		{
 			if(!m_Enabled)

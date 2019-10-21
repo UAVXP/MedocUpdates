@@ -30,16 +30,51 @@ namespace MedocUpdates
 
 			public static implicit operator Inside_v2(Inside v)
 			{
+				//Log.Write(LogLevel.NORMAL, true, "SessionStorage: Converting SessionStorage file from v1 to v2"); // Not needed anymore
+
 				Inside_v2 inside_v2 = new Inside_v2();
 				inside_v2.NotificationDelay = v.NotificationDelay;
 				return inside_v2;
 			}
 		}
 
+		[Serializable]
+		public class Inside_v3
+		{
+			public double NotificationDelay = 1 * 60 * 60 * 1000; // Default notification delay - 1 hour
+			public List<MedocTelegramUser> TelegramUsers = new List<MedocTelegramUser>();
+			public bool LogsEnabled = true;
+			public int LoggingLevel = LogLevel.BASIC; // LogLevel
+			public string TelegramToken = "";
+			public string DownloadFolderPath = "\\mu_downloads";
+
+			public static implicit operator Inside_v3(Inside_v2 v)
+			{
+				Log.Write(LogLevel.NORMAL, true, "SessionStorage: Converting SessionStorage file from v2 to v3");
+
+				Inside_v3 inside_v3 = new Inside_v3();
+				inside_v3.NotificationDelay = v.NotificationDelay;
+				inside_v3.TelegramUsers = v.TelegramUsers;
+				inside_v3.LogsEnabled = v.LogsEnabled;
+				inside_v3.LoggingLevel = v.LoggingLevel;
+				inside_v3.TelegramToken = v.TelegramToken;
+				return inside_v3;
+			}
+
+			public static implicit operator Inside_v3(Inside v)
+			{
+				Log.Write(LogLevel.NORMAL, true, "SessionStorage: Converting SessionStorage file from v1 to v3");
+
+				Inside_v3 inside_v3 = new Inside_v3();
+				inside_v3.NotificationDelay = v.NotificationDelay;
+				return inside_v3;
+			}
+		}
+
 		private static string m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 		private static string m_settingsPath = m_exePath + "\\mu.dat";
 
-		public static Inside_v2 inside = new Inside_v2();
+		public static Inside_v3 inside = new Inside_v3();
 
 		public static event EventHandler NotificationDelayChanged = delegate { };
 		public static event EventHandler LogsEnabledChanged = delegate { };
@@ -72,7 +107,7 @@ namespace MedocUpdates
 			Stream filestream = new FileStream(m_settingsPath, FileMode.Create, FileAccess.Write);
 			if (filestream == null)
 			{
-				Log.Write(LogLevel.NORMAL, "SessionStorage: Cannot save session storage. Check your permissions");
+				Log.Write(LogLevel.NORMAL, true, "SessionStorage: Cannot save session storage. Check your permissions");
 				return;
 			}
 
@@ -86,7 +121,7 @@ namespace MedocUpdates
 			Stream filestream = new FileStream(m_settingsPath, FileMode.OpenOrCreate, FileAccess.Read);
 			if (filestream == null)
 			{
-				Log.Write(LogLevel.NORMAL, "SessionStorage: Cannot load session storage file. Check your permissions");
+				Log.Write(LogLevel.NORMAL, true, "SessionStorage: Cannot load session storage file. Check your permissions");
 
 				// Initializing and saving a default values
 				Save();
@@ -96,7 +131,7 @@ namespace MedocUpdates
 
 			if (filestream.Length <= 0)
 			{
-				Log.Write(LogLevel.NORMAL, "SessionStorage: Cannot load saved session");
+				Log.Write(LogLevel.NORMAL, true, "SessionStorage: Cannot load saved session");
 				filestream.Close();
 
 				// Initializing and saving a default values
@@ -106,7 +141,7 @@ namespace MedocUpdates
 			}
 
 
-			SessionStorage.Inside_v2 temp = new Inside_v2();
+			SessionStorage.Inside_v3 temp = new Inside_v3();
 
 			try
 			{
@@ -121,11 +156,14 @@ namespace MedocUpdates
 				case "Inside_v2":
 					temp = (SessionStorage.Inside_v2)deserialized;
 					break;
+				case "Inside_v3":
+					temp = (SessionStorage.Inside_v3)deserialized;
+					break;
 				}
 			}
 			catch (SerializationException ex)
 			{
-				Log.Write(LogLevel.NORMAL, "SessionStorage: Cannot retrieve settings - wrong file structure\r\n" + ex.Message);
+				Log.Write(LogLevel.NORMAL, true, "SessionStorage: Cannot retrieve settings - wrong file structure\r\n" + ex.Message);
 			}
 
 			filestream.Close();
