@@ -363,7 +363,8 @@ namespace MedocUpdates
 					Log.Write(LogLevel.NORMAL, "Cannot read a latest log file\r\n" + ex.Message);
 				}
 
-				for (int j = 0; j < file.Length; j++)
+				// Search from the end to start of the file
+				for (int j = file.Length - 1; j >= 0; j--)
 				{
 					string line = file[j];
 
