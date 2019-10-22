@@ -42,12 +42,13 @@ namespace MedocUpdates
 		[Serializable]
 		public class Inside_v3
 		{
-			public double NotificationDelay = 1 * 60 * 60 * 1000; // Default notification delay - 1 hour
-			public List<MedocTelegramUser> TelegramUsers = new List<MedocTelegramUser>();
-			public bool LogsEnabled = true;
-			public int LoggingLevel = LogLevel.BASIC; // LogLevel
-			public string TelegramToken = "";
-			public string DownloadsFolderPath = new KnownFolder(KnownFolderType.Downloads).Path;
+			public double					NotificationDelay = 1 * 60 * 60 * 1000; // Default notification delay - 1 hour
+			public List<MedocTelegramUser>	TelegramUsers = new List<MedocTelegramUser>();
+			public bool						LogsEnabled = true;
+			public int						LoggingLevel = LogLevel.BASIC; // LogLevel
+			public string					TelegramToken = "";
+			public string					DownloadsFolderPath = new KnownFolder(KnownFolderType.Downloads).Path;
+			public bool						RemoveUpdateFileAfterInstall = true;
 
 			public static implicit operator Inside_v3(Inside_v2 v)
 			{
@@ -82,6 +83,7 @@ namespace MedocUpdates
 		public static event EventHandler LoggingLevelChanged = delegate { };
 		public static event EventHandler TelegramTokenChanged = delegate { };
 		public static event EventHandler DownloadsFolderPathChanged = delegate { };
+		public static event EventHandler RemoveUpdateFileAfterInstallChanged = delegate { };
 
 		// TODO: Maybe do this in properties and not calling ...ChangedFunc?
 		// Actually, then I cannot use sender object
@@ -105,6 +107,10 @@ namespace MedocUpdates
 		public static void DownloadsFolderPathChangedFunc(object sender)
 		{
 			DownloadsFolderPathChanged.Invoke(sender, new EventArgs());
+		}
+		public static void RemoveUpdateFileAfterInstallChangedFunc(object sender)
+		{
+			RemoveUpdateFileAfterInstallChanged.Invoke(sender, new EventArgs());
 		}
 
 		public static void Save()

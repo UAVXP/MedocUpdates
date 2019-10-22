@@ -45,7 +45,7 @@ namespace MedocUpdates
 			}
 		}
 
-		internal bool GetInstallationPath(out string path)
+		public static bool GetInstallationPath(out string path)
 		{
 			path = "";
 

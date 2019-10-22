@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Net;
 using System.IO;
 using System.IO.Compression;
+using System.Threading;
 
 namespace MedocUpdates
 {
@@ -24,6 +25,13 @@ namespace MedocUpdates
 		string updateFilename;
 
 		public bool IsHighlighted { get; set; }
+		public string UpdateFilename
+		{
+			get
+			{
+				return updateFilename;
+			}
+		}
 
 
 		public event EventHandler FileDownloadedAndRunned = delegate { };
@@ -89,11 +97,53 @@ namespace MedocUpdates
 			llblDownloadRun.Enabled = true;
 			pbDownloadRun.Visible = false;
 
+			// The initial update.exe process
 			Process proc = new Process();
 			proc.StartInfo = new ProcessStartInfo(this.updateFilename);
 			proc.Start();
 			proc.WaitForExit();
 
+			//FileDownloadedAndRunned.Invoke(this, new EventArgs()); // M.E.Doc is still updating at this point. Need to check the process
+
+			// Wait a few moments before update.exe has spawned again,
+			// because we ned to get a new update.exe, not the first one
+			Thread.Sleep(5 * 1000); // TODO: Should this be configurable?
+
+			Process[] updateProcs = Process.GetProcessesByName("update");
+			if(updateProcs.Length <= 0)
+			{
+				Log.Write(LogLevel.EXPERT, String.Format("DownloadButton ({0}): Cannot find update.exe after a short wait", this.item.version));
+				MessageBox.Show(String.Format("M.E.Doc version {0} hadn't been installed properly!", this.item.version), "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				return;
+			}
+
+			string installPath = "";
+			if(!MedocInternal.GetInstallationPath(out installPath))
+			{
+				Log.Write(LogLevel.EXPERT, String.Format("DownloadButton ({0}): Cannot get M.E.Doc installation path", this.item.version));
+				return;
+			}
+			
+			int procIdx = Array.FindIndex(updateProcs, element => Path.Equals(Path.GetDirectoryName(element.MainModule.FileName), installPath));
+			if(procIdx < 0)
+			{
+				Log.Write(LogLevel.EXPERT, String.Format("DownloadButton ({0}): update.exe didn't appear for the second time of installation", this.item.version));
+				MessageBox.Show(String.Format("M.E.Doc version {0} hadn't been installed properly!", this.item.version), "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				return;
+			}
+
+			Process updateProc = updateProcs[procIdx];
+			if(updateProc == null)
+			{
+				Log.Write(LogLevel.EXPERT, String.Format("DownloadButton ({0}): The second update.exe process is corrupted", this.item.version));
+				MessageBox.Show(String.Format("M.E.Doc version {0} hadn't been installed properly!", this.item.version), "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				return;
+			}
+
+			//updateProc.Exited += UpdateProc_Exited; // Not working, and also not needed, because we need to block the app until update installation is done
+			updateProc.WaitForExit();
+
+			// And only now we can update the main frame
 			FileDownloadedAndRunned.Invoke(this, new EventArgs());
 		}
 

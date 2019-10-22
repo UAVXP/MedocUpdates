@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using System.Threading;
+using System.IO;
 
 namespace MedocUpdates
 {
@@ -201,6 +202,13 @@ namespace MedocUpdates
 		private void Btn_FileDownloadedAndRunned(object sender, EventArgs e)
 		{
 			CheckingRoutine();
+
+			// FIXME: Should I do this in DownloadButton maybe?
+			if(SessionStorage.inside.RemoveUpdateFileAfterInstall)
+			{
+				DownloadButton btn = (sender as DownloadButton);
+				File.Delete(btn.UpdateFilename);
+			}
 		}
 
 		private void settingsToolStripMenuItem_Click(object sender, EventArgs e)

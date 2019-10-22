@@ -43,6 +43,8 @@ namespace MedocUpdates
 
 			tbDownloadsPath.Text = SessionStorage.inside.DownloadsFolderPath;
 			fbdDownloadPath.SelectedPath = tbDownloadsPath.Text;
+
+			cbRemoveUpdateFile.Checked = SessionStorage.inside.RemoveUpdateFileAfterInstall;
 		}
 
 		private void cbLogs_CheckedChanged(object sender, EventArgs e)
@@ -74,6 +76,12 @@ namespace MedocUpdates
 			{
 				SessionStorage.inside.DownloadsFolderPath = tbDownloadsPath.Text;
 				SessionStorage.DownloadsFolderPathChangedFunc(this);
+			}
+
+			if (SessionStorage.inside.RemoveUpdateFileAfterInstall != cbRemoveUpdateFile.Checked)
+			{
+				SessionStorage.inside.RemoveUpdateFileAfterInstall = cbRemoveUpdateFile.Checked;
+				SessionStorage.RemoveUpdateFileAfterInstallChangedFunc(this);
 			}
 
 			Log.SetEnabled(SessionStorage.inside.LogsEnabled);

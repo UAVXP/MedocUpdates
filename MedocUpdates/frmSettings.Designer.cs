@@ -39,10 +39,11 @@
 			this.btnSave = new System.Windows.Forms.Button();
 			this.btnCancel = new System.Windows.Forms.Button();
 			this.gbDownloads = new System.Windows.Forms.GroupBox();
-			this.tbDownloadsPath = new System.Windows.Forms.TextBox();
-			this.lblDownloadPath = new System.Windows.Forms.Label();
 			this.btnDownloadsPathBrowse = new System.Windows.Forms.Button();
+			this.lblDownloadPath = new System.Windows.Forms.Label();
+			this.tbDownloadsPath = new System.Windows.Forms.TextBox();
 			this.fbdDownloadPath = new Ookii.Dialogs.WinForms.VistaFolderBrowserDialog();
+			this.cbRemoveUpdateFile = new System.Windows.Forms.CheckBox();
 			this.gbLogLevels.SuspendLayout();
 			this.gbTelegram.SuspendLayout();
 			this.gbDownloads.SuspendLayout();
@@ -140,31 +141,16 @@
 			// 
 			// gbDownloads
 			// 
+			this.gbDownloads.Controls.Add(this.cbRemoveUpdateFile);
 			this.gbDownloads.Controls.Add(this.btnDownloadsPathBrowse);
 			this.gbDownloads.Controls.Add(this.lblDownloadPath);
 			this.gbDownloads.Controls.Add(this.tbDownloadsPath);
 			this.gbDownloads.Location = new System.Drawing.Point(252, 12);
 			this.gbDownloads.Name = "gbDownloads";
-			this.gbDownloads.Size = new System.Drawing.Size(489, 81);
+			this.gbDownloads.Size = new System.Drawing.Size(489, 142);
 			this.gbDownloads.TabIndex = 4;
 			this.gbDownloads.TabStop = false;
 			this.gbDownloads.Text = "Download settings";
-			// 
-			// tbDownloadsPath
-			// 
-			this.tbDownloadsPath.Location = new System.Drawing.Point(109, 17);
-			this.tbDownloadsPath.Name = "tbDownloadsPath";
-			this.tbDownloadsPath.Size = new System.Drawing.Size(363, 20);
-			this.tbDownloadsPath.TabIndex = 0;
-			// 
-			// lblDownloadPath
-			// 
-			this.lblDownloadPath.AutoSize = true;
-			this.lblDownloadPath.Location = new System.Drawing.Point(16, 20);
-			this.lblDownloadPath.Name = "lblDownloadPath";
-			this.lblDownloadPath.Size = new System.Drawing.Size(87, 13);
-			this.lblDownloadPath.TabIndex = 1;
-			this.lblDownloadPath.Text = "Downloads path:";
 			// 
 			// btnDownloadsPathBrowse
 			// 
@@ -176,9 +162,35 @@
 			this.btnDownloadsPathBrowse.UseVisualStyleBackColor = true;
 			this.btnDownloadsPathBrowse.Click += new System.EventHandler(this.btnDownloadPathBrowse_Click);
 			// 
+			// lblDownloadPath
+			// 
+			this.lblDownloadPath.AutoSize = true;
+			this.lblDownloadPath.Location = new System.Drawing.Point(16, 20);
+			this.lblDownloadPath.Name = "lblDownloadPath";
+			this.lblDownloadPath.Size = new System.Drawing.Size(87, 13);
+			this.lblDownloadPath.TabIndex = 1;
+			this.lblDownloadPath.Text = "Downloads path:";
+			// 
+			// tbDownloadsPath
+			// 
+			this.tbDownloadsPath.Location = new System.Drawing.Point(109, 17);
+			this.tbDownloadsPath.Name = "tbDownloadsPath";
+			this.tbDownloadsPath.Size = new System.Drawing.Size(363, 20);
+			this.tbDownloadsPath.TabIndex = 0;
+			// 
 			// fbdDownloadPath
 			// 
 			this.fbdDownloadPath.RootFolder = System.Environment.SpecialFolder.MyComputer;
+			// 
+			// cbRemoveUpdateFile
+			// 
+			this.cbRemoveUpdateFile.AutoSize = true;
+			this.cbRemoveUpdateFile.Location = new System.Drawing.Point(19, 77);
+			this.cbRemoveUpdateFile.Name = "cbRemoveUpdateFile";
+			this.cbRemoveUpdateFile.Size = new System.Drawing.Size(223, 17);
+			this.cbRemoveUpdateFile.TabIndex = 3;
+			this.cbRemoveUpdateFile.Text = "Remove .upd files after update installation";
+			this.cbRemoveUpdateFile.UseVisualStyleBackColor = true;
 			// 
 			// frmSettings
 			// 
@@ -220,5 +232,6 @@
 		private System.Windows.Forms.Label lblDownloadPath;
 		private System.Windows.Forms.TextBox tbDownloadsPath;
 		private Ookii.Dialogs.WinForms.VistaFolderBrowserDialog fbdDownloadPath;
+		private System.Windows.Forms.CheckBox cbRemoveUpdateFile;
 	}
 }

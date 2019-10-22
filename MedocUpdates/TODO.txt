@@ -33,4 +33,9 @@ Rename "Delay notifications" to "Checking updates interval"
 
 +Callback on Internet connection became online
 
-Settings: Enable/disable .upd file removing after update installation
++Settings: Enable/disable .upd file removing after update installation
+Application should notice the user that M.E.Doc hasn't been updated (unfortunately, it should be for this app to work properly)
+	Or just assume that M.E.Doc version that has been installed (and not updated) - is the latest from the downloads' page Distribution section
+		Could be wrong! Then ask user, what version he'd been installed
+
+Need to detect cancelled update
