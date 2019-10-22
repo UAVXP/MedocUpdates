@@ -14,6 +14,9 @@ namespace MedocUpdates
         [STAThread]
         static void Main()
         {
+			ParsedArgs.SetArgs(Environment.GetCommandLineArgs());
+			ParsedArgs.PrintArgs();
+
 			SessionStorage.Restore();
 
 			Log.Init();

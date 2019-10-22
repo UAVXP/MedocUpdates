@@ -52,39 +52,19 @@ namespace MedocUpdates
 
 		public static void Init()
 		{
-			string[] args = Environment.GetCommandLineArgs();
-			if(args.Length <= 0)
-				LogFallbackInternal("Log: Something went wrong with the application arguments");
-			if(args[0].Equals(""))
-				LogFallbackInternal("Log: Cannot find filename in application arguments");
-
 			// Make sure log directory does exist
 			string logDirectory = Path.GetDirectoryName(m_logPath);
 			if (!Directory.Exists(logDirectory))
 				Directory.CreateDirectory(logDirectory);
 
-			// TODO: Refactor this
-			int logLevelArg = Array.FindIndex(args, element => element.StartsWith("-loglevel", StringComparison.Ordinal));
-			if(logLevelArg > 0) // Skip the first argument (a filename)
+			string logLevelStr = ParsedArgs.GetArgument("loglevel");
+			if (logLevelStr.Length > 0)
 			{
-				if ((logLevelArg + 1) >= args.Length)
-				{
-					Log.Write(LogLevel.NORMAL, "Log: Unexpected end of the \"-loglevel\" argument");
-					return;
-				}
-
-				string logLevelStr = args[logLevelArg+1];
-				if (logLevelStr.Length <= 0)
-				{
-					Log.Write(LogLevel.NORMAL, "Log: Cannot set \"-loglevel\" - wrong argument");
-					return;
-				}
-
 				int logLevel = m_logLevel;
 				if (int.TryParse(logLevelStr, out logLevel))
 				{
 					m_logLevel = LogLevel.Clamp(logLevel, LogLevel.BASIC, LogLevel.MAXLOGLEVELS - 1);
-					Log.Write(LogLevel.NORMAL, "Log: Level was forcibly set to " + LogLevel.GetName(m_logLevel));
+					Log.Write("Log: Level was forcibly set to " + LogLevel.GetName(m_logLevel));
 				}
 			}
 		}

@@ -79,30 +79,10 @@ namespace MedocUpdates
 		{
 			botToken = SessionStorage.inside.TelegramToken;
 
-			string[] args = Environment.GetCommandLineArgs();
-			if (args.Length <= 0)
-				Log.Write("MedocTelegram: Something went wrong with the application arguments");
-			if (args[0].Equals(""))
-				Log.Write("MedocTelegram: Cannot find filename in application arguments");
-
-			// TODO: Refactor this
-			int tokenArg = Array.FindIndex(args, element => element.StartsWith("-token", StringComparison.Ordinal));
-			if (tokenArg > 0) // Skip the first argument (a filename)
+			string tokenStr = ParsedArgs.GetArgument("telegramtoken");
+			if (tokenStr.Length > 0)
 			{
-				if((tokenArg + 1) >= args.Length)
-				{
-					Log.Write(LogLevel.NORMAL, "MedocTelegram: Unexpected end of the \"-token\" argument");
-					return;
-				}
-
-				string tokenStr = args[tokenArg + 1];
-				if(tokenStr.Length <= 0)
-				{
-					Log.Write(LogLevel.NORMAL, "MedocTelegram: Cannot set \"-token\" - wrong argument");
-					return;
-				}
 				botToken = tokenStr;
-
 				Log.Write("MedocTelegram: Token was forcibly set to " + tokenStr.Substring(0, 3) + "..."); // Print only first 3 symbols - just to make sure
 			}
 
@@ -198,7 +178,7 @@ namespace MedocUpdates
 			}
 		}
 
-		public async void SendUpdateButton(MedocTelegramUser user)
+		public /*async */void SendUpdateButton(MedocTelegramUser user)
 		{
 			//InlineKeyboardMarkup inlineKeyboard = new InlineKeyboardMarkup(new[]
 			//{
@@ -214,16 +194,16 @@ namespace MedocUpdates
 			//			"Are you going to initiate an update sequence?",
 			//			replyMarkup: inlineKeyboard);
 
-			ReplyKeyboardMarkup ReplyKeyboard = new[]
-					{
-						new[] { "Update", "Cancel" },
-						new[] { "/start", "Cancel" },
-					};
+			//ReplyKeyboardMarkup ReplyKeyboard = new[]
+			//		{
+			//			new[] { "Update", "Cancel" },
+			//			new[] { "/start", "Cancel" },
+			//		};
 
-			await botClient.SendTextMessageAsync(
-				user.Id,
-				"Choose",
-				replyMarkup: ReplyKeyboard);
+			//await botClient.SendTextMessageAsync(
+			//	user.Id,
+			//	"Choose",
+			//	replyMarkup: ReplyKeyboard);
 		}
 
 		public void SendMessageAll(string textmessage)
