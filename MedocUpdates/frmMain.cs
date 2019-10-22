@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 using System.Threading;
 using System.IO;
+using System.Reflection;
 
 namespace MedocUpdates
 {
@@ -172,6 +173,8 @@ namespace MedocUpdates
 
 		private void frmMain_Load(object sender, EventArgs e)
 		{
+			this.Text += " - " + Assembly.GetEntryAssembly().GetName().Version;
+
 			CheckingRoutine();
 
 			TimerRoutine();
