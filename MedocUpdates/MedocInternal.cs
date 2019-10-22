@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Win32;
 using System.IO;
 using System.Text.RegularExpressions;
+using BlackBeltCoder;
 
 //using DMF.Config;
 //using ZvitClientInterface;
@@ -39,7 +40,10 @@ namespace MedocUpdates
 				// TODO: Do a fallback way - through Software\\M.E.Doc\\M.E.Doc subkey name
 				// TODO: Make a proper cache for this? Maybe by time or something else
 				MedocVersion tempVersion = new MedocVersion();
-				GetDSTVersion(out tempVersion);
+
+				//GetDSTVersion(out tempVersion); // Old version detection
+				GetLastUpdateVersion(out tempVersion); // New, more reliable version detection
+
 				Log.Write(LogLevel.NORMAL, "MedocInternal: Retrieving local version");
 				return tempVersion;
 			}
@@ -285,6 +289,8 @@ namespace MedocUpdates
 			return value;
 		}
 
+		// TODO: This should be replaced with a new detection method!
+		// (evidences line 2)
 		internal bool GetDSTVersion(out MedocVersion version)
 		{
 			version = new MedocVersion();
@@ -322,6 +328,69 @@ namespace MedocUpdates
 			}
 
 			version = (MedocVersion)value; // Added explicit conversion for convenience
+
+			return true;
+		}
+
+		// http://www.blackbeltcoder.com/Articles/strings/a-sscanf-replacement-for-net
+		internal bool GetLastUpdateVersion(out MedocVersion version)
+		{
+			version = new MedocVersion();
+
+			ScanFormatted parser = new ScanFormatted();
+
+			string[] allLogFiles = new string[0];
+			if (!GetLatestLogs(out allLogFiles))
+				return false;
+
+			for (int i = allLogFiles.Length - 1; i >= 0; i--)
+			{
+				string logFile = allLogFiles[i];
+				if (logFile.Trim().Length <= 0)
+				{
+					Log.Write(LogLevel.EXPERT, "MedocInternal: Unexpected log list searching error");
+					continue;
+				}
+
+				// 
+				string[] file = new string[] { };
+				try
+				{
+					file = File.ReadAllLines(logFile);
+				}
+				catch (Exception ex)
+				{
+					Log.Write(LogLevel.NORMAL, "Cannot read a latest log file\r\n" + ex.Message);
+				}
+
+				for (int j = 0; j < file.Length; j++)
+				{
+					string line = file[j];
+
+					//
+					bool foundNewVerString = GetLine(line, "newVer");
+					if (!foundNewVerString)
+						continue;
+
+					int newVerIdx = line.IndexOf("newVer");
+					if(newVerIdx + "newVer".Length >= line.Length)
+						continue;
+
+					line = line.Substring(newVerIdx);
+
+					// ScanFormatted fricks stuff up after parsing %s for some reason (doesn't care it's Ukrainian word of English (i.e. "is1C = False"))
+					//string lineformat = "%d.%d.%d %d:%d:%d.%d %s INFO    %s: is1C = %s, newVer = %d, newRel = %d, newBld = %d";
+
+					string lineformat = "newVer = %d, newRel = %d, newBld = %d";
+					int count = parser.Parse(line, lineformat);
+					//if(count > 9 /*&& count <= 13*/)
+					if(count == 3)
+					{
+						version = new MedocVersion((int)parser.Results[0], (int)parser.Results[1], (int)parser.Results[2]);
+						Console.WriteLine("Found version: {0}", version.Version);
+					}
+				}
+			}
 
 			return true;
 		}

@@ -109,6 +109,10 @@ namespace MedocUpdates
 			// because we ned to get a new update.exe, not the first one
 			Thread.Sleep(5 * 1000); // TODO: Should this be configurable?
 
+			// TODO: Maybe search for "<installation path>\update.exe" (evidences line 1) in M.E.Doc update log?
+			// That would mean that update.exe was started for the second time now,
+			// and this should be much stable than just thread-sleeping for a constant amount of time
+
 			Process[] updateProcs = Process.GetProcessesByName("update");
 			if(updateProcs.Length <= 0)
 			{

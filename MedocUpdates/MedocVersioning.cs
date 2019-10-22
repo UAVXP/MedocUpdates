@@ -70,6 +70,11 @@ namespace MedocUpdates
 			this.Version = version;
 		}
 
+		public MedocVersion(int first, int second, int third) : base()
+		{
+			this.Version = String.Format("{0:00}.{1:00}.{2:000}", first, second, third);
+		}
+
 		public static int Comparison(MedocVersion ver1, MedocVersion ver2)
 		{
 			if (ver1.rawfirst < ver2.rawfirst || ver1.rawsecond < ver2.rawsecond || ver1.rawthird < ver2.rawthird)
