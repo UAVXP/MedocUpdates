@@ -38,4 +38,7 @@ Application should notice the user that M.E.Doc hasn't been updated (unfortunate
 	Or just assume that M.E.Doc version that has been installed (and not updated) - is the latest from the downloads' page Distribution section
 		Could be wrong! Then ask user, what version he'd been installed
 
-Need to detect cancelled update
++Need to detect cancelled update
+	Doesn't actually need to, made proper update detection
+
+Make an app updater

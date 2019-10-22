@@ -388,11 +388,12 @@ namespace MedocUpdates
 					{
 						version = new MedocVersion((int)parser.Results[0], (int)parser.Results[1], (int)parser.Results[2]);
 						Console.WriteLine("Found version: {0}", version.Version);
+						return true;
 					}
 				}
 			}
 
-			return true;
+			return false;
 		}
 	}
 }
