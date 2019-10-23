@@ -129,10 +129,8 @@ namespace MedocUpdates
 				{
 					trayIcon.ShowBalloonTip(5000, "M.E.Doc update has been released!",	labelVersion.Text + "\r\n" +
 																						labelLocalVersion.Text, ToolTipIcon.Info);
-#if !DEBUG
-				//	telegram.SendMessageAll(labelVersion.Text); // FIXME: Uncomment this
-				//	telegram.SendUpdateButtonAll();
-#endif
+
+					telegram.SendMessageAll(String.Format("Update from {0} to {1} is available", localversion, version));
 				}
 				else
 				{
@@ -141,12 +139,6 @@ namespace MedocUpdates
 																				labelVersion.Text + "\r\n" +
 																				labelLocalVersion.Text, ToolTipIcon.Info);
 				}
-
-#if DEBUG
-				// FIXME: Sending this everytime just to make sure Telegram connection is working
-				telegram.SendMessageAll(String.Format("Update from {0} to {1} is available", localversion, version));
-				//telegram.SendUpdateButtonAll();
-#endif
 			}
 			else
 			{

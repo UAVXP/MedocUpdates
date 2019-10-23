@@ -201,7 +201,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <TransformOnBuild>false</TransformOnBuild>
+    <TransformOnBuild>true</TransformOnBuild>
     <OverwriteReadOnlyOutputFiles>false</OverwriteReadOnlyOutputFiles>
     <TransformOutOfDateOnly>false</TransformOutOfDateOnly>
   </PropertyGroup>

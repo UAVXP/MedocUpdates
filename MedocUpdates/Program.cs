@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.Reflection;
+
 namespace MedocUpdates
 {
     static class Program
@@ -20,13 +22,13 @@ namespace MedocUpdates
 			SessionStorage.Restore();
 
 			Log.Init();
-			Log.Write("MedocUpdates: Initializing...");
+			Log.Write(String.Format("MedocUpdates: Initializing version {0}...", Assembly.GetEntryAssembly().GetName().Version));
 
 			Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain());
 
-			Log.Write("MedocUpdates: Shutting down the application");
+			Log.Write("MedocUpdates: Shutting down the application\r\n");
 			SessionStorage.Save();
 		}
     }

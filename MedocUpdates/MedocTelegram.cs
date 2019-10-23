@@ -39,7 +39,7 @@ namespace MedocUpdates
 				return;
 			}
 
-			//	Console.WriteLine(botClient.GetMeAsync().Result.Username);
+			Console.WriteLine(botClient.GetMeAsync().Result.Username);
 
 			botClient.OnCallbackQuery += OnCallbackQueryReceived;
 			botClient.OnInlineQuery += BotClient_OnInlineQuery;
@@ -159,9 +159,11 @@ namespace MedocUpdates
 			}
 		}
 
-		private void Subscribe(long chatID, ChatMember member)
+		private async void Subscribe(long chatID, ChatMember member)
 		{
-			if (member.Status > ChatMemberStatus.Administrator)
+			Chat chat = await botClient.GetChatAsync(chatID);
+
+			if (chat.Type != ChatType.Private && member.Status > ChatMemberStatus.Administrator)
 			{
 				SendMessage(chatID, "You cannot subscribe since you're not an administrator");
 				return;
@@ -178,9 +180,12 @@ namespace MedocUpdates
 			Log.Write(LogLevel.NORMAL, "MedocTelegram: Chat #" + chatID + " was subscribed by @" + member.User);
 		}
 
-		private void Unsubscribe(long chatID, ChatMember member)
+		private async void Unsubscribe(long chatID, ChatMember member)
 		{
-			if (member.Status > ChatMemberStatus.Administrator)
+			//botClient.GetChatMembersCountAsync
+			Chat chat = await botClient.GetChatAsync(chatID);
+
+			if (chat.Type != ChatType.Private && member.Status > ChatMemberStatus.Administrator)
 			{
 				SendMessage(chatID, "You cannot unsubscribe since you're not an administrator");
 				return;
@@ -222,7 +227,7 @@ namespace MedocUpdates
 			long chatID = chat.Id;
 			ChatMember member = await botClient.GetChatMemberAsync(chatID, message.From.Id);
 
-			string lastMessage = message.Text.Trim().Split(' ').First();
+			string lastMessage = message.Text.Trim().Split(new char[] { ' ', '@' }).First();
 			if(!lastMessage.StartsWith("/"))
 				return; // Regular chat message, not a command
 

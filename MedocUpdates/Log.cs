@@ -113,12 +113,12 @@ namespace MedocUpdates
 			{
 				using (StreamWriter w = File.AppendText(m_logPath))
 				{
-					string[] parsed = logMessage.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+					string[] parsed = logMessage.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
 					int i = 0;
 					foreach (string rawline in parsed)
 					{
 						string line = rawline;
-						if (i > 0)
+						if (i > 0 && line.Length > 0)
 							line = "\t" + line;
 
 						LogInternal(line, w);
