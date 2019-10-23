@@ -116,6 +116,7 @@
     <Compile Include="MedocDownloadItem.cs" />
     <Compile Include="MedocInternal.cs" />
     <Compile Include="MedocNetwork.cs" />
+    <Compile Include="MedocTelegramUser.cs" />
     <Compile Include="MedocVersioning.cs" />
     <Compile Include="ParsedArgs.cs" />
     <Compile Include="Program.cs" />
@@ -201,8 +202,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <TransformOnBuild>true</TransformOnBuild>
-	<OverwriteReadOnlyOutputFiles>true</OverwriteReadOnlyOutputFiles>
-	<TransformOutOfDateOnly>false</TransformOutOfDateOnly>
+    <OverwriteReadOnlyOutputFiles>false</OverwriteReadOnlyOutputFiles>
+    <TransformOutOfDateOnly>false</TransformOutOfDateOnly>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v16.0\TextTemplating\Microsoft.TextTemplating.targets" />
 </Project>
