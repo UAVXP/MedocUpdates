@@ -144,8 +144,8 @@ namespace MedocUpdates
 
 #if DEBUG
 				// FIXME: Sending this everytime just to make sure Telegram connection is working
-				telegram.SendMessageAll(labelVersion.Text);
-				telegram.SendUpdateButtonAll();
+				telegram.SendMessageAll(String.Format("Update from {0} to {1} is available", localversion, version));
+				//telegram.SendUpdateButtonAll();
 #endif
 			}
 			else
