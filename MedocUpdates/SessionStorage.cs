@@ -42,13 +42,13 @@ namespace MedocUpdates
 		[Serializable]
 		public class Inside_v3
 		{
-			public double					NotificationDelay = 1 * 60 * 60 * 1000; // Default notification delay - 1 hour
-			public List<MedocTelegramUser>	TelegramUsers = new List<MedocTelegramUser>();
-			public bool						LogsEnabled = true;
-			public int						LoggingLevel = LogLevel.BASIC; // LogLevel
-			public string					TelegramToken = "";
-			public string					DownloadsFolderPath = new KnownFolder(KnownFolderType.Downloads).Path;
-			public bool						RemoveUpdateFileAfterInstall = true;
+			public double		NotificationDelay = 1 * 60 * 60 * 1000; // Default notification delay - 1 hour
+			public List<long>	TelegramChats = new List<long>();
+			public bool			LogsEnabled = true;
+			public int			LoggingLevel = LogLevel.BASIC; // LogLevel
+			public string		TelegramToken = "";
+			public string		DownloadsFolderPath = new KnownFolder(KnownFolderType.Downloads).Path;
+			public bool			RemoveUpdateFileAfterInstall = true;
 
 			public static implicit operator Inside_v3(Inside_v2 v)
 			{
@@ -56,7 +56,10 @@ namespace MedocUpdates
 
 				Inside_v3 inside_v3 = new Inside_v3();
 				inside_v3.NotificationDelay = v.NotificationDelay;
-				inside_v3.TelegramUsers = v.TelegramUsers;
+
+				foreach(MedocTelegramUser user in v.TelegramUsers)
+					inside_v3.TelegramChats.Add(user.Id);
+
 				inside_v3.LogsEnabled = v.LogsEnabled;
 				inside_v3.LoggingLevel = v.LoggingLevel;
 				inside_v3.TelegramToken = v.TelegramToken;
