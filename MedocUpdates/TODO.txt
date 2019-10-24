@@ -1,6 +1,4 @@
-﻿Telegram connection
-	+userID-username relation class
-		+MedocTelegramUser
+﻿+Telegram connection
 
 +Checking interval control
 
@@ -16,7 +14,7 @@ Logging every operation (like parsing, checking for updates, etc.)
 
 +Convert Log class to static one?
 
-Log/MedocTelegram app args extraction to external class (ParsedArgs)
++Log/MedocTelegram app args extraction to external class (ParsedArgs)
 +Storage Telegram token in SessionStorage
 +Be able to set log level and Telegram token from the UI (app args ones will be just needed to override those)
 
@@ -48,5 +46,7 @@ Make an app updater
 		https://docs.microsoft.com/en-us/visualstudio/modeling/code-generation-in-a-build-process?view=vs-2019
 
 +Leave only one app instance to run
-"Run minimized" setting
++"Run minimized" setting
+	"-minimize" command-line parameter
 ?"Repeat notifications" setting
+Make guardian app, that will run the main app and store stdout/stderr output (like a batch file doing it now)
