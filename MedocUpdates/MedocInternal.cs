@@ -158,52 +158,58 @@ namespace MedocUpdates
 			foreach (string regPath in regPaths)
 			{
 				key = Registry.LocalMachine.OpenSubKey(regPath);
-				if (key != null)
+				if (key == null)
 				{
-					string[] versions = key.GetSubKeyNames();
-
-					// Find the latest subkey from all
-					MedocVersion latestVersion = new MedocVersion();
-					foreach (string versionStr in versions)
-					{
-						MedocVersion testVersion = new MedocVersion();
-						if (!MedocVersion.IsVersion(versionStr, out testVersion))
-							continue;
-
-						if(testVersion > latestVersion)
-							latestVersion = testVersion;
-					}
-
-					version = latestVersion;
-					return true;
+					Log.Write(LogLevel.NORMAL, "MedocInternal: Cannot find local distribution path at HKLM");
+					continue;
 				}
+
+				string[] versions = key.GetSubKeyNames();
+
+				// Find the latest subkey from all
+				MedocVersion latestVersion = new MedocVersion();
+				foreach (string versionStr in versions)
+				{
+					MedocVersion testVersion = new MedocVersion();
+					if (!MedocVersion.IsVersion(versionStr, out testVersion))
+						continue;
+
+					if(testVersion > latestVersion)
+						latestVersion = testVersion;
+				}
+
+				version = latestVersion;
+				return true;
 			}
 
 			foreach (string regPath in regPaths)
 			{
 				key = Registry.CurrentUser.OpenSubKey(regPath);
-				if (key != null)
+				if (key == null)
 				{
-					string[] versions = key.GetSubKeyNames();
-
-					// Find the latest subkey from all
-					MedocVersion latestVersion = new MedocVersion();
-					foreach (string versionStr in versions)
-					{
-						MedocVersion testVersion = new MedocVersion();
-						if (!MedocVersion.IsVersion(versionStr, out testVersion))
-							continue;
-
-						if (testVersion > latestVersion)
-							latestVersion = testVersion;
-					}
-
-					version = latestVersion;
-					return true;
+					Log.Write(LogLevel.NORMAL, "MedocInternal: Cannot find local distribution path at HKCU");
+					continue;
 				}
+
+				string[] versions = key.GetSubKeyNames();
+
+				// Find the latest subkey from all
+				MedocVersion latestVersion = new MedocVersion();
+				foreach (string versionStr in versions)
+				{
+					MedocVersion testVersion = new MedocVersion();
+					if (!MedocVersion.IsVersion(versionStr, out testVersion))
+						continue;
+
+					if (testVersion > latestVersion)
+						latestVersion = testVersion;
+				}
+
+				version = latestVersion;
+				return true;
 			}
 
-			Log.Write(LogLevel.NORMAL, "MedocInternal: Cannot get the PATH path from registry");
+			Log.Write(LogLevel.NORMAL, "MedocInternal: Cannot get local distribution path from registry");
 			return false;
 		}
 
