@@ -4,8 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using System.Reflection;
-
 namespace MedocUpdates
 {
     static class Program
@@ -16,6 +14,13 @@ namespace MedocUpdates
         [STAThread]
         static void Main()
         {
+			System.Reflection.Assembly entryassembly = System.Reflection.Assembly.GetEntryAssembly();
+			if (System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(entryassembly.Location)).Count() > 1)
+			{
+				MessageBox.Show("Cannot run another instance of this app!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
 			ParsedArgs.SetArgs(Environment.GetCommandLineArgs());
 			ParsedArgs.PrintArgs();
 
@@ -23,7 +28,7 @@ namespace MedocUpdates
 
 			Log.Init();
 			Log.Write("");
-			Log.Write(String.Format("MedocUpdates: Initializing version {0}...", Assembly.GetEntryAssembly().GetName().Version));
+			Log.Write(String.Format("MedocUpdates: Initializing version {0}...", entryassembly.GetName().Version));
 
 			Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

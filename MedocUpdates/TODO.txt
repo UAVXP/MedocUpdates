@@ -46,3 +46,5 @@ Make an app updater
 	https://stackoverflow.com/questions/356543/can-i-automatically-increment-the-file-build-version-when-using-visual-studio
 	+ https://stackoverflow.com/questions/826777/how-to-have-an-auto-incrementing-version-number-visual-studio
 		https://docs.microsoft.com/en-us/visualstudio/modeling/code-generation-in-a-build-process?view=vs-2019
+
++Leave only one app instance to run
