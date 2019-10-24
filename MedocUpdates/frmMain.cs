@@ -114,7 +114,7 @@ namespace MedocUpdates
 					foreach (MedocDownloadItem item in items)
 					{
 						DownloadButton btn = new DownloadButton(item);
-						btn.IsHighlighted = (item.version > localversion); // TODO
+						btn.IsHighlighted = (item.version > localversion);
 						btn.FileDownloadedAndRunned += Btn_FileDownloadedAndRunned;
 						flowDownloads.Controls.Add(btn);
 

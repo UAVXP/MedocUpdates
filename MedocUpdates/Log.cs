@@ -164,7 +164,7 @@ namespace MedocUpdates
 			}
 		}
 
-		public static void LogFallbackInternal(string logMessage)
+		private static void LogFallbackInternal(string logMessage)
 		{
 			Console.Error.WriteLine(logMessage);
 			Console.Out.WriteLine(logMessage); // Doubling that to standart output just in case

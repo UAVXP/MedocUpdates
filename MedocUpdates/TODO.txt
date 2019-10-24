@@ -48,3 +48,5 @@ Make an app updater
 		https://docs.microsoft.com/en-us/visualstudio/modeling/code-generation-in-a-build-process?view=vs-2019
 
 +Leave only one app instance to run
+"Run minimized" setting
+?"Repeat notifications" setting

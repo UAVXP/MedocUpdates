@@ -20,14 +20,14 @@ namespace MedocUpdates
 		{
 			if ((token + 1) >= inputargs.Length)
 			{
-				//Log.LogFallbackInternal(String.Format("ParsedArgs: Token \"{0}\" is the latest in arguments", inputargs[token]));
+				//Log.Write(String.Format("ParsedArgs: Token \"{0}\" is the latest in arguments", inputargs[token]));
 				return;
 			}
 
 			string tokenArgStr = inputargs[token + 1];
 			if (tokenArgStr.Length <= 0)
 			{
-				//Log.LogFallbackInternal(String.Format("ParsedArgs: \"{0}\" token is simple (doesn't contain any arguments)", inputargs[token]));
+				//Log.Write(String.Format("ParsedArgs: \"{0}\" token is simple (doesn't contain any arguments)", inputargs[token]));
 				return;
 			}
 
@@ -42,9 +42,9 @@ namespace MedocUpdates
 		public static void SetArgs( string[] inputargs )
 		{
 			if (inputargs.Length <= 0)
-				Log.LogFallbackInternal("ParsedArgs: Something went wrong with the application arguments");
+				Log.Write("ParsedArgs: Something went wrong with the application arguments");
 			if (inputargs[0].Equals(""))
-				Log.LogFallbackInternal("ParsedArgs: Cannot find filename in application arguments");
+				Log.Write("ParsedArgs: Cannot find filename in application arguments");
 
 			//int tokenArg = Array.FindIndex(inputargs, element => element.StartsWith("-", StringComparison.Ordinal));
 			//int[] tokenIdxs = inputargs.FindAllIndexOf("-");

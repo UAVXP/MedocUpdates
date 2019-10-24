@@ -289,8 +289,7 @@ namespace MedocUpdates
 			return value;
 		}
 
-		// TODO: This should be replaced with a new detection method!
-		// (evidences line 2)
+		// Replaced with a new detection method! (evidences line 2)
 		internal bool GetDSTVersion(out MedocVersion version)
 		{
 			version = new MedocVersion();
