@@ -45,6 +45,7 @@ namespace MedocUpdates
 
 	public static class Log
 	{
+		private static bool m_bInit = false;
 		private static string m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 		private static string m_logPath = m_exePath + "\\mu_logs\\" + String.Format("log_{0}.txt", DateTime.Now.ToString("yyyy-MM-dd"));
 		private static bool m_Enabled = SessionStorage.inside.LogsEnabled;
@@ -52,10 +53,18 @@ namespace MedocUpdates
 
 		public static void Init()
 		{
-			// Make sure log directory does exist
-			string logDirectory = Path.GetDirectoryName(m_logPath);
-			if (!Directory.Exists(logDirectory))
-				Directory.CreateDirectory(logDirectory);
+			try
+			{
+				// Make sure log directory does exist
+				string logDirectory = Path.GetDirectoryName(m_logPath);
+				if (!Directory.Exists(logDirectory))
+					Directory.CreateDirectory(logDirectory);
+			}
+			catch(Exception ex)
+			{
+				LogFallbackInternal("Log: Cannot create log directory\r\n" + ex.Message);
+				return;
+			}
 
 			string logLevelStr = ParsedArgs.GetArgument("loglevel");
 			if (logLevelStr.Length > 0)
@@ -67,6 +76,8 @@ namespace MedocUpdates
 					Log.Write("Log: Level was forcibly set to " + LogLevel.GetName(m_logLevel));
 				}
 			}
+
+			m_bInit = true;
 		}
 
 		// FIXME: Why not property?
@@ -103,6 +114,14 @@ namespace MedocUpdates
 
 		public static void Write(int logLevel, string logMessage)
 		{
+			if(!m_bInit)
+			{
+				// If not initialized - something was probably wrong with creating a log directory.
+				// Falling back to console method
+				LogFallbackInternal(logMessage);
+				return;
+			}
+
 			if(!m_Enabled)
 				return;
 
@@ -148,6 +167,7 @@ namespace MedocUpdates
 		public static void LogFallbackInternal(string logMessage)
 		{
 			Console.Error.WriteLine(logMessage);
+			Console.Out.WriteLine(logMessage); // Doubling that to standart output just in case
 		}
 	}
 }

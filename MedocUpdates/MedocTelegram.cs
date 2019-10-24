@@ -32,6 +32,7 @@ namespace MedocUpdates
 			try
 			{
 				botClient = new TelegramBotClient(botToken);
+				Log.Write(LogLevel.NORMAL, "MedocTelegram: Created TelegramBotClient object");
 			}
 			catch(Exception ex)
 			{
@@ -39,7 +40,7 @@ namespace MedocUpdates
 				return;
 			}
 
-			Console.WriteLine(botClient.GetMeAsync().Result.Username);
+			//Console.WriteLine(botClient.GetMeAsync().Result.Username);
 
 			botClient.OnCallbackQuery += OnCallbackQueryReceived;
 			botClient.OnInlineQuery += BotClient_OnInlineQuery;
@@ -47,9 +48,30 @@ namespace MedocUpdates
 			botClient.OnMessage += OnMessageReceived;
 			botClient.OnReceiveError += BotClient_OnReceiveError;
 			
-			botClient.StartReceiving();
+			try
+			{
+				Log.Write(LogLevel.NORMAL, "MedocTelegram: Client begins to receive updates...");
 
-			if(SessionStorage.inside.TelegramChats == null) // May be rare
+			/* Not needed
+				UpdateType[] updates = new UpdateType [4]{
+					UpdateType.CallbackQuery,
+					UpdateType.InlineQuery,
+					UpdateType.ChosenInlineResult,
+					UpdateType.Message
+				};
+			*/
+
+
+
+				botClient.StartReceiving(/*updates*/); // Start loop
+			}
+			catch(Exception ex)
+			{
+				Log.Write(LogLevel.NORMAL, "MedocTelegram: Cannot start receiving updates\r\n" + ex.Message);
+				return;
+			}
+
+			if (SessionStorage.inside.TelegramChats == null) // May be rare
 			{
 				Log.Write(LogLevel.EXPERT, "MedocTelegram: Internal chat list is null");
 				return;
@@ -59,22 +81,35 @@ namespace MedocUpdates
 		~MedocTelegram()
 		{
 			if(botClient != null)
-				botClient.StopReceiving();
+			{
+				try
+				{
+					Log.Write(LogLevel.NORMAL, "MedocTelegram: Trying to destroy client object");
+					botClient.StopReceiving();
+				}
+				catch(Exception ex)
+				{
+					Log.Write(LogLevel.EXPERT, "MedocTelegram: Client destruction has been failed\r\n" + ex.Message);
+				}
+			}
 		}
 
 		private void BotClient_OnInlineQuery(object sender, InlineQueryEventArgs e)
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
+			Log.Write(LogLevel.NORMAL, "MedocTelegram: OnInlineQuery()\r\n" + e.InlineQuery.Query);
 		}
 
 		private void BotClient_OnInlineResultChosen(object sender, ChosenInlineResultEventArgs e)
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
+			Log.Write(LogLevel.NORMAL, "MedocTelegram: OnInlineResultChosen()\r\n" + e.ChosenInlineResult.Query);
 		}
 
 		private void BotClient_OnReceiveError(object sender, ReceiveErrorEventArgs e)
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
+			Log.Write(LogLevel.NORMAL, "MedocTelegram: OnReceiveError()\r\n" + e.ApiRequestException.Message);
 		}
 
 		private bool IsSubscribed(long chatID)
@@ -225,7 +260,16 @@ namespace MedocUpdates
 			}
 
 			long chatID = chat.Id;
-			ChatMember member = await botClient.GetChatMemberAsync(chatID, message.From.Id);
+			ChatMember member = new ChatMember();
+			try
+			{
+				member = await botClient.GetChatMemberAsync(chatID, message.From.Id);
+			}
+			catch(Exception ex)
+			{
+				Log.Write(LogLevel.NORMAL, "MedocTelegram: OnMessageReceived(): Cannot get chat member - probably timeout\r\n" + ex.Message);
+				return;
+			}
 
 			string lastMessage = message.Text.Trim().Split(new char[] { ' ', '@' }).First();
 			if(!lastMessage.StartsWith("/"))
@@ -275,6 +319,7 @@ namespace MedocUpdates
 				}
 			default:
 				{
+					Log.Write(LogLevel.NORMAL, "MedocTelegram: User requested usage");
 					SendMessage(chatID, @"Usage:
 /start - See subscribe/unsubscribe button
 /sub - Subscribe chat to M.E.Doc updates notifications
@@ -294,7 +339,16 @@ namespace MedocUpdates
 			string data = callbackQuery.Data;
 			long chatID = chat.Id;
 
-			ChatMember member = await botClient.GetChatMemberAsync(chatID, user.Id);
+			ChatMember member = new ChatMember();
+			try
+			{
+				await botClient.GetChatMemberAsync(chatID, user.Id);
+			}
+			catch(Exception ex)
+			{
+				Log.Write(LogLevel.NORMAL, "MedocTelegram: OnCallbackQueryReceived(): Cannot get chat member - probably timeout\r\n" + ex.Message);
+				return;
+			}
 
 			switch (data)
 			{
@@ -336,17 +390,6 @@ namespace MedocUpdates
 				}
 			default:
 				{
-					try
-					{
-						await botClient.AnswerCallbackQueryAsync(
-							callbackQuery.Id,
-							"Unknown callback query received");
-					}
-					catch (Exception ex)
-					{
-						Log.Write(LogLevel.NORMAL, "MedocTelegram: OnCallbackQueryReceived(): Exception error\r\n" + ex.Message);
-					}
-
 					Log.Write(LogLevel.NORMAL, "MedocTelegram: OnCallbackQueryReceived(): Chat #" + chatID + " has sent an unknown callback query (" + data + ", by @" + member.User + ")");
 
 					break;

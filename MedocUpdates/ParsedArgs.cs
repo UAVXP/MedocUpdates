@@ -65,6 +65,21 @@ namespace MedocUpdates
 			}
 		}
 
+		public static bool GetToken(string token)
+		{
+			if (args.Count <= 0)
+				return false;
+
+			ArgsPair pair = args.FirstOrDefault(element => element.Token.Equals(token));
+			if (pair == null)
+				return false;
+
+			if(pair.Token.Trim().Length <= 0) // Something is wrong here
+				return false;
+
+			return true;
+		}
+
 		public static string GetArgument(string token)
 		{
 			if(args.Count <= 0)

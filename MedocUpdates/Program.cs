@@ -22,13 +22,14 @@ namespace MedocUpdates
 			SessionStorage.Restore();
 
 			Log.Init();
+			Log.Write("");
 			Log.Write(String.Format("MedocUpdates: Initializing version {0}...", Assembly.GetEntryAssembly().GetName().Version));
 
 			Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain());
 
-			Log.Write("MedocUpdates: Shutting down the application\r\n");
+			Log.Write("MedocUpdates: Shutting down the application");
 			SessionStorage.Save();
 		}
     }

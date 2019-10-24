@@ -20,7 +20,6 @@ namespace MedocUpdates
 		MedocInternal localmedoc = new MedocInternal();
 		MedocTelegram telegram = new MedocTelegram();
 
-
 		// https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.control.invoke?redirectedfrom=MSDN&view=netframework-4.7.2#System_Windows_Forms_Control_Invoke_System_Delegate_
 		MedocNetwork network;
 		public delegate void RefreshVersionStatus();
@@ -31,6 +30,7 @@ namespace MedocUpdates
 
 		public frmMain()
 		{
+			Log.Write(LogLevel.EXPERT, "Loading main frame");
 			InitializeComponent();
 
 			// Network checking
@@ -129,8 +129,6 @@ namespace MedocUpdates
 				{
 					trayIcon.ShowBalloonTip(5000, "M.E.Doc update has been released!",	labelVersion.Text + "\r\n" +
 																						labelLocalVersion.Text, ToolTipIcon.Info);
-
-					telegram.SendMessageAll(String.Format("Update from {0} to {1} is available", localversion, version));
 				}
 				else
 				{
@@ -139,6 +137,9 @@ namespace MedocUpdates
 																				labelVersion.Text + "\r\n" +
 																				labelLocalVersion.Text, ToolTipIcon.Info);
 				}
+
+				if(ParsedArgs.GetToken("telegramforcemsg") || localversion != version)
+					telegram.SendMessageAll(String.Format("Update from {0} to {1} is available", localversion, version));
 			}
 			else
 			{

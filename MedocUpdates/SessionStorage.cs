@@ -180,6 +180,10 @@ namespace MedocUpdates
 			{
 				Log.Write(LogLevel.NORMAL, true, "SessionStorage: Cannot retrieve settings - wrong file structure\r\n" + ex.Message);
 			}
+			catch(Exception ex)
+			{
+				Log.Write(LogLevel.NORMAL, true, "SessionStorage: Error occured while loading app settings\r\n" + ex.Message);
+			}
 
 			filestream.Close();
 			
