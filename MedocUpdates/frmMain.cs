@@ -166,6 +166,9 @@ namespace MedocUpdates
 
 		private void frmMain_Load(object sender, EventArgs e)
 		{
+			if(ParsedArgs.GetToken("minimize"))
+				this.WindowState = FormWindowState.Minimized;
+
 			this.Text += " - " + Assembly.GetEntryAssembly().GetName().Version;
 
 			CheckingRoutine();
