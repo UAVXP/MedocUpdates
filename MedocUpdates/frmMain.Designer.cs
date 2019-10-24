@@ -33,6 +33,7 @@
 			this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.delayNotificationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.labelVersion = new System.Windows.Forms.Label();
@@ -44,7 +45,6 @@
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.timerUpdate = new System.Windows.Forms.Timer(this.components);
-			this.delayNotificationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
@@ -67,6 +67,7 @@
             this.delayNotificationsToolStripMenuItem,
             this.exitToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
+			this.contextMenuStrip1.OwnerItem = this.fileToolStripMenuItem;
 			this.contextMenuStrip1.Size = new System.Drawing.Size(182, 70);
 			// 
 			// checkForUpdatesToolStripMenuItem
@@ -75,6 +76,13 @@
 			this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
 			this.checkForUpdatesToolStripMenuItem.Text = "Check for updates";
 			this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
+			// 
+			// delayNotificationsToolStripMenuItem
+			// 
+			this.delayNotificationsToolStripMenuItem.Name = "delayNotificationsToolStripMenuItem";
+			this.delayNotificationsToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+			this.delayNotificationsToolStripMenuItem.Text = "Delay notifications...";
+			this.delayNotificationsToolStripMenuItem.Click += new System.EventHandler(this.delayNotificationsToolStripMenuItem_Click);
 			// 
 			// exitToolStripMenuItem
 			// 
@@ -131,14 +139,14 @@
 			this.flowDownloads.AutoScroll = true;
 			this.flowDownloads.Location = new System.Drawing.Point(12, 72);
 			this.flowDownloads.Name = "flowDownloads";
-			this.flowDownloads.Size = new System.Drawing.Size(661, 100);
+			this.flowDownloads.Size = new System.Drawing.Size(661, 187);
 			this.flowDownloads.TabIndex = 3;
 			// 
 			// labelLocalVersion
 			// 
 			this.labelLocalVersion.AutoSize = true;
 			this.labelLocalVersion.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.labelLocalVersion.Location = new System.Drawing.Point(42, 225);
+			this.labelLocalVersion.Location = new System.Drawing.Point(42, 271);
 			this.labelLocalVersion.Name = "labelLocalVersion";
 			this.labelLocalVersion.Size = new System.Drawing.Size(182, 18);
 			this.labelLocalVersion.TabIndex = 4;
@@ -164,13 +172,6 @@
 			// 
 			this.timerUpdate.Interval = 10000;
 			this.timerUpdate.Tick += new System.EventHandler(this.timerUpdate_Tick);
-			// 
-			// delayNotificationsToolStripMenuItem
-			// 
-			this.delayNotificationsToolStripMenuItem.Name = "delayNotificationsToolStripMenuItem";
-			this.delayNotificationsToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-			this.delayNotificationsToolStripMenuItem.Text = "Delay notifications...";
-			this.delayNotificationsToolStripMenuItem.Click += new System.EventHandler(this.delayNotificationsToolStripMenuItem_Click);
 			// 
 			// frmMain
 			// 
