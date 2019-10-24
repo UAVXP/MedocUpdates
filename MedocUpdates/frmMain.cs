@@ -101,6 +101,13 @@ namespace MedocUpdates
 
 
 				MedocVersion localversion = localmedoc.LocalVersion;
+				if(localversion.IsEmpty())
+				{
+					Log.Write("Application cannot get a local version of M.E.Doc installation.");
+					MessageBox.Show("This application must be ran only on systems with M.E.Doc installed.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+					return;
+				}
 				//localversion = "11.01.021";
 				labelLocalVersion.Text = "Latest local version: " + localversion;
 

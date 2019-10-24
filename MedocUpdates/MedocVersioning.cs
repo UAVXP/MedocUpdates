@@ -32,7 +32,12 @@ namespace MedocUpdates
 			set
 			{
 				if (value.Length <= 0 || value.Length > "xx.xx.xxx".Length)
-					throw new Exception("Wrong version passed");
+				{
+					Log.Write(LogLevel.EXPERT, "MedocVersion: Wrong version string has passed to object");
+					return;
+				}
+
+				// TODO: Parse those with new ScanFormatted class maybe
 
 #if PARSE_VERSION_USING_REGEX
 				//Regex regex = new Regex(@"\d{2}.\d{2}.\d{3}");
@@ -42,12 +47,25 @@ namespace MedocUpdates
 				string[] values = value.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
 #endif
 				if (values.Length <= 0 || values.Length > 3)
-					throw new Exception("Cannot parse version");
+				{
+					Log.Write(LogLevel.EXPERT, String.Format("MedocVersion: Version string contains unknown version format ({0} numbers)", values.Length));
+					return;
+				}
 
 				if (!int.TryParse(values[0], out this.rawfirst) ||
 					!int.TryParse(values[1], out this.rawsecond) ||
 					!int.TryParse(values[2], out this.rawthird))
-					throw new Exception("Wrong numbers parsed");
+				{
+					Log.Write(LogLevel.EXPERT,
+						String.Format("MedocVersion: Cannot parse one of the version string values (Values are: {0}, {1} and {2})", values[0], values[1], values[2]));
+
+					// Clear a mess
+					this.rawfirst = 0;
+					this.rawsecond = 0;
+					this.rawthird = 0;
+
+					return;
+				}
 
 				this.first = values[0];
 				this.second = values[1];
