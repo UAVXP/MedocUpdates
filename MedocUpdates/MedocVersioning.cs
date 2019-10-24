@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace MedocUpdates
 {
+	// FIXME: Implement comparison with null, and nullable object overall
 	public class MedocVersion : IEquatable<MedocVersion>
 	{
 		// Used for calculation and comparison
@@ -170,6 +171,12 @@ namespace MedocUpdates
 					(this.first == "" &&
 					this.second == "" &&
 					this.third == "");
+		}
+
+		public static bool IsVersion(string value, out MedocVersion version)
+		{
+			version = new MedocVersion(value);
+			return !version.IsEmpty();
 		}
 	}
 }

@@ -21,14 +21,6 @@ namespace MedocUpdates
 		{
 			get
 			{
-				/*
-					RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\M.E.Doc\\M.E.Doc");
-					if (key == null)
-						return "";
-
-					return key.GetSubKeyNames()[0]; // FIXME: Might be wrong maybe? What if there would be many subkeys before the version one?
-				*/
-
 				// M.E.Doc direct integration test
 				//DMFEnvironment env = new DMFEnvironment();
 				//ObjectProvider obj = new ObjectProvider(env);
@@ -37,15 +29,18 @@ namespace MedocUpdates
 				//string test = Globals.PrgVersion;
 				//return test;
 
-				// TODO: Do a fallback way - through Software\\M.E.Doc\\M.E.Doc subkey name
 				// TODO: Make a proper cache for this? Maybe by time or something else
 				MedocVersion tempVersion = new MedocVersion();
 
 				//GetDSTVersion(out tempVersion); // Old version detection
-				GetLastUpdateVersion(out tempVersion); // New, more reliable version detection
+				if(GetLastUpdateVersion(out tempVersion)) // New, more reliable version detection
+					return tempVersion;
 
-				Log.Write(LogLevel.NORMAL, "MedocInternal: Retrieving local version");
-				return tempVersion;
+				if (GetLocalDistributionVersion(out tempVersion))
+					return tempVersion;
+
+				Log.Write(LogLevel.BASIC, "MedocInternal: Retrieving local version has been failed. Did you installed M.E.Doc on this system?");
+				return "";
 			}
 		}
 
@@ -146,6 +141,69 @@ namespace MedocUpdates
 			}
 
 			Log.Write(LogLevel.NORMAL, "MedocInternal: Cannot get the APPDATA path from registry");
+			return false;
+		}
+
+		public static bool GetLocalDistributionVersion(out MedocVersion version)
+		{
+			version = new MedocVersion();
+
+			// Getting a subkey
+			string[] regPaths = new string[1] {
+				"Software\\M.E.Doc\\M.E.Doc",
+			};
+
+			RegistryKey key;
+
+			foreach (string regPath in regPaths)
+			{
+				key = Registry.LocalMachine.OpenSubKey(regPath);
+				if (key != null)
+				{
+					string[] versions = key.GetSubKeyNames();
+
+					// Find the latest subkey from all
+					MedocVersion latestVersion = new MedocVersion();
+					foreach (string versionStr in versions)
+					{
+						MedocVersion testVersion = new MedocVersion();
+						if (!MedocVersion.IsVersion(versionStr, out testVersion))
+							continue;
+
+						if(testVersion > latestVersion)
+							latestVersion = testVersion;
+					}
+
+					version = latestVersion;
+					return true;
+				}
+			}
+
+			foreach (string regPath in regPaths)
+			{
+				key = Registry.CurrentUser.OpenSubKey(regPath);
+				if (key != null)
+				{
+					string[] versions = key.GetSubKeyNames();
+
+					// Find the latest subkey from all
+					MedocVersion latestVersion = new MedocVersion();
+					foreach (string versionStr in versions)
+					{
+						MedocVersion testVersion = new MedocVersion();
+						if (!MedocVersion.IsVersion(versionStr, out testVersion))
+							continue;
+
+						if (testVersion > latestVersion)
+							latestVersion = testVersion;
+					}
+
+					version = latestVersion;
+					return true;
+				}
+			}
+
+			Log.Write(LogLevel.NORMAL, "MedocInternal: Cannot get the PATH path from registry");
 			return false;
 		}
 
