@@ -58,3 +58,5 @@ Services:
 	https://docs.microsoft.com/en-us/dotnet/framework/windows-services/how-to-add-installers-to-your-service-application
 	https://docs.microsoft.com/en-us/dotnet/framework/windows-services/how-to-start-services
 	https://metanit.com/sharp/tutorial/21.1.php
+
++When updates are performing, do something with user be possible to Check for updates and frick up the buttons

@@ -27,6 +27,7 @@ namespace MedocUpdates
 
 
 		bool isMinimizedMessageShown = false;
+		//int lastDownloadsCount = 0;
 
 		public frmMain()
 		{
@@ -82,7 +83,7 @@ namespace MedocUpdates
 		private void CheckingRoutine()
 		{
 			// Cleaning up a bit
-			flowDownloads.Controls.Clear();
+			//flowDownloads.Controls.Clear();
 
 			labelVersion.Text = "Checking...";
 			Log.Write("Checking for updates on the medoc.ua server");
@@ -114,18 +115,72 @@ namespace MedocUpdates
 				Log.Write(labelVersion.Text);
 				Log.Write(labelLocalVersion.Text);
 
-				MedocDownloadItem[] items;
-				success = medoc.GetItems(out items);
-				if (success)
+				// Does some updates are performing now? Then don't recreate the buttons
+				// FIXME: Still can be a better solution probably
+				bool isStillUpdating = false;
+				foreach(DownloadButton button in flowDownloads.Controls)
 				{
-					foreach (MedocDownloadItem item in items)
+					if(button.IsUpdating)
 					{
-						DownloadButton btn = new DownloadButton(item);
-						btn.IsHighlighted = (item.version > localversion);
-						btn.FileDownloadedAndRunned += Btn_FileDownloadedAndRunned;
-						flowDownloads.Controls.Add(btn);
+						isStillUpdating = true;
+						break;
+					}
+				}
 
-					//	Console.WriteLine("Added {0}", item.link);
+				if(!isStillUpdating)
+				{
+					MedocDownloadItem[] items;
+					success = medoc.GetItems(out items);
+					if (success)
+					{
+						/*
+							if (lastDownloadsCount != items.Length)
+							{
+								// Initial download items update
+								//if(lastDownloadsCount == 0)
+								if(false) // Test
+								{
+									flowDownloads.Controls.Clear();
+									foreach (MedocDownloadItem item in items)
+									{
+										DownloadButton btn = new DownloadButton(item);
+										btn.IsHighlighted = (item.version > localversion);
+										btn.FileDownloadedAndRunned += Btn_FileDownloadedAndRunned;
+										flowDownloads.Controls.Add(btn);
+
+										//	Console.WriteLine("Added {0}", item.link);
+									}
+								}
+								else // Update count was changed since the last checking for updates
+								{
+									// Determine what count should we add to existing download items
+									int newItemsCount = items.Length - lastDownloadsCount;
+									int i = 0;
+									for (; newItemsCount > 0; newItemsCount--, i++)
+									{
+										//MedocDownloadItem item = items[newItemsCount-1]; // Reverse order
+										MedocDownloadItem item = items[i];
+										DownloadButton btn = new DownloadButton(item);
+										btn.IsHighlighted = (item.version > localversion);
+										btn.FileDownloadedAndRunned += Btn_FileDownloadedAndRunned;
+										flowDownloads.Controls.Add(btn); // This whole thing might be working if I could add to the begin of the Controls
+									}
+								}
+
+								lastDownloadsCount = items.Length;
+							}
+						*/
+
+						flowDownloads.Controls.Clear();
+						foreach (MedocDownloadItem item in items)
+						{
+							DownloadButton btn = new DownloadButton(item);
+							btn.IsHighlighted = (item.version > localversion);
+							btn.FileDownloadedAndRunned += Btn_FileDownloadedAndRunned;
+							flowDownloads.Controls.Add(btn);
+
+							//	Console.WriteLine("Added {0}", item.link);
+						}
 					}
 				}
 

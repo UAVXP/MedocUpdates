@@ -32,6 +32,13 @@ namespace MedocUpdates
 				return updateFilename;
 			}
 		}
+		public bool IsUpdating
+		{
+			get
+			{
+				return webclient != null;
+			}
+		}
 
 
 		public event EventHandler FileDownloadedAndRunned = delegate { };
@@ -64,10 +71,8 @@ namespace MedocUpdates
 			Process.Start(item.link); // Open URL in the default browser
 		}
 
-		private void llblDownloadRun_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		private void UpdateRoutine()
 		{
-			llblDownloadRun.Enabled = false;
-
 			if (File.Exists(this.updateFilename))
 			{
 				RunUpdate();
@@ -81,21 +86,20 @@ namespace MedocUpdates
 				return;
 			}
 
-			webclient = new WebClient();
-			webclient.DownloadFileCompleted += WebClient_DownloadFileCompleted;
-			webclient.DownloadProgressChanged += WebClient_DownloadProgressChanged;
+			// TODO: Dispose webclient here probably?
 
-			Uri fileURI = new Uri(item.link);
-			webclient.DownloadFileAsync(fileURI, this.zipFilename);
+			RunDownload();
+		}
 
-			pbDownloadRun.Visible = true;
+		private void llblDownloadRun_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			UpdateRoutine();
 		}
 
 		private void RunUpdate()
 		{
-			// FIXME: Are those even needed? frmMain is updating after installing an update anyways
-			llblDownloadRun.Enabled = true;
-			pbDownloadRun.Visible = false;
+			if(!File.Exists(this.updateFilename))
+				return;
 
 			// The initial update.exe process
 			Process proc = new Process();
@@ -153,8 +157,26 @@ namespace MedocUpdates
 
 		private void UnpackUpdate()
 		{
-			// Unzip and run
-			ZipArchive arch = ZipFile.OpenRead(this.zipFilename);
+			ZipArchive arch = null;
+			try
+			{
+				// Unzip and run
+				arch = ZipFile.OpenRead(this.zipFilename);
+			}
+			catch(Exception ex)
+			{
+				Log.Write(LogLevel.NORMAL, String.Format("{0} is corrupted, trying to redownload\r\n{1}", this.zipFilename, ex.Message));
+				MessageBox.Show(String.Format("{0} is corrupted, trying to redownload\r\n{1}", this.zipFilename, ex.Message));
+
+				File.Delete(this.zipFilename);
+			}
+
+			// Something went wrong with opening an archive.
+			if (arch == null)
+			{
+				RunDownload();
+				return;
+			}
 
 			//ZipArchiveEntry entry = arch.GetEntry(this.updateFilename);
 			//Stream stream = entry.Open();
@@ -163,11 +185,39 @@ namespace MedocUpdates
 			arch.Dispose();
 		}
 
+		public void RunDownload()
+		{
+			if(webclient != null)
+			{
+			//	return;
+				webclient.CancelAsync();
+				webclient.Dispose();
+				webclient = null;
+			}
+
+			llblDownloadRun.Enabled = false;
+
+			webclient = new WebClient();
+			webclient.DownloadFileCompleted += WebClient_DownloadFileCompleted;
+			webclient.DownloadProgressChanged += WebClient_DownloadProgressChanged;
+
+			Uri fileURI = new Uri(item.link);
+			webclient.DownloadFileAsync(fileURI, this.zipFilename);
+
+			pbDownloadRun.Visible = true;
+		}
+
 		private void WebClient_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
 		{
+			if(webclient != null)
+				webclient.Dispose();
+
 			UnpackUpdate();
 
 			RunUpdate();
+
+			llblDownloadRun.Enabled = true;
+			pbDownloadRun.Visible = false;
 		}
 
 		private void WebClient_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
