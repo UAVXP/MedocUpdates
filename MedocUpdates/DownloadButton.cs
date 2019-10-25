@@ -55,6 +55,16 @@ namespace MedocUpdates
 			this.updateFilename = Path.ChangeExtension(this.zipFilename, ".upd");
 		}
 
+		~DownloadButton()
+		{
+			if (webclient != null)
+			{
+				webclient.CancelAsync();
+				webclient.Dispose();
+				webclient = null;
+			}
+		}
+
 		private void DownloadButton_Load(object sender, EventArgs e)
 		{
 			if (this.IsHighlighted)
@@ -102,10 +112,15 @@ namespace MedocUpdates
 				return;
 
 			// The initial update.exe process
+			// TODO: try-catch this
 			Process proc = new Process();
 			proc.StartInfo = new ProcessStartInfo(this.updateFilename);
 			proc.Start();
 			proc.WaitForExit();
+
+			proc.Close();
+			proc.Dispose();
+			proc = null;
 
 			//FileDownloadedAndRunned.Invoke(this, new EventArgs()); // M.E.Doc is still updating at this point. Need to check the process
 
@@ -150,6 +165,10 @@ namespace MedocUpdates
 
 			//updateProc.Exited += UpdateProc_Exited; // Not working, and also not needed, because we need to block the app until update installation is done
 			updateProc.WaitForExit();
+
+			updateProc.Close();
+			updateProc.Dispose();
+			updateProc = null;
 
 			// And only now we can update the main frame
 			FileDownloadedAndRunned.Invoke(this, new EventArgs());

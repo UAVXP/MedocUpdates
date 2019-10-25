@@ -276,6 +276,8 @@ namespace MedocUpdates
 		{
 			frmSettings settings = new frmSettings();
 			settings.ShowDialog();
+			settings.Dispose();
+			settings = null;
 		}
 
 		private void delayNotificationsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -284,6 +286,9 @@ namespace MedocUpdates
 			delay.Delay = SessionStorage.inside.NotificationDelay; // timerUpdate.Interval
 			delay.ShowDialog();
 			Console.WriteLine(SessionStorage.inside.NotificationDelay);
+
+			delay.Dispose();
+			delay = null;
 		}
 
 		private void frmMain_Resize(object sender, EventArgs e)
