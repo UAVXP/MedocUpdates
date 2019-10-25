@@ -22,9 +22,10 @@ Logging every operation (like parsing, checking for updates, etc.)
 "Disable all notifications" setting
 Various notifications control (enable/disable)
 Rename "Delay notifications" to "Checking updates interval"
--Make updates to M.E.Doc server through the keyboard button in Telegram message
+Make updates to M.E.Doc server through the keyboard button in Telegram message
 	When someone pressed the button - it should be disabled/removed from other subscribers (or just does nothing on press)
 	+Update installation program needs to be operated
+	Make a button that will download all of the needed .zip-files from the downloads
 
 +Need to get previous update_*.log, if the latest one doesn't contain DSTVERSION in it. Also should do it recursively
 +Setting for downloads folder - to download and run updates immediately through the application
@@ -32,8 +33,8 @@ Rename "Delay notifications" to "Checking updates interval"
 +Callback on Internet connection became online
 
 +Settings: Enable/disable .upd file removing after update installation
-?Application should notice the user that M.E.Doc hasn't been updated or installed (unfortunately, it should be for this app to work properly)
-	Or just assume that M.E.Doc version that has been installed (and not updated) - is the latest from the downloads' page Distribution section
++Application should notice the user that M.E.Doc hasn't been updated or installed
+	-Or just assume that M.E.Doc version that has been installed (and not updated) - is the latest from the downloads' page Distribution section
 		Could be wrong! Then ask user, what version he'd been installed
 	+Latest installed distribution (not update) version is stored at HKLM\HKCU\Software\M.E.Doc\M.E.Doc subkey
 
@@ -51,3 +52,9 @@ Make an app updater
 	"-minimize" command-line parameter
 ?"Repeat notifications" setting
 Make guardian app, that will run the main app and store stdout/stderr output (like a batch file doing it now)
+
+Services:
+	https://docs.microsoft.com/en-us/dotnet/framework/windows-services/walkthrough-creating-a-windows-service-application-in-the-component-designer
+	https://docs.microsoft.com/en-us/dotnet/framework/windows-services/how-to-add-installers-to-your-service-application
+	https://docs.microsoft.com/en-us/dotnet/framework/windows-services/how-to-start-services
+	https://metanit.com/sharp/tutorial/21.1.php
