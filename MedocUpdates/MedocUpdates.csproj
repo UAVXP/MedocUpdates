@@ -126,10 +126,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BuildInfo.tt</DependentUpon>
     </Compile>
-    <Compile Include="sscanf\ScanFormatted.cs" />
+    <Compile Include="External\sscanf\ScanFormatted.cs" />
     <Compile Include="SessionStorage.cs" />
     <Compile Include="MedocTelegram.cs" />
-    <Compile Include="sscanf\TextParser.cs" />
+    <Compile Include="External\sscanf\TextParser.cs" />
     <Compile Include="TimeChooser.cs">
       <SubType>UserControl</SubType>
     </Compile>
