@@ -92,6 +92,12 @@ namespace MedocUpdates
 			if (success)
 			{
 				MedocVersion version = medoc.GetLatestVersion();
+				if (!MedocVersion.IsValid(version))
+				{
+					Log.Write("Application cannot get the latest remote M.E.Doc version");
+					return;
+				}
+
 				//version = "11.01.023";
 				labelVersion.Text = "Latest version: " + version;
 
@@ -102,7 +108,7 @@ namespace MedocUpdates
 
 
 				MedocVersion localversion = localmedoc.LocalVersion;
-				if(localversion.IsEmpty())
+				if(!MedocVersion.IsValid(version))
 				{
 					Log.Write("Application cannot get a local version of M.E.Doc installation.");
 					MessageBox.Show("This application must be ran only on systems with M.E.Doc installed.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);

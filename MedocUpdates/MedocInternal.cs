@@ -171,7 +171,7 @@ namespace MedocUpdates
 				foreach (string versionStr in versions)
 				{
 					MedocVersion testVersion = new MedocVersion();
-					if (!MedocVersion.IsVersion(versionStr, out testVersion))
+					if (!MedocVersion.GetVersion(versionStr, out testVersion))
 						continue;
 
 					if(testVersion > latestVersion)
@@ -198,7 +198,7 @@ namespace MedocUpdates
 				foreach (string versionStr in versions)
 				{
 					MedocVersion testVersion = new MedocVersion();
-					if (!MedocVersion.IsVersion(versionStr, out testVersion))
+					if (!MedocVersion.GetVersion(versionStr, out testVersion))
 						continue;
 
 					if (testVersion > latestVersion)

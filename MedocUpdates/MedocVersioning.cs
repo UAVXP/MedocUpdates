@@ -196,10 +196,15 @@ namespace MedocUpdates
 					this.third == "");
 		}
 
-		public static bool IsVersion(string value, out MedocVersion version)
+		public static bool IsValid(MedocVersion version)
+		{
+			return version != null && !version.IsEmpty();
+		}
+
+		public static bool GetVersion(string value, out MedocVersion version)
 		{
 			version = new MedocVersion(value);
-			return !version.IsEmpty();
+			return IsValid(version);
 		}
 	}
 }
