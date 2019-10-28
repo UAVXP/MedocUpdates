@@ -59,7 +59,7 @@
 			// 
 			this.lblTelegramToken.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.lblTelegramToken.AutoSize = true;
-			this.lblTelegramToken.Location = new System.Drawing.Point(91, 185);
+			this.lblTelegramToken.Location = new System.Drawing.Point(88, 281);
 			this.lblTelegramToken.Name = "lblTelegramToken";
 			this.lblTelegramToken.Size = new System.Drawing.Size(84, 13);
 			this.lblTelegramToken.TabIndex = 3;
@@ -68,7 +68,7 @@
 			// tbTelegramToken
 			// 
 			this.tbTelegramToken.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-			this.tbTelegramToken.Location = new System.Drawing.Point(181, 182);
+			this.tbTelegramToken.Location = new System.Drawing.Point(181, 278);
 			this.tbTelegramToken.Name = "tbTelegramToken";
 			this.tbTelegramToken.Size = new System.Drawing.Size(150, 20);
 			this.tbTelegramToken.TabIndex = 2;
@@ -77,7 +77,7 @@
 			// 
 			this.lblDownloadPath.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.lblDownloadPath.AutoSize = true;
-			this.lblDownloadPath.Location = new System.Drawing.Point(88, 159);
+			this.lblDownloadPath.Location = new System.Drawing.Point(88, 255);
 			this.lblDownloadPath.Name = "lblDownloadPath";
 			this.lblDownloadPath.Size = new System.Drawing.Size(87, 13);
 			this.lblDownloadPath.TabIndex = 5;
@@ -86,7 +86,7 @@
 			// tbDownloadsPath
 			// 
 			this.tbDownloadsPath.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-			this.tbDownloadsPath.Location = new System.Drawing.Point(181, 156);
+			this.tbDownloadsPath.Location = new System.Drawing.Point(181, 252);
 			this.tbDownloadsPath.Name = "tbDownloadsPath";
 			this.tbDownloadsPath.Size = new System.Drawing.Size(150, 20);
 			this.tbDownloadsPath.TabIndex = 4;
@@ -96,7 +96,7 @@
 			this.cmbLogLevels.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.cmbLogLevels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cmbLogLevels.FormattingEnabled = true;
-			this.cmbLogLevels.Location = new System.Drawing.Point(181, 129);
+			this.cmbLogLevels.Location = new System.Drawing.Point(181, 225);
 			this.cmbLogLevels.Name = "cmbLogLevels";
 			this.cmbLogLevels.Size = new System.Drawing.Size(150, 21);
 			this.cmbLogLevels.TabIndex = 7;
@@ -105,7 +105,7 @@
 			// 
 			this.lblLogLevels.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.lblLogLevels.AutoSize = true;
-			this.lblLogLevels.Location = new System.Drawing.Point(105, 132);
+			this.lblLogLevels.Location = new System.Drawing.Point(88, 228);
 			this.lblLogLevels.Name = "lblLogLevels";
 			this.lblLogLevels.Size = new System.Drawing.Size(70, 13);
 			this.lblLogLevels.TabIndex = 6;
@@ -114,7 +114,7 @@
 			// btnCancel
 			// 
 			this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-			this.btnCancel.Location = new System.Drawing.Point(236, 228);
+			this.btnCancel.Location = new System.Drawing.Point(236, 324);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
 			this.btnCancel.TabIndex = 9;
@@ -125,7 +125,7 @@
 			// btnSave
 			// 
 			this.btnSave.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-			this.btnSave.Location = new System.Drawing.Point(155, 228);
+			this.btnSave.Location = new System.Drawing.Point(155, 324);
 			this.btnSave.Name = "btnSave";
 			this.btnSave.Size = new System.Drawing.Size(75, 23);
 			this.btnSave.TabIndex = 8;
@@ -140,7 +140,7 @@
 			// btnDownloadsPathBrowse
 			// 
 			this.btnDownloadsPathBrowse.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-			this.btnDownloadsPathBrowse.Location = new System.Drawing.Point(337, 156);
+			this.btnDownloadsPathBrowse.Location = new System.Drawing.Point(337, 252);
 			this.btnDownloadsPathBrowse.Name = "btnDownloadsPathBrowse";
 			this.btnDownloadsPathBrowse.Size = new System.Drawing.Size(75, 21);
 			this.btnDownloadsPathBrowse.TabIndex = 10;
@@ -152,9 +152,9 @@
 			// 
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label2.Location = new System.Drawing.Point(38, 45);
+			this.label2.Location = new System.Drawing.Point(12, 45);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(393, 69);
+			this.label2.Size = new System.Drawing.Size(442, 123);
 			this.label2.TabIndex = 0;
 			this.label2.Text = resources.GetString("label2.Text");
 			this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -163,7 +163,8 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(466, 274);
+			this.ClientSize = new System.Drawing.Size(466, 370);
+			this.ControlBox = false;
 			this.Controls.Add(this.btnDownloadsPathBrowse);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnSave);

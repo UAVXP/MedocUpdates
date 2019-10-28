@@ -168,6 +168,74 @@
         {
             "token": "frmSettings.Text",
             "value": "Medoc Updates - Settings"
+        },
+        {
+            "token": "frmNotificationsDelay.btnDone.Text",
+            "value": "Delay"
+        },
+        {
+            "token": "frmNotificationsDelay.btnCancel.Text",
+            "value": "Cancel"
+        },
+        {
+            "token": "frmNotificationsDelay.rbByHour.Text",
+            "value": "by a hour"
+        },
+        {
+            "token": "frmNotificationsDelay.rbBy5Hours.Text",
+            "value": "by a 5 hours"
+        },
+        {
+            "token": "frmNotificationsDelay.rbByManual.Text",
+            "value": "manually"
+        },
+        {
+            "token": "frmNotificationsDelay.rbByCustom.Text",
+            "value": "custom interval:"
+        },
+        {
+            "token": "frmNotificationsDelay.gbDelays.Text",
+            "value": "Delay notifications..."
+        },
+        {
+            "token": "frmNotificationsDelay.Text",
+            "value": "Medoc Updates - Delay notifications"
+        },
+        {
+            "token": "frmFirstRun.label1.Text",
+            "value": "Hello. Looks like you've run this application for the first time.\r\nLet's proceed you through the important settings."
+        },
+        {
+            "token": "frmFirstRun.lblTelegramToken.Text",
+            "value": "Telegram token:"
+        },
+        {
+            "token": "frmFirstRun.lblDownloadPath.Text",
+            "value": "Downloads path:"
+        },
+        {
+            "token": "frmFirstRun.lblLogLevels.Text",
+            "value": "Level of logs:"
+        },
+        {
+            "token": "frmFirstRun.btnCancel.Text",
+            "value": "Quit"
+        },
+        {
+            "token": "frmFirstRun.btnSave.Text",
+            "value": "Next >"
+        },
+        {
+            "token": "frmFirstRun.btnDownloadsPathBrowse.Text",
+            "value": "Browse..."
+        },
+        {
+            "token": "frmFirstRun.label2.Text",
+            "value": "Level of logs - configures log system to log only basic things, some more, or all the things that happen.\r\nDownloads path - a path for downloads, such as zipped M.E.Doc update files.\r\nTelegram token (if any) - A bot token, to notify all bot users with update messages. You can leave it empty.\r\n"
+        },
+        {
+            "token": "frmFirstRun.Text",
+            "value": "Medoc Updates - First run"
         }
     ]
 }

@@ -168,6 +168,74 @@
         {
             "token": "frmSettings.Text",
             "value": "Обновления M.E.Doc - Настройки"
+        },
+        {
+            "token": "frmNotificationsDelay.btnDone.Text",
+            "value": "Отложить"
+        },
+        {
+            "token": "frmNotificationsDelay.btnCancel.Text",
+            "value": "Отмена"
+        },
+        {
+            "token": "frmNotificationsDelay.rbByHour.Text",
+            "value": "каждый час"
+        },
+        {
+            "token": "frmNotificationsDelay.rbBy5Hours.Text",
+            "value": "каждые 5 часов"
+        },
+        {
+            "token": "frmNotificationsDelay.rbByManual.Text",
+            "value": "обновлять только вручную"
+        },
+        {
+            "token": "frmNotificationsDelay.rbByCustom.Text",
+            "value": "пользовательский интервал:"
+        },
+        {
+            "token": "frmNotificationsDelay.gbDelays.Text",
+            "value": "Проверять обновления..."
+        },
+        {
+            "token": "frmNotificationsDelay.Text",
+            "value": "Обновления M.E.Doc - Интервал обновления"
+        },
+        {
+            "token": "frmFirstRun.label1.Text",
+            "value": "Похоже, Вы запускаете это приложение впервые.\r\nДавайте начнём с настройки основных функций программы."
+        },
+        {
+            "token": "frmFirstRun.lblTelegramToken.Text",
+            "value": "Токен Telegram:"
+        },
+        {
+            "token": "frmFirstRun.lblDownloadPath.Text",
+            "value": "Загрузки:"
+        },
+        {
+            "token": "frmFirstRun.lblLogLevels.Text",
+            "value": "Уровень логов:"
+        },
+        {
+            "token": "frmFirstRun.btnCancel.Text",
+            "value": "Выход"
+        },
+        {
+            "token": "frmFirstRun.btnSave.Text",
+            "value": "Далее >"
+        },
+        {
+            "token": "frmFirstRun.btnDownloadsPathBrowse.Text",
+            "value": "Обзор..."
+        },
+        {
+            "token": "frmFirstRun.label2.Text",
+            "value": "Уровень логов - настраивает уровень логирования ошибок и прочей информации. Логи могут содержать как базовую информацию, так и быть более содержательными (полезно для разработчиков).\r\n\r\nЗагрузки - путь к директории, где будут лежать все скачанные файлы установки обновлений. Можно указать папку загрузок Windows по-умолчанию, уже существующую папку с загруженными файлами обновлений, либо иную папку.\r\n\r\nТокен Telegram (есть есть) - Можно указать токен бота в Telegram, и тогда приложение будет отсылать через этого бота уведдомления всем на него подписавшимся. Можно оставить пустым.\r\n"
+        },
+        {
+            "token": "frmFirstRun.Text",
+            "value": "Обновления M.E.Doc - Первый запуск"
         }
     ]
 }
