@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
+using System.Reflection;
 
 namespace MedocUpdates
 {
@@ -48,73 +49,49 @@ namespace MedocUpdates
 		private static string lang = "en"; // SessionStorage
 		private static List<LocLanguage> langstrs = new List<LocLanguage>();
 
-		public static void Init(string lang)
+		public static bool Init(string lang)
 		{
-			// TODO: Implement localization files and parsing of them
-			/*
-			List<LocalizePair> strs = new List<LocalizePair>();
-		//	strs.Add(new LocalizePair("", ""));
-			//strs.Add(new LocalizePair("frmMain_Done", "Done!"));
-			//strs.Add(new LocalizePair("frmMain.trayIcon.Text", "Medoc Updates"));
-			//strs.Add(new LocalizePair("frmMain.checkForUpdatesToolStripMenuItem.Text", "Check for updates"));
-			//strs.Add(new LocalizePair("frmMain.delayNotificationsToolStripMenuItem.Text", "Delay notifications..."));
-			//strs.Add(new LocalizePair("frmMain.exitToolStripMenuItem.Text", "Exit"));
-			//strs.Add(new LocalizePair("frmMain.fileToolStripMenuItem.Text", "File"));
-			//strs.Add(new LocalizePair("frmMain.labelVersion.Text", "VERSION HERE"));
-			//strs.Add(new LocalizePair("frmMain.menuStrip1.Text", "menuStrip1"));
-			//strs.Add(new LocalizePair("frmMain.editToolStripMenuItem.Text", "Edit"));
-			//strs.Add(new LocalizePair("frmMain.settingsToolStripMenuItem.Text", "Settings"));
-			//strs.Add(new LocalizePair("frmMain.labelLocalVersion.Text", "LOCAL VERSION HERE"));
-			//strs.Add(new LocalizePair("frmMain.statusStrip1.Text", "statusStrip1"));
-			//strs.Add(new LocalizePair("frmMain.toolStripStatusLabel1.Text", "toolStripStatusLabel1"));
-			//strs.Add(new LocalizePair("frmMain.Text", "Medoc Updates"));
-			langstrs.Add(new LocLanguage(strs, "en"));
-
-			strs = new List<LocalizePair>();
-			//strs.Add(new LocalizePair("frmMain_Done", "Готово!"));
-			//strs.Add(new LocalizePair("frmMain.trayIcon.Text", "Обновления M.E.Doc"));
-			//strs.Add(new LocalizePair("frmMain.checkForUpdatesToolStripMenuItem.Text", "Проверить обновления"));
-			//strs.Add(new LocalizePair("frmMain.delayNotificationsToolStripMenuItem.Text", "Отложить уведомления..."));
-			//strs.Add(new LocalizePair("frmMain.exitToolStripMenuItem.Text", "Выход"));
-			//strs.Add(new LocalizePair("frmMain.fileToolStripMenuItem.Text", "Файл"));
-			//strs.Add(new LocalizePair("frmMain.labelVersion.Text", "ВЕРСИЯ ЗДЕСЬ"));
-			//strs.Add(new LocalizePair("frmMain.menuStrip1.Text", "menuStrip1"));
-			//strs.Add(new LocalizePair("frmMain.editToolStripMenuItem.Text", "Правка"));
-			//strs.Add(new LocalizePair("frmMain.settingsToolStripMenuItem.Text", "Настройки"));
-			//strs.Add(new LocalizePair("frmMain.labelLocalVersion.Text", "ЛОКАЛЬНАЯ ВЕРСИЯ ЗДЕСЬ"));
-			//strs.Add(new LocalizePair("frmMain.statusStrip1.Text", "statusStrip1"));
-			//strs.Add(new LocalizePair("frmMain.toolStripStatusLabel1.Text", "toolStripStatusLabel1"));
-			//strs.Add(new LocalizePair("frmMain.Text", "Обновления M.E.Doc"));
-
-			string json = File.ReadAllText("ru.json");
-			LocFile locfile = JsonConvert.DeserializeObject<LocFile>(json);
-			strs.AddRange(locfile.tokens);
-
 			//LocFile locfileWrite = new LocFile();
 			//locfileWrite.language = "English";
 			//locfileWrite.tokens = strs;
 			//string jsonWrite = JsonConvert.SerializeObject(locfileWrite, Formatting.Indented);
 			//File.WriteAllText("en.json", jsonWrite);
 
-			langstrs.Add(new LocLanguage(strs, "ru"));
-			*/
-
 			List<LocalizePair> strs;
 			string json;
 			LocFile locfile;
 
-			string[] langfiles = Directory.GetFiles("lang", "*.json");
-			foreach(string langfile in langfiles)
+			string exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			string languagePath = Path.Combine(exePath, "lang");
+
+			if (!Directory.Exists(languagePath))
+				return false;
+
+			string[] langfiles = Directory.GetFiles(languagePath, "*.json");
+			if(langfiles.Length <= 0)
+				return false;
+
+			try
 			{
-				string langname = Path.GetFileNameWithoutExtension(langfile);
-				strs = new List<LocalizePair>();
-				json = File.ReadAllText(langfile);
-				locfile = JsonConvert.DeserializeObject<LocFile>(json);
-				strs.AddRange(locfile.tokens);
-				langstrs.Add(new LocLanguage(strs, langname));
+				foreach(string langfile in langfiles)
+				{
+					string langname = Path.GetFileNameWithoutExtension(langfile);
+
+					strs = new List<LocalizePair>();
+					json = File.ReadAllText(langfile);
+					locfile = JsonConvert.DeserializeObject<LocFile>(json);
+					strs.AddRange(locfile.tokens);
+					langstrs.Add(new LocLanguage(strs, langname));
+				}
+			}
+			catch(Exception ex)
+			{
+				Log.Write(LogLevel.NORMAL, "");
+				return false;
 			}
 
 			Loc.lang = lang;
+			return true;
 		}
 
 		public static string Get(string token)

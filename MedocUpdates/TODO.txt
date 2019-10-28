@@ -9,6 +9,8 @@ MedocInternal.cachedVersion - this needs to be removed when we will be able to d
 	Or better should be the way to force update (invalidate) this
 
 Logging every operation (like parsing, checking for updates, etc.)
+	Write log message level at the log line into the log itself
+
 +Compile under the lowest .NET Framework (.NET Framework 4.7.2) as possibly as I can get
 	Not needed, the server supports that
 
@@ -65,3 +67,4 @@ Small "first run" form (or wizard), where user can define some of the important 
 Localization
 	First - the interface
 	Second - logs (maybe)
+	Loc.Get should have 2nd parameter that defines a default string, if none of the localization file is available
