@@ -96,8 +96,6 @@ namespace MedocUpdates
 				return;
 			}
 
-			// TODO: Dispose webclient here probably?
-
 			RunDownload();
 		}
 
@@ -112,15 +110,21 @@ namespace MedocUpdates
 				return;
 
 			// The initial update.exe process
-			// TODO: try-catch this
-			Process proc = new Process();
-			proc.StartInfo = new ProcessStartInfo(this.updateFilename);
-			proc.Start();
-			proc.WaitForExit();
+			try
+			{
+				Process proc = new Process();
+				proc.StartInfo = new ProcessStartInfo(this.updateFilename);
+				proc.Start();
+				proc.WaitForExit();
 
-			proc.Close();
-			proc.Dispose();
-			proc = null;
+				proc.Close();
+				proc.Dispose();
+				proc = null;
+			}
+			catch(Exception ex)
+			{
+				Log.Write(LogLevel.NORMAL, String.Format("DownloadButton ({0}): Failed to create an update.exe process", this.item.version));
+			}
 
 			//FileDownloadedAndRunned.Invoke(this, new EventArgs()); // M.E.Doc is still updating at this point. Need to check the process
 
