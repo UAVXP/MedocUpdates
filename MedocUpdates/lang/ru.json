@@ -120,6 +120,54 @@
         {
             "token": "DownloadButton.MessageBox.ArchiveCorrupted",
             "value": "Архив {0} повреждён, сейчас предпримется попытка загрузить его заново."
+        },
+        {
+            "token": "frmSettings.gbLogLevels.Text",
+            "value": "Логи"
+        },
+        {
+            "token": "frmSettings.lblLogLevels.Text",
+            "value": "Уровень логов:"
+        },
+        {
+            "token": "frmSettings.cbLogs.Text",
+            "value": "Включить логирование"
+        },
+        {
+            "token": "frmSettings.gbTelegram.Text",
+            "value": "Telegram"
+        },
+        {
+            "token": "frmSettings.lblTelegramToken.Text",
+            "value": "Токен:"
+        },
+        {
+            "token": "frmSettings.btnSave.Text",
+            "value": "Сохранить"
+        },
+        {
+            "token": "frmSettings.btnCancel.Text",
+            "value": "Отмена"
+        },
+        {
+            "token": "frmSettings.gbDownloads.Text",
+            "value": "Настройки загрузок"
+        },
+        {
+            "token": "frmSettings.btnDownloadsPathBrowse.Text",
+            "value": "Обзор..."
+        },
+        {
+            "token": "frmSettings.lblDownloadPath.Text",
+            "value": "Путь к загрузкам:"
+        },
+        {
+            "token": "frmSettings.cbRemoveUpdateFile.Text",
+            "value": "Удалять файлы .upd после их установки"
+        },
+        {
+            "token": "frmSettings.Text",
+            "value": "Обновления M.E.Doc - Настройки"
         }
     ]
 }

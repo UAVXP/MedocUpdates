@@ -39,11 +39,11 @@
 			this.btnSave = new System.Windows.Forms.Button();
 			this.btnCancel = new System.Windows.Forms.Button();
 			this.gbDownloads = new System.Windows.Forms.GroupBox();
+			this.cbRemoveUpdateFile = new System.Windows.Forms.CheckBox();
 			this.btnDownloadsPathBrowse = new System.Windows.Forms.Button();
 			this.lblDownloadPath = new System.Windows.Forms.Label();
 			this.tbDownloadsPath = new System.Windows.Forms.TextBox();
 			this.fbdDownloadPath = new Ookii.Dialogs.WinForms.VistaFolderBrowserDialog();
-			this.cbRemoveUpdateFile = new System.Windows.Forms.CheckBox();
 			this.gbLogLevels.SuspendLayout();
 			this.gbTelegram.SuspendLayout();
 			this.gbDownloads.SuspendLayout();
@@ -65,9 +65,9 @@
 			// 
 			this.cmbLogLevels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cmbLogLevels.FormattingEnabled = true;
-			this.cmbLogLevels.Location = new System.Drawing.Point(91, 42);
+			this.cmbLogLevels.Location = new System.Drawing.Point(103, 42);
 			this.cmbLogLevels.Name = "cmbLogLevels";
-			this.cmbLogLevels.Size = new System.Drawing.Size(121, 21);
+			this.cmbLogLevels.Size = new System.Drawing.Size(109, 21);
 			this.cmbLogLevels.TabIndex = 2;
 			// 
 			// lblLogLevels
@@ -152,6 +152,16 @@
 			this.gbDownloads.TabStop = false;
 			this.gbDownloads.Text = "Download settings";
 			// 
+			// cbRemoveUpdateFile
+			// 
+			this.cbRemoveUpdateFile.AutoSize = true;
+			this.cbRemoveUpdateFile.Location = new System.Drawing.Point(19, 77);
+			this.cbRemoveUpdateFile.Name = "cbRemoveUpdateFile";
+			this.cbRemoveUpdateFile.Size = new System.Drawing.Size(223, 17);
+			this.cbRemoveUpdateFile.TabIndex = 3;
+			this.cbRemoveUpdateFile.Text = "Remove .upd files after update installation";
+			this.cbRemoveUpdateFile.UseVisualStyleBackColor = true;
+			// 
 			// btnDownloadsPathBrowse
 			// 
 			this.btnDownloadsPathBrowse.Location = new System.Drawing.Point(397, 43);
@@ -173,24 +183,14 @@
 			// 
 			// tbDownloadsPath
 			// 
-			this.tbDownloadsPath.Location = new System.Drawing.Point(109, 17);
+			this.tbDownloadsPath.Location = new System.Drawing.Point(120, 17);
 			this.tbDownloadsPath.Name = "tbDownloadsPath";
-			this.tbDownloadsPath.Size = new System.Drawing.Size(363, 20);
+			this.tbDownloadsPath.Size = new System.Drawing.Size(352, 20);
 			this.tbDownloadsPath.TabIndex = 0;
 			// 
 			// fbdDownloadPath
 			// 
 			this.fbdDownloadPath.RootFolder = System.Environment.SpecialFolder.MyComputer;
-			// 
-			// cbRemoveUpdateFile
-			// 
-			this.cbRemoveUpdateFile.AutoSize = true;
-			this.cbRemoveUpdateFile.Location = new System.Drawing.Point(19, 77);
-			this.cbRemoveUpdateFile.Name = "cbRemoveUpdateFile";
-			this.cbRemoveUpdateFile.Size = new System.Drawing.Size(223, 17);
-			this.cbRemoveUpdateFile.TabIndex = 3;
-			this.cbRemoveUpdateFile.Text = "Remove .upd files after update installation";
-			this.cbRemoveUpdateFile.UseVisualStyleBackColor = true;
 			// 
 			// frmSettings
 			// 

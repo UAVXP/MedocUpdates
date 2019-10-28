@@ -120,6 +120,54 @@
         {
             "token": "DownloadButton.MessageBox.ArchiveCorrupted",
             "value": "{0} is corrupted, trying to redownload"
+        },
+        {
+            "token": "frmSettings.gbLogLevels.Text",
+            "value": "Logs"
+        },
+        {
+            "token": "frmSettings.lblLogLevels.Text",
+            "value": "Level of logs:"
+        },
+        {
+            "token": "frmSettings.cbLogs.Text",
+            "value": "Enable logging"
+        },
+        {
+            "token": "frmSettings.gbTelegram.Text",
+            "value": "Telegram"
+        },
+        {
+            "token": "frmSettings.lblTelegramToken.Text",
+            "value": "Token:"
+        },
+        {
+            "token": "frmSettings.btnSave.Text",
+            "value": "Save"
+        },
+        {
+            "token": "frmSettings.btnCancel.Text",
+            "value": "Cancel"
+        },
+        {
+            "token": "frmSettings.gbDownloads.Text",
+            "value": "Download settings"
+        },
+        {
+            "token": "frmSettings.btnDownloadsPathBrowse.Text",
+            "value": "Browse..."
+        },
+        {
+            "token": "frmSettings.lblDownloadPath.Text",
+            "value": "Downloads path:"
+        },
+        {
+            "token": "frmSettings.cbRemoveUpdateFile.Text",
+            "value": "Remove .upd files after update installation"
+        },
+        {
+            "token": "frmSettings.Text",
+            "value": "Medoc Updates - Settings"
         }
     ]
 }
