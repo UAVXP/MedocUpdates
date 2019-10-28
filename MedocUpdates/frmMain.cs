@@ -129,7 +129,7 @@ namespace MedocUpdates
 				if(!MedocVersion.IsValid(version))
 				{
 					Log.Write("Application cannot get a local version of M.E.Doc installation.");
-					MessageBox.Show("This application must be ran only on systems with M.E.Doc installed.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					MessageBox.Show(Loc.Get("frmMain.MessageBox.CheckingRoutine.NoLocalVersion"), "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
 					return;
 				}

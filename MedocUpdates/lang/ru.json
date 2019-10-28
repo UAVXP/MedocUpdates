@@ -66,6 +66,10 @@
             "value": "Веб-версия: {0}"
         },
         {
+            "token": "frmMain.MessageBox.CheckingRoutine.NoLocalVersion",
+            "value": "Это приложение имеет смысл запускать только на компьютерах с установленным M.E.Doc."
+        },
+        {
             "token": "frmMain.labelLocalVersion.Text.CheckingRoutine.LatestLocalVersion",
             "value": "Установленная версия: {0}"
         },
@@ -100,6 +104,22 @@
         {
             "token": "frmMain.trayIcon.BalloonTipText.CheckingRoutine.WindowMinimized",
             "value": "Вы можете развернуть окно нажатием на иконку в трее"
+        },
+        {
+            "token": "DownloadButton.llblDownload.Text",
+            "value": "Загрузить"
+        },
+        {
+            "token": "DownloadButton.labelVersion.Text",
+            "value": "ВЕРСИЯ"
+        },
+        {
+            "token": "DownloadButton.llblDownloadRun.Text",
+            "value": "Обновить"
+        },
+        {
+            "token": "DownloadButton.MessageBox.ArchiveCorrupted",
+            "value": "Архив {0} повреждён, сейчас предпримется попытка загрузить его заново."
         }
     ]
 }

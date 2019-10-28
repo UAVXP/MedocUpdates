@@ -43,10 +43,17 @@ namespace MedocUpdates
 
 		public event EventHandler FileDownloadedAndRunned = delegate { };
 
+		private void InitializeLocalization()
+		{
+			this.llblDownload.Text = Loc.Get("DownloadButton.llblDownload.Text");
+			this.labelVersion.Text = Loc.Get("DownloadButton.labelVersion.Text");
+			this.llblDownloadRun.Text = Loc.Get("DownloadButton.llblDownloadRun.Text");
+		}
 
 		public DownloadButton(MedocDownloadItem item)
 		{
 			InitializeComponent();
+			InitializeLocalization();
 
 			this.item = item;
 			this.labelVersion.Text = item.version;
@@ -196,7 +203,7 @@ namespace MedocUpdates
 			catch(Exception ex)
 			{
 				Log.Write(LogLevel.NORMAL, String.Format("{0} is corrupted, trying to redownload\r\n{1}", this.zipFilename, ex.Message));
-				MessageBox.Show(String.Format("{0} is corrupted, trying to redownload\r\n{1}", this.zipFilename, ex.Message));
+				//MessageBox.Show(String.Format(Loc.Get("DownloadButton.MessageBox.ArchiveCorrupted"), this.zipFilename));
 
 				File.Delete(this.zipFilename);
 			}
