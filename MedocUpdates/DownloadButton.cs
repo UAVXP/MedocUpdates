@@ -123,7 +123,7 @@ namespace MedocUpdates
 			}
 			catch(Exception ex)
 			{
-				Log.Write(LogLevel.NORMAL, String.Format("DownloadButton ({0}): Failed to create an update.exe process", this.item.version));
+				Log.Write(LogLevel.NORMAL, String.Format("DownloadButton ({0}): Failed to create an update.exe process\r\n{1}", this.item.version, ex.Message));
 			}
 
 			//FileDownloadedAndRunned.Invoke(this, new EventArgs()); // M.E.Doc is still updating at this point. Need to check the process
