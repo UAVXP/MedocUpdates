@@ -29,10 +29,28 @@ namespace MedocUpdates
 		bool isMinimizedMessageShown = false;
 		//int lastDownloadsCount = 0;
 
+		private void InitializeLocalization()
+		{
+			this.trayIcon.Text = Loc.Get("frmMain.trayIcon.Text"); // "Medoc Updates";
+			this.checkForUpdatesToolStripMenuItem.Text = Loc.Get("frmMain.checkForUpdatesToolStripMenuItem.Text"); // "Check for updates";
+			this.delayNotificationsToolStripMenuItem.Text = Loc.Get("frmMain.delayNotificationsToolStripMenuItem.Text"); // "Delay notifications...";
+			this.exitToolStripMenuItem.Text = Loc.Get("frmMain.exitToolStripMenuItem.Text"); // "Exit";
+			this.fileToolStripMenuItem.Text = Loc.Get("frmMain.fileToolStripMenuItem.Text"); // "File";
+			this.labelVersion.Text = Loc.Get("frmMain.labelVersion.Text"); // "VERSION HERE";
+			this.menuStrip1.Text = Loc.Get("frmMain.menuStrip1.Text"); // "menuStrip1";
+			this.editToolStripMenuItem.Text = Loc.Get("frmMain.editToolStripMenuItem.Text"); // "Edit";
+			this.settingsToolStripMenuItem.Text = Loc.Get("frmMain.settingsToolStripMenuItem.Text"); // "Settings";
+			this.labelLocalVersion.Text = Loc.Get("frmMain.labelLocalVersion.Text"); // "LOCAL VERSION HERE";
+			this.statusStrip1.Text = Loc.Get("frmMain.statusStrip1.Text"); // "statusStrip1";
+			this.toolStripStatusLabel1.Text = Loc.Get("frmMain.toolStripStatusLabel1.Text"); // "toolStripStatusLabel1";
+			this.Text = Loc.Get("frmMain.Text"); // "Medoc Updates";
+		}
+
 		public frmMain()
 		{
 			Log.Write(LogLevel.EXPERT, "Loading main frame");
 			InitializeComponent();
+			InitializeLocalization();
 
 			// Network checking
 			network = new MedocNetwork(this);
@@ -85,7 +103,7 @@ namespace MedocUpdates
 			// Cleaning up a bit
 			//flowDownloads.Controls.Clear();
 
-			labelVersion.Text = "Checking...";
+			labelVersion.Text = Loc.Get("frmMain.labelVersion.Text.CheckingRoutine");
 			Log.Write("Checking for updates on the medoc.ua server");
 
 			bool success = medoc.RefreshDoc();
@@ -99,7 +117,7 @@ namespace MedocUpdates
 				}
 
 				//version = "11.01.023";
-				labelVersion.Text = "Latest version: " + version;
+				labelVersion.Text = String.Format(Loc.Get("frmMain.labelVersion.Text.CheckingRoutine.LatestVersion"), version);
 
 				//MedocVersion test = new MedocVersion(version);
 
@@ -116,7 +134,7 @@ namespace MedocUpdates
 					return;
 				}
 				//localversion = "11.01.021";
-				labelLocalVersion.Text = "Latest local version: " + localversion;
+				labelLocalVersion.Text = String.Format(Loc.Get("frmMain.labelLocalVersion.Text.CheckingRoutine.LatestLocalVersion"), localversion);
 
 				Log.Write(labelVersion.Text);
 				Log.Write(labelLocalVersion.Text);
@@ -196,25 +214,26 @@ namespace MedocUpdates
 
 				if (localversion != version)
 				{
-					trayIcon.ShowBalloonTip(5000, "M.E.Doc update has been released!",	labelVersion.Text + "\r\n" +
-																						labelLocalVersion.Text, ToolTipIcon.Info);
+					trayIcon.ShowBalloonTip(5000, Loc.Get("frmMain.trayIcon.BalloonTipTitle.CheckingRoutine.UpdateReleased"),
+						labelVersion.Text + "\r\n" + labelLocalVersion.Text, ToolTipIcon.Info);
 				}
 				else
 				{
 					if(this.WindowState != FormWindowState.Minimized)
-						trayIcon.ShowBalloonTip(5000, "No updates for M.E.Doc", "Minimize the app to deny \"no updates\" notifications\r\n" +
+						trayIcon.ShowBalloonTip(5000, Loc.Get("frmMain.trayIcon.BalloonTipTitle.CheckingRoutine.NoUpdates"),
+										String.Format(Loc.Get("frmMain.trayIcon.BalloonTipText.CheckingRoutine.NoUpdates"),
 																				labelVersion.Text + "\r\n" +
-																				labelLocalVersion.Text, ToolTipIcon.Info);
+																				labelLocalVersion.Text), ToolTipIcon.Info);
 				}
 
 				if(ParsedArgs.GetToken("telegramforcemsg") || localversion != version)
-					telegram.SendMessageAll(String.Format("Update from {0} to {1} is available", localversion, version));
+					telegram.SendMessageAll(String.Format(Loc.Get("frmMain.telegram.CheckingRoutine.UpdateAvailable"), localversion, version));
 			}
 			else
 			{
-				labelVersion.Text = "Something went wrong";
+				labelVersion.Text = Loc.Get("frmMain.labelVersion.Text.CheckingRoutine.Error");
 				Log.Write("Cannot connect to medoc.ua");
-				Status("Cannot connect to medoc.ua");
+				Status(Loc.Get("frmMain.Status.CheckingRoutine.CannotConnect"));
 			}
 		}
 
@@ -304,7 +323,8 @@ namespace MedocUpdates
 
 			if(!this.ShowInTaskbar && !isMinimizedMessageShown)
 			{
-				trayIcon.ShowBalloonTip(5000, "Medoc Updates window has been minimized", "You can reach Medoc Updates through the tray icon now", ToolTipIcon.Info);
+				trayIcon.ShowBalloonTip(5000,	Loc.Get("frmMain.trayIcon.BalloonTipTitle.CheckingRoutine.WindowMinimized"),
+												Loc.Get("frmMain.trayIcon.BalloonTipText.CheckingRoutine.WindowMinimized"), ToolTipIcon.Info);
 				isMinimizedMessageShown = true;
 			}
 		}

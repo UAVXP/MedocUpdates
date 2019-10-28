@@ -1,0 +1,105 @@
+{
+  "language": "Русский",
+    "tokens": [
+        {
+            "token": "frmMain_Done",
+            "value": "Готово!"
+        },
+        {
+            "token": "frmMain.trayIcon.Text",
+            "value": "Обновления M.E.Doc"
+        },
+        {
+            "token": "frmMain.checkForUpdatesToolStripMenuItem.Text",
+            "value": "Проверить обновления"
+        },
+        {
+            "token": "frmMain.delayNotificationsToolStripMenuItem.Text",
+            "value": "Отложить уведомления..."
+        },
+        {
+            "token": "frmMain.exitToolStripMenuItem.Text",
+            "value": "Выход"
+        },
+        {
+            "token": "frmMain.fileToolStripMenuItem.Text",
+            "value": "Файл"
+        },
+        {
+            "token": "frmMain.labelVersion.Text",
+            "value": "ВЕРСИЯ ЗДЕСЬ"
+        },
+        {
+            "token": "frmMain.menuStrip1.Text",
+            "value": "menuStrip1"
+        },
+        {
+            "token": "frmMain.editToolStripMenuItem.Text",
+            "value": "Правка"
+        },
+        {
+            "token": "frmMain.settingsToolStripMenuItem.Text",
+            "value": "Настройки"
+        },
+        {
+            "token": "frmMain.labelLocalVersion.Text",
+            "value": "ЛОКАЛЬНАЯ ВЕРСИЯ ЗДЕСЬ"
+        },
+        {
+            "token": "frmMain.statusStrip1.Text",
+            "value": "statusStrip1"
+        },
+        {
+            "token": "frmMain.toolStripStatusLabel1.Text",
+            "value": "toolStripStatusLabel1"
+        },
+        {
+            "token": "frmMain.Text",
+            "value": "Обновления M.E.Doc"
+        },
+        {
+            "token": "frmMain.labelVersion.Text.CheckingRoutine.Checking",
+            "value": "Проверка..."
+        },
+        {
+            "token": "frmMain.labelVersion.Text.CheckingRoutine.LatestVersion",
+            "value": "Веб-версия: {0}"
+        },
+        {
+            "token": "frmMain.labelLocalVersion.Text.CheckingRoutine.LatestLocalVersion",
+            "value": "Установленная версия: {0}"
+        },
+        {
+            "token": "frmMain.trayIcon.BalloonTipTitle.CheckingRoutine.UpdateReleased",
+            "value": "Доступно обновление для M.E.Doc!"
+        },
+        {
+            "token": "frmMain.trayIcon.BalloonTipTitle.CheckingRoutine.NoUpdates",
+            "value": "Обновления отсутствуют"
+        },
+        {
+            "token": "frmMain.trayIcon.BalloonTipText.CheckingRoutine.NoUpdates",
+            "value": "Сверните приложение чтобы перестать получать уведомления об отсутствии обновлений\r\n{0}"
+        },
+        {
+            "token": "frmMain.telegram.CheckingRoutine.UpdateAvailable",
+            "value": "Доступно обновление с версии {0} по {1}"
+        },
+        {
+            "token": "frmMain.labelVersion.Text.CheckingRoutine.Error",
+            "value": "Что-то пошло не так"
+        },
+        {
+            "token": "frmMain.Status.CheckingRoutine.CannotConnect",
+            "value": "Невозможно открыть medoc.ua"
+        },
+        {
+            "token": "frmMain.trayIcon.BalloonTipTitle.CheckingRoutine.WindowMinimized",
+            "value": "Программа была свёрнута"
+        },
+        {
+            "token": "frmMain.trayIcon.BalloonTipText.CheckingRoutine.WindowMinimized",
+            "value": "Вы можете развернуть окно нажатием на иконку в трее"
+        }
+    ]
+}

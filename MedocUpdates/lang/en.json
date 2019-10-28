@@ -1,0 +1,105 @@
+{
+    "language": "English",
+    "tokens": [
+        {
+            "token": "frmMain_Done",
+            "value": "Done!"
+        },
+        {
+            "token": "frmMain.trayIcon.Text",
+            "value": "Medoc Updates"
+        },
+        {
+            "token": "frmMain.checkForUpdatesToolStripMenuItem.Text",
+            "value": "Check for updates"
+        },
+        {
+            "token": "frmMain.delayNotificationsToolStripMenuItem.Text",
+            "value": "Delay notifications..."
+        },
+        {
+            "token": "frmMain.exitToolStripMenuItem.Text",
+            "value": "Exit"
+        },
+        {
+            "token": "frmMain.fileToolStripMenuItem.Text",
+            "value": "File"
+        },
+        {
+            "token": "frmMain.labelVersion.Text",
+            "value": "VERSION HERE"
+        },
+        {
+            "token": "frmMain.menuStrip1.Text",
+            "value": "menuStrip1"
+        },
+        {
+            "token": "frmMain.editToolStripMenuItem.Text",
+            "value": "Edit"
+        },
+        {
+            "token": "frmMain.settingsToolStripMenuItem.Text",
+            "value": "Settings"
+        },
+        {
+            "token": "frmMain.labelLocalVersion.Text",
+            "value": "LOCAL VERSION HERE"
+        },
+        {
+            "token": "frmMain.statusStrip1.Text",
+            "value": "statusStrip1"
+        },
+        {
+            "token": "frmMain.toolStripStatusLabel1.Text",
+            "value": "toolStripStatusLabel1"
+        },
+        {
+            "token": "frmMain.Text",
+            "value": "Medoc Updates"
+        },
+        {
+            "token": "frmMain.labelVersion.Text.CheckingRoutine.Checking",
+            "value": "Checking..."
+        },
+        {
+            "token": "frmMain.labelVersion.Text.CheckingRoutine.LatestVersion",
+            "value": "Latest version: {0}"
+        },
+        {
+            "token": "frmMain.labelLocalVersion.Text.CheckingRoutine.LatestLocalVersion",
+            "value": "Latest local version: {0}"
+        },
+        {
+            "token": "frmMain.trayIcon.BalloonTipTitle.CheckingRoutine.UpdateReleased",
+            "value": "M.E.Doc update has been released!"
+        },
+        {
+            "token": "frmMain.trayIcon.BalloonTipTitle.CheckingRoutine.NoUpdates",
+            "value": "No updates for M.E.Doc"
+        },
+        {
+            "token": "frmMain.trayIcon.BalloonTipText.CheckingRoutine.NoUpdates",
+            "value": "Minimize the app to deny \"no updates\" notifications\r\n{0}"
+        },
+        {
+            "token": "frmMain.telegram.CheckingRoutine.UpdateAvailable",
+            "value": "Update from {0} to {1} is available"
+        },
+        {
+            "token": "frmMain.labelVersion.Text.CheckingRoutine.Error",
+            "value": "Something went wrong"
+        },
+        {
+            "token": "frmMain.Status.CheckingRoutine.CannotConnect",
+            "value": "Cannot connect to medoc.ua"
+        },
+        {
+            "token": "frmMain.trayIcon.BalloonTipTitle.CheckingRoutine.WindowMinimized",
+            "value": "Medoc Updates window has been minimized"
+        },
+        {
+            "token": "frmMain.trayIcon.BalloonTipText.CheckingRoutine.WindowMinimized",
+            "value": "You can reach Medoc Updates through the tray icon now"
+        }
+    ]
+}
