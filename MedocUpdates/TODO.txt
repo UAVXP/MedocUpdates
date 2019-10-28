@@ -60,3 +60,5 @@ Services:
 	https://metanit.com/sharp/tutorial/21.1.php
 
 +When updates are performing, do something with user be possible to Check for updates and frick up the buttons
+
+Small "first run" form (or wizard), where user can define some of the important settings
