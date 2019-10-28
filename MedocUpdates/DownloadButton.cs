@@ -78,6 +78,7 @@ namespace MedocUpdates
 
 		private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
+			Log.Write(LogLevel.NORMAL, String.Format("Opening a {0} link in default browser", this.item.link));
 			Process.Start(item.link); // Open URL in the default browser
 		}
 
@@ -85,17 +86,20 @@ namespace MedocUpdates
 		{
 			if (File.Exists(this.updateFilename))
 			{
+				Log.Write(LogLevel.NORMAL, String.Format("Found unpacked {0} update file at the downloads folder. Trying to run", Path.GetFileName(this.updateFilename)));
 				RunUpdate();
 				return;
 			}
 
 			if (File.Exists(this.zipFilename))
 			{
+				Log.Write(LogLevel.NORMAL, String.Format("Found already downloaded {0} archive at the downloads folder. Trying to unpack", Path.GetFileName(this.zipFilename)));
 				UnpackUpdate();
 				RunUpdate();
 				return;
 			}
 
+			Log.Write(LogLevel.NORMAL, "Initiating download for " + this.item.version);
 			RunDownload();
 		}
 
@@ -107,7 +111,10 @@ namespace MedocUpdates
 		private void RunUpdate()
 		{
 			if(!File.Exists(this.updateFilename))
+			{
+				Log.Write(LogLevel.NORMAL, "Update file wasn't unpacked. Cannot run an update if it doesn't exist");
 				return;
+			}
 
 			// The initial update.exe process
 			try
@@ -210,7 +217,9 @@ namespace MedocUpdates
 
 		public void RunDownload()
 		{
-			if(webclient != null)
+			Log.Write(LogLevel.EXPERT, "Getting file by link " + this.item.link);
+
+			if (webclient != null)
 			{
 			//	return;
 				webclient.CancelAsync();
@@ -224,7 +233,7 @@ namespace MedocUpdates
 			webclient.DownloadFileCompleted += WebClient_DownloadFileCompleted;
 			webclient.DownloadProgressChanged += WebClient_DownloadProgressChanged;
 
-			Uri fileURI = new Uri(item.link);
+			Uri fileURI = new Uri(this.item.link);
 			webclient.DownloadFileAsync(fileURI, this.zipFilename);
 
 			pbDownloadRun.Visible = true;
@@ -232,8 +241,12 @@ namespace MedocUpdates
 
 		private void WebClient_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
 		{
-			if(webclient != null)
+			if (webclient != null)
+			{
+				webclient.CancelAsync(); // Probably not needed here, but for refactoring reasons I'll leave it
 				webclient.Dispose();
+				webclient = null;
+			}
 
 			UnpackUpdate();
 
