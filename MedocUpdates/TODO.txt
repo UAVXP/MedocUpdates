@@ -63,3 +63,5 @@ Services:
 
 Small "first run" form (or wizard), where user can define some of the important settings
 Localization
+	First - the interface
+	Second - logs (maybe)

@@ -117,6 +117,7 @@
     <Compile Include="frmSettings.Designer.cs">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Loc.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MedocAPI.cs" />
     <Compile Include="MedocDownloadItem.cs" />

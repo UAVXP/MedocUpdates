@@ -21,6 +21,8 @@ namespace MedocUpdates
 				return;
 			}
 
+			Loc.Init("ru");
+
 			ParsedArgs.SetArgs(Environment.GetCommandLineArgs());
 			ParsedArgs.PrintArgs();
 

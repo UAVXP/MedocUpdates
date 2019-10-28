@@ -190,7 +190,8 @@ namespace MedocUpdates
 					}
 				}
 
-				Status("Done");
+				//Status("Done");
+				Status(Loc.Get("frmMain_Done"));
 				trayIcon.Text = labelVersion.Text + "\r\n" + labelLocalVersion.Text;
 
 				if (localversion != version)
