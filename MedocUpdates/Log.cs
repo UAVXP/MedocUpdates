@@ -53,6 +53,10 @@ namespace MedocUpdates
 
 		public static void Init()
 		{
+			// If initialized already - don't do this again
+			if (m_bInit)
+				return;
+
 			try
 			{
 				// Make sure log directory does exist
@@ -107,7 +111,20 @@ namespace MedocUpdates
 		public static void Write(int logLevel, bool forceConsole, string logMessage)
 		{
 			if(forceConsole)
-				Console.WriteLine(logMessage); // TODO: Make the same EOL stuff as in Write
+			{
+				string[] parsed = logMessage.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+				int i = 0;
+				foreach (string rawline in parsed)
+				{
+					string line = rawline;
+					if (i > 0 && line.Length > 0)
+						line = "\t" + line;
+
+					Console.WriteLine(line);
+
+					i++;
+				}
+			}
 
 			Write(LogLevel.BASIC, logMessage);
 		}
