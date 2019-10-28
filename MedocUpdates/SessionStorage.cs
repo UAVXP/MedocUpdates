@@ -130,7 +130,7 @@ namespace MedocUpdates
 			filestream.Close();
 		}
 
-		public static void Restore()
+		public static bool Restore()
 		{
 			IFormatter formatter = new BinaryFormatter();
 			Stream filestream = new FileStream(m_settingsPath, FileMode.OpenOrCreate, FileAccess.Read);
@@ -141,7 +141,7 @@ namespace MedocUpdates
 				// Initializing and saving a default values
 				Save();
 
-				return;
+				return false;
 			}
 
 			if (filestream.Length <= 0)
@@ -152,7 +152,7 @@ namespace MedocUpdates
 				// Initializing and saving a default values
 				Save();
 
-				return;
+				return false;
 			}
 
 
@@ -188,6 +188,7 @@ namespace MedocUpdates
 			filestream.Close();
 			
 			inside = temp;
+			return true;
 		}
 	}
 }

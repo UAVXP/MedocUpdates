@@ -24,7 +24,7 @@ namespace MedocUpdates
 			ParsedArgs.SetArgs(Environment.GetCommandLineArgs());
 			ParsedArgs.PrintArgs();
 
-			SessionStorage.Restore();
+			bool bSettingsWasRestoredFromFile = SessionStorage.Restore();
 
 			Log.Init();
 			Log.Write("");
@@ -32,7 +32,11 @@ namespace MedocUpdates
 
 			Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMain());
+
+			if(/*true || */!bSettingsWasRestoredFromFile)
+				Application.Run(new frmFirstRun()); // Only show if SessionStorage file doesn't exist
+
+			Application.Run(new frmMain());
 
 			Log.Write("MedocUpdates: Shutting down the application");
 			SessionStorage.Save();
