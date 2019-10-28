@@ -10,7 +10,6 @@ using System.Text.RegularExpressions;
 
 namespace MedocUpdates
 {
-	// FIXME: Implement comparison with null, and nullable object overall
 	public class MedocVersion : IEquatable<MedocVersion>
 	{
 		// Used for calculation and comparison
@@ -96,6 +95,12 @@ namespace MedocUpdates
 
 		public static int Comparison(MedocVersion ver1, MedocVersion ver2)
 		{
+			// FIXME: Is this OK? Probably don't need that much of declaration
+			if((ver1 as object) == null)
+				return -1;
+			if((ver2 as object) == null)
+				return 1;
+
 			if (ver1.rawfirst < ver2.rawfirst || ver1.rawsecond < ver2.rawsecond || ver1.rawthird < ver2.rawthird)
 				return -1;
 			else if (ver1.rawfirst == ver2.rawfirst && ver1.rawsecond == ver2.rawsecond && ver1.rawthird == ver2.rawthird)
