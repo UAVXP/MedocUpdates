@@ -7,7 +7,7 @@
         },
         {
             "token": "frmMain_Done",
-            "value": "Готово!"
+            "value": "Готово."
         },
         {
             "token": "frmMain.trayIcon.Text",
@@ -260,6 +260,18 @@
         {
             "token": "frmFirstRun.lblLanguageNote.Text",
             "value": "Заметьте, что язык приложения изменится только после перезагрузки приложения."
+        },
+        {
+            "token": "TimeChooser.lblHours.Text",
+            "value": "ч."
+        },
+        {
+            "token": "TimeChooser.lblMinutes.Text",
+            "value": "м."
+        },
+        {
+            "token": "TimeChooser.lblSeconds.Text",
+            "value": "с."
         }
     ]
 }

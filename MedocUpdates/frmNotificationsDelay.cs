@@ -53,14 +53,14 @@ namespace MedocUpdates
 
 		private void InitializeLocalization()
 		{
-			this.btnDone.Text = Loc.Get("frmNotificationsDelay.btnDone.Text"); // "Delay";
-			this.btnCancel.Text = Loc.Get("frmNotificationsDelay.btnCancel.Text"); // "Cancel";
-			this.rbByHour.Text = Loc.Get("frmNotificationsDelay.rbByHour.Text"); // "by a hour";
-			this.rbBy5Hours.Text = Loc.Get("frmNotificationsDelay.rbBy5Hours.Text"); // "by a 5 hours";
-			this.rbByManual.Text = Loc.Get("frmNotificationsDelay.rbByManual.Text"); // "manually";
-			this.rbByCustom.Text = Loc.Get("frmNotificationsDelay.rbByCustom.Text"); // "custom interval:";
-			this.gbDelays.Text = Loc.Get("frmNotificationsDelay.gbDelays.Text"); // "Delay notifications...";
-			this.Text = Loc.Get("frmNotificationsDelay.Text"); // "Medoc Updates - Delay notifications";
+			this.btnDone.Text = Loc.Get("frmNotificationsDelay.btnDone.Text", "Delay");
+			this.btnCancel.Text = Loc.Get("frmNotificationsDelay.btnCancel.Text", "Cancel");
+			this.rbByHour.Text = Loc.Get("frmNotificationsDelay.rbByHour.Text", "by a hour");
+			this.rbBy5Hours.Text = Loc.Get("frmNotificationsDelay.rbBy5Hours.Text", "by a 5 hours");
+			this.rbByManual.Text = Loc.Get("frmNotificationsDelay.rbByManual.Text", "manually");
+			this.rbByCustom.Text = Loc.Get("frmNotificationsDelay.rbByCustom.Text", "custom interval:");
+			this.gbDelays.Text = Loc.Get("frmNotificationsDelay.gbDelays.Text", "Delay notifications...");
+			this.Text = Loc.Get("frmNotificationsDelay.Text", "Medoc Updates - Delay notifications");
 		}
 
 		public frmNotificationsDelay()

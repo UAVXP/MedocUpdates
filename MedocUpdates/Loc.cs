@@ -166,54 +166,54 @@ namespace MedocUpdates
 			return lang.Equals(m_defaultLang);
 		}
 
-		private static string GetDefaultLangToken(string token)
+		private static string GetDefaultLangToken(string token, string defaultValue)
 		{
 			LocLanguage loclang;
 			LocalizePair locpair;
 
 			loclang = langstrs.FirstOrDefault(elem => IsDefaultLang(elem.lang));
 			if (loclang == null)
-				return token; // Give up and just return the passed token - we don't have any localizations for it
+				return (!defaultValue.Trim().Equals("") ? defaultValue : token); // Give up and just return the token or defaultValue - we don't have any localizations for it
 
 			locpair = loclang.str.FirstOrDefault(elem => elem.token.Equals(token));
 			if (locpair != null)
 				return locpair.value;
 
-			return token; // Give up and just return the passed token - we don't have any localizations for it
+			return (!defaultValue.Trim().Equals("") ? defaultValue : token); // Give up and just return the token or defaultValue - we don't have any localizations for it
 		}
 
-		private static string GetLangToken(string token, string lang)
+		private static string GetLangToken(string token, string defaultValue, string lang)
 		{
 			LocLanguage loclang;
 			LocalizePair locpair;
 
 			loclang = langstrs.FirstOrDefault(elem => elem.lang.Equals(lang));
 			if (loclang == null)
-				return GetDefaultLangToken(token);
+				return GetDefaultLangToken(token, defaultValue);
 
 			locpair = loclang.str.FirstOrDefault(elem => elem.token.Equals(token));
 			if (locpair != null)
 				return locpair.value;
 
-			return GetDefaultLangToken(token);
+			return GetDefaultLangToken(token, defaultValue);
 		}
 
-		public static string Get(string token, string forceLang = "")
+		public static string Get(string token, string defaultValue = "", string forceLang = "")
 		{
 			// Checking forced lang first
 			if (forceLang.Trim().Length > 0)
 			{
-				return GetLangToken(token, forceLang);
+				return GetLangToken(token, defaultValue, forceLang);
 			}
 
 			// Checking selected lang
 			if (Loc.m_lang.Trim().Length > 0 && !IsDefaultLang(Loc.m_lang)) // We don't need to search for token for this lang, if it's already a default lang. Just pass to the end
 			{
-				return GetLangToken(token, Loc.m_lang);
+				return GetLangToken(token, defaultValue, Loc.m_lang);
 			}
 
 			// Checking default lang (en)
-			return GetDefaultLangToken(token);
+			return GetDefaultLangToken(token, defaultValue);
 		}
 	}
 }

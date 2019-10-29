@@ -7,7 +7,7 @@
         },
         {
             "token": "frmMain_Done",
-            "value": "Done!"
+            "value": "Done."
         },
         {
             "token": "frmMain.trayIcon.Text",
@@ -260,6 +260,18 @@
         {
             "token": "frmFirstRun.lblLanguageNote.Text",
             "value": "Note that the language will change only after the application restart."
+        },
+        {
+            "token": "TimeChooser.lblHours.Text",
+            "value": "h."
+        },
+        {
+            "token": "TimeChooser.lblMinutes.Text",
+            "value": "m."
+        },
+        {
+            "token": "TimeChooser.lblSeconds.Text",
+            "value": "s."
         }
     ]
 }

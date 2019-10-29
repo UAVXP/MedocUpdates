@@ -34,9 +34,17 @@ namespace MedocUpdates
 		public event EventHandler MinutesChanged = delegate { };
 		public event EventHandler SecondsChanged = delegate { };
 
+		private void InitializeLocalization()
+		{
+			this.lblHours.Text = Loc.Get("TimeChooser.lblHours.Text", "h.");
+			this.lblMinutes.Text = Loc.Get("TimeChooser.lblMinutes.Text", "m.");
+			this.lblSeconds.Text = Loc.Get("TimeChooser.lblSeconds.Text", "s.");
+		}
+
 		public TimeChooser()
 		{
 			InitializeComponent();
+			InitializeLocalization();
 
 			this.Delay = new TimeSpan();
 		}

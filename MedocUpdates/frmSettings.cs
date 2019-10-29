@@ -31,22 +31,22 @@ namespace MedocUpdates
 
 		private void InitializeLocalization()
 		{
-			this.gbLogLevels.Text = Loc.Get("frmSettings.gbLogLevels.Text"); // "Logs"
-			this.lblLogLevels.Text = Loc.Get("frmSettings.lblLogLevels.Text"); // "Level of logs:"
-			this.cbLogs.Text = Loc.Get("frmSettings.cbLogs.Text"); // "Enable logging"
-			this.gbTelegram.Text = Loc.Get("frmSettings.gbTelegram.Text"); // "Telegram"
-			this.lblTelegramToken.Text = Loc.Get("frmSettings.lblTelegramToken.Text"); // "Token:"
-			this.btnSave.Text = Loc.Get("frmSettings.btnSave.Text"); // "Save"
-			this.btnCancel.Text = Loc.Get("frmSettings.btnCancel.Text"); // "Cancel"
-			this.gbDownloads.Text = Loc.Get("frmSettings.gbDownloads.Text"); // "Download settings"
-			this.btnDownloadsPathBrowse.Text = Loc.Get("frmSettings.btnDownloadsPathBrowse.Text"); // "Browse..."
-			this.lblDownloadPath.Text = Loc.Get("frmSettings.lblDownloadPath.Text"); // "Downloads path:"
-			this.cbRemoveUpdateFile.Text = Loc.Get("frmSettings.cbRemoveUpdateFile.Text"); // "Remove .upd files after update installation"
-			this.Text = Loc.Get("frmSettings.Text"); // "Medoc Updates - Settings"
+			this.gbLogLevels.Text = Loc.Get("frmSettings.gbLogLevels.Text", "Logs");
+			this.lblLogLevels.Text = Loc.Get("frmSettings.lblLogLevels.Text", "Level of logs:");
+			this.cbLogs.Text = Loc.Get("frmSettings.cbLogs.Text", "Enable logging");
+			this.gbTelegram.Text = Loc.Get("frmSettings.gbTelegram.Text", "Telegram");
+			this.lblTelegramToken.Text = Loc.Get("frmSettings.lblTelegramToken.Text", "Token:");
+			this.btnSave.Text = Loc.Get("frmSettings.btnSave.Text", "Save");
+			this.btnCancel.Text = Loc.Get("frmSettings.btnCancel.Text", "Cancel");
+			this.gbDownloads.Text = Loc.Get("frmSettings.gbDownloads.Text", "Download settings");
+			this.btnDownloadsPathBrowse.Text = Loc.Get("frmSettings.btnDownloadsPathBrowse.Text", "Browse...");
+			this.lblDownloadPath.Text = Loc.Get("frmSettings.lblDownloadPath.Text", "Downloads path:");
+			this.cbRemoveUpdateFile.Text = Loc.Get("frmSettings.cbRemoveUpdateFile.Text", "Remove .upd files after update installation");
+			this.Text = Loc.Get("frmSettings.Text", "Medoc Updates - Settings");
 
-			this.gbLanguage.Text = Loc.Get("frmSettings.gbLanguage.Text"); // "Language setup";
-			this.lblLanguage.Text = Loc.Get("frmSettings.lblLanguage.Text"); // "Language:";
-			this.lblLanguageNote.Text = Loc.Get("frmSettings.lblLanguageNote.Text"); // "Note that the language will change only after the application restart.";
+			this.gbLanguage.Text = Loc.Get("frmSettings.gbLanguage.Text", "Language setup");
+			this.lblLanguage.Text = Loc.Get("frmSettings.lblLanguage.Text", "Language:");
+			this.lblLanguageNote.Text = Loc.Get("frmSettings.lblLanguageNote.Text", "Note that the language will change only after the application restart.");
 		}
 
 		public frmSettings()

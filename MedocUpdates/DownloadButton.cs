@@ -45,9 +45,9 @@ namespace MedocUpdates
 
 		private void InitializeLocalization()
 		{
-			this.llblDownload.Text = Loc.Get("DownloadButton.llblDownload.Text"); // "Download"
-			this.labelVersion.Text = Loc.Get("DownloadButton.labelVersion.Text"); // "VERSION HERE"
-			this.llblDownloadRun.Text = Loc.Get("DownloadButton.llblDownloadRun.Text"); // "Download and run"
+			this.llblDownload.Text = Loc.Get("DownloadButton.llblDownload.Text", "Download");
+			this.labelVersion.Text = Loc.Get("DownloadButton.labelVersion.Text", "VERSION HERE");
+			this.llblDownloadRun.Text = Loc.Get("DownloadButton.llblDownloadRun.Text", "Download and run");
 		}
 
 		public DownloadButton(MedocDownloadItem item)
