@@ -66,23 +66,31 @@ namespace MedocUpdates
 
 
 			// If the language was forcebly set in the parameters, then check it first
-			if(forcelang.Trim().Length > 0 && File.Exists(Path.Combine(m_languagePath, forcelang + ".json")))
+			if(forcelang.Trim().Length > 0)
 			{
-				string langfile = Path.Combine(m_languagePath, forcelang + ".json");
-				string langname = forcelang;
+				if(File.Exists(Path.Combine(m_languagePath, forcelang + ".json")))
+				{
+					string langfile = Path.Combine(m_languagePath, forcelang + ".json");
+					string langname = forcelang;
 
-				strs = new List<LocalizePair>();
-				json = File.ReadAllText(langfile);
-				locfile = JsonConvert.DeserializeObject<LocFile>(json);
-				strs.AddRange(locfile.tokens);
+					strs = new List<LocalizePair>();
+					json = File.ReadAllText(langfile);
+					locfile = JsonConvert.DeserializeObject<LocFile>(json);
+					strs.AddRange(locfile.tokens);
 
-				// Clearing up the "comments" (objects with empty tokens)
-				strs = strs.Where(elem => !String.IsNullOrWhiteSpace(elem.token)).Distinct().ToList(); // FIXME: Distinct is very uneffective
+					// Clearing up the "comments" (objects with empty tokens)
+					strs = strs.Where(elem => !String.IsNullOrWhiteSpace(elem.token)).Distinct().ToList(); // FIXME: Distinct is very uneffective
 
-				langstrs.Add(new LocLanguage(strs, langname));
+					langstrs.Add(new LocLanguage(strs, langname));
 
-				Loc.m_lang = forcelang;
-				return true;
+					Loc.m_lang = forcelang;
+					return true;
+				}
+				else
+				{
+					Log.Write(LogLevel.NORMAL,
+						String.Format("Localization: Cannot use -forcelanguage because language {0} doesn't exist! Proceeding to the saved language.", forcelang));
+				}
 			}
 
 

@@ -26,15 +26,15 @@ namespace MedocUpdates
 
 			bool bSettingsWasRestoredFromFile = SessionStorage.Restore();
 
+			Log.Init();
+			Log.Write("");
+			Log.Write(String.Format("MedocUpdates: Initializing version {0}...", entryassembly.GetName().Version));
+
 			string forcedLang = ParsedArgs.GetArgument("forcelanguage");
 			if (forcedLang.Trim().Length > 0)
 				Loc.Init(forcedLang);
 			else
 				Loc.Init();
-
-			Log.Init();
-			Log.Write("");
-			Log.Write(String.Format("MedocUpdates: Initializing version {0}...", entryassembly.GetName().Version));
 
 			Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
