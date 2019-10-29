@@ -172,7 +172,7 @@ namespace MedocUpdates
 			}
 			catch (Exception ex)
 			{
-				LogFallbackInternal(FormatLogMessage(logMessage, logLevel), ex.Message);
+				LogFallbackInternal(FormatLogMessage(logMessage, logLevel), FormatLogMessage(ex.Message));
 			}
 		}
 
@@ -185,7 +185,7 @@ namespace MedocUpdates
 			}
 			catch (Exception ex)
 			{
-				LogFallbackInternal(endMessage, ex.Message);
+				LogFallbackInternal(endMessage, FormatLogMessage(ex.Message));
 			}
 		}
 
