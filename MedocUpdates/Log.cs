@@ -66,7 +66,7 @@ namespace MedocUpdates
 			}
 			catch(Exception ex)
 			{
-				LogFallbackInternal("Log: Cannot create log directory\r\n" + ex.Message);
+				LogFallbackInternal(FormatLogMessage("Log: Cannot create log directory"), FormatLogMessage(ex.Message));
 				return;
 			}
 
