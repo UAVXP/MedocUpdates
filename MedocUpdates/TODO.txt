@@ -70,4 +70,4 @@ Localization
 	Loc.Get should have 2nd parameter that defines a default string, if none of the localization file is available
 	+Check for empty token in lang files and don't add them - they will act like a comments
 	Manually fix duplicate lang entries (i.e. for frmSettings and frmFirstRun)
-	Force localization command-line parameter
+	+Force localization command-line parameter

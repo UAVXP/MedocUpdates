@@ -26,9 +26,11 @@ namespace MedocUpdates
 
 			bool bSettingsWasRestoredFromFile = SessionStorage.Restore();
 
-			Loc.Init(/*"ru"*/);
-			//string[] names;
-			//Loc.GetLocalizations(out names);
+			string forcedLang = ParsedArgs.GetArgument("forcelanguage");
+			if (forcedLang.Trim().Length > 0)
+				Loc.Init(forcedLang);
+			else
+				Loc.Init();
 
 			Log.Init();
 			Log.Write("");
