@@ -43,6 +43,10 @@ namespace MedocUpdates
 			this.lblDownloadPath.Text = Loc.Get("frmSettings.lblDownloadPath.Text"); // "Downloads path:"
 			this.cbRemoveUpdateFile.Text = Loc.Get("frmSettings.cbRemoveUpdateFile.Text"); // "Remove .upd files after update installation"
 			this.Text = Loc.Get("frmSettings.Text"); // "Medoc Updates - Settings"
+
+			this.gbLanguage.Text = Loc.Get("frmSettings.gbLanguage.Text"); // "Language setup";
+			this.lblLanguage.Text = Loc.Get("frmSettings.lblLanguage.Text"); // "Language:";
+			this.lblLanguageNote.Text = Loc.Get("frmSettings.lblLanguageNote.Text"); // "Note that the language will change only after the application restart.";
 		}
 
 		public frmSettings()

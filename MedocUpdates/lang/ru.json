@@ -236,6 +236,26 @@
         {
             "token": "frmFirstRun.Text",
             "value": "Обновления M.E.Doc - Первый запуск"
+        },
+        {
+            "token": "frmSettings.gbLanguage.Text",
+            "value": "Установка языка"
+        },
+        {
+            "token": "frmSettings.lblLanguage.Text",
+            "value": "Язык:"
+        },
+        {
+            "token": "frmSettings.lblLanguageNote.Text",
+            "value": "Заметьте, что язык приложения изменится только после перезагрузки приложения."
+        },
+        {
+            "token": "frmFirstRun.lblLanguage.Text",
+            "value": "Язык:"
+        },
+        {
+            "token": "frmFirstRun.lblLanguageNote.Text",
+            "value": "Заметьте, что язык приложения изменится только после перезагрузки приложения."
         }
     ]
 }

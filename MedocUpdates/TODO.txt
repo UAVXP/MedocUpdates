@@ -68,3 +68,7 @@ Localization
 	First - the interface
 	Second - logs (maybe)
 	Loc.Get should have 2nd parameter that defines a default string, if none of the localization file is available
+	Check for empty token in lang files and don't add them - they will act like a comments
+	Fix duplicate lang entries (i.e. for frmSettings and frmFirstRun)
+
+Make frmMain contain frmFirstRun launch button

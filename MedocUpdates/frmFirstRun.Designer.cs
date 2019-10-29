@@ -62,7 +62,7 @@
 			// 
 			this.lblTelegramToken.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.lblTelegramToken.AutoSize = true;
-			this.lblTelegramToken.Location = new System.Drawing.Point(88, 242);
+			this.lblTelegramToken.Location = new System.Drawing.Point(88, 248);
 			this.lblTelegramToken.Name = "lblTelegramToken";
 			this.lblTelegramToken.Size = new System.Drawing.Size(84, 13);
 			this.lblTelegramToken.TabIndex = 3;
@@ -71,7 +71,7 @@
 			// tbTelegramToken
 			// 
 			this.tbTelegramToken.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-			this.tbTelegramToken.Location = new System.Drawing.Point(181, 239);
+			this.tbTelegramToken.Location = new System.Drawing.Point(181, 245);
 			this.tbTelegramToken.Name = "tbTelegramToken";
 			this.tbTelegramToken.Size = new System.Drawing.Size(150, 20);
 			this.tbTelegramToken.TabIndex = 2;
@@ -80,7 +80,7 @@
 			// 
 			this.lblDownloadPath.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.lblDownloadPath.AutoSize = true;
-			this.lblDownloadPath.Location = new System.Drawing.Point(88, 216);
+			this.lblDownloadPath.Location = new System.Drawing.Point(88, 222);
 			this.lblDownloadPath.Name = "lblDownloadPath";
 			this.lblDownloadPath.Size = new System.Drawing.Size(87, 13);
 			this.lblDownloadPath.TabIndex = 5;
@@ -89,7 +89,7 @@
 			// tbDownloadsPath
 			// 
 			this.tbDownloadsPath.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-			this.tbDownloadsPath.Location = new System.Drawing.Point(181, 213);
+			this.tbDownloadsPath.Location = new System.Drawing.Point(181, 219);
 			this.tbDownloadsPath.Name = "tbDownloadsPath";
 			this.tbDownloadsPath.Size = new System.Drawing.Size(150, 20);
 			this.tbDownloadsPath.TabIndex = 4;
@@ -99,7 +99,7 @@
 			this.cmbLogLevels.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.cmbLogLevels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cmbLogLevels.FormattingEnabled = true;
-			this.cmbLogLevels.Location = new System.Drawing.Point(181, 186);
+			this.cmbLogLevels.Location = new System.Drawing.Point(181, 192);
 			this.cmbLogLevels.Name = "cmbLogLevels";
 			this.cmbLogLevels.Size = new System.Drawing.Size(150, 21);
 			this.cmbLogLevels.TabIndex = 7;
@@ -108,7 +108,7 @@
 			// 
 			this.lblLogLevels.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.lblLogLevels.AutoSize = true;
-			this.lblLogLevels.Location = new System.Drawing.Point(88, 189);
+			this.lblLogLevels.Location = new System.Drawing.Point(88, 195);
 			this.lblLogLevels.Name = "lblLogLevels";
 			this.lblLogLevels.Size = new System.Drawing.Size(70, 13);
 			this.lblLogLevels.TabIndex = 6;
@@ -117,7 +117,7 @@
 			// btnCancel
 			// 
 			this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-			this.btnCancel.Location = new System.Drawing.Point(236, 324);
+			this.btnCancel.Location = new System.Drawing.Point(236, 339);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
 			this.btnCancel.TabIndex = 9;
@@ -128,7 +128,7 @@
 			// btnSave
 			// 
 			this.btnSave.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-			this.btnSave.Location = new System.Drawing.Point(155, 324);
+			this.btnSave.Location = new System.Drawing.Point(155, 339);
 			this.btnSave.Name = "btnSave";
 			this.btnSave.Size = new System.Drawing.Size(75, 23);
 			this.btnSave.TabIndex = 8;
@@ -143,7 +143,7 @@
 			// btnDownloadsPathBrowse
 			// 
 			this.btnDownloadsPathBrowse.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-			this.btnDownloadsPathBrowse.Location = new System.Drawing.Point(337, 213);
+			this.btnDownloadsPathBrowse.Location = new System.Drawing.Point(337, 219);
 			this.btnDownloadsPathBrowse.Name = "btnDownloadsPathBrowse";
 			this.btnDownloadsPathBrowse.Size = new System.Drawing.Size(75, 21);
 			this.btnDownloadsPathBrowse.TabIndex = 10;
@@ -167,7 +167,7 @@
 			this.cmbLanguages.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.cmbLanguages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cmbLanguages.FormattingEnabled = true;
-			this.cmbLanguages.Location = new System.Drawing.Point(181, 265);
+			this.cmbLanguages.Location = new System.Drawing.Point(181, 271);
 			this.cmbLanguages.Name = "cmbLanguages";
 			this.cmbLanguages.Size = new System.Drawing.Size(150, 21);
 			this.cmbLanguages.TabIndex = 12;
@@ -176,7 +176,7 @@
 			// 
 			this.lblLanguage.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.lblLanguage.AutoSize = true;
-			this.lblLanguage.Location = new System.Drawing.Point(88, 268);
+			this.lblLanguage.Location = new System.Drawing.Point(88, 274);
 			this.lblLanguage.Name = "lblLanguage";
 			this.lblLanguage.Size = new System.Drawing.Size(58, 13);
 			this.lblLanguage.TabIndex = 11;
@@ -184,19 +184,20 @@
 			// 
 			// lblLanguageNote
 			// 
-			this.lblLanguageNote.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-			this.lblLanguageNote.AutoSize = true;
-			this.lblLanguageNote.Location = new System.Drawing.Point(65, 289);
+			this.lblLanguageNote.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblLanguageNote.Location = new System.Drawing.Point(38, 295);
 			this.lblLanguageNote.Name = "lblLanguageNote";
-			this.lblLanguageNote.Size = new System.Drawing.Size(325, 13);
+			this.lblLanguageNote.Size = new System.Drawing.Size(393, 32);
 			this.lblLanguageNote.TabIndex = 13;
 			this.lblLanguageNote.Text = "Note that the language will change only after the application restart.";
+			this.lblLanguageNote.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// frmFirstRun
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(466, 370);
+			this.ClientSize = new System.Drawing.Size(466, 385);
 			this.ControlBox = false;
 			this.Controls.Add(this.lblLanguageNote);
 			this.Controls.Add(this.cmbLanguages);

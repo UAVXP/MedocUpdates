@@ -236,6 +236,26 @@
         {
             "token": "frmFirstRun.Text",
             "value": "Medoc Updates - First run"
+        },
+        {
+            "token": "frmSettings.gbLanguage.Text",
+            "value": "Language setup"
+        },
+        {
+            "token": "frmSettings.lblLanguage.Text",
+            "value": "Language:"
+        },
+        {
+            "token": "frmSettings.lblLanguageNote.Text",
+            "value": "Note that the language will change only after the application restart."
+        },
+        {
+            "token": "frmFirstRun.lblLanguage.Text",
+            "value": "Language:"
+        },
+        {
+            "token": "frmFirstRun.lblLanguageNote.Text",
+            "value": "Note that the language will change only after the application restart."
         }
     ]
 }

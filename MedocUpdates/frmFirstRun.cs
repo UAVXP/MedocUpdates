@@ -40,6 +40,9 @@ namespace MedocUpdates
 			this.btnDownloadsPathBrowse.Text = Loc.Get("frmFirstRun.btnDownloadsPathBrowse.Text"); // "Browse...";
 			this.label2.Text = Loc.Get("frmFirstRun.label2.Text"); // resources.GetString("label2.Text")
 			this.Text = Loc.Get("frmFirstRun.Text"); // "Medoc Updates - First run";
+
+			this.lblLanguage.Text = Loc.Get("frmFirstRun.lblLanguage.Text"); // "Language:";
+			this.lblLanguageNote.Text = Loc.Get("frmFirstRun.lblLanguageNote.Text"); // "Note that the language will change only after the application restart.";
 		}
 
 		public frmFirstRun()
