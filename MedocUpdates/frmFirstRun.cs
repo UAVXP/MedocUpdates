@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.IO;
+
 namespace MedocUpdates
 {
 	public partial class frmFirstRun : Form
@@ -18,7 +20,14 @@ namespace MedocUpdates
 			public string Name { get; set; }
 		}
 
+		private class LanguageHelper
+		{
+			public string Abbr { get; set; }
+			public string Name { get; set; }
+		}
+
 		private List<LogLevelHelper> logLevels = new List<LogLevelHelper>();
+		private List<LanguageHelper> languages = new List<LanguageHelper>();
 
 		private void InitializeLocalization()
 		{
@@ -42,6 +51,15 @@ namespace MedocUpdates
 			{
 				logLevels.Add(new LogLevelHelper() { Level = i, Name = LogLevel.GetName(i) });
 			}
+
+			string[] locfiles;
+			string[] locs;
+			Loc.GetLocalizations(out locs, out locfiles); // TODO: Check
+
+			for (int i = 0; i < locs.Length; i++)
+			{
+				languages.Add(new LanguageHelper() { Abbr = Path.GetFileNameWithoutExtension(locfiles[i]), Name = locs[i] });
+			}
 		}
 
 		private void frmFirstRun_Load(object sender, EventArgs e)
@@ -54,6 +72,11 @@ namespace MedocUpdates
 			tbTelegramToken.Text = SessionStorage.inside.TelegramToken;
 
 			tbDownloadsPath.Text = SessionStorage.inside.DownloadsFolderPath;
+
+			cmbLanguages.DisplayMember = "Name";
+			cmbLanguages.ValueMember = "Abbr";
+			cmbLanguages.DataSource = languages;
+			cmbLanguages.SelectedValue = SessionStorage.inside.SelectedLanguage;
 		}
 
 		private void btnSave_Click(object sender, EventArgs e)
@@ -74,6 +97,12 @@ namespace MedocUpdates
 			{
 				SessionStorage.inside.DownloadsFolderPath = tbDownloadsPath.Text;
 				SessionStorage.DownloadsFolderPathChangedFunc(this);
+			}
+
+			if (SessionStorage.inside.SelectedLanguage != cmbLanguages.SelectedValue.ToString())
+			{
+				SessionStorage.inside.SelectedLanguage = cmbLanguages.SelectedValue.ToString();
+				SessionStorage.SelectedLanguageChangedFunc(this);
 			}
 
 			Log.SetLevel(SessionStorage.inside.LoggingLevel);

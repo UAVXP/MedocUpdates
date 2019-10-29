@@ -231,7 +231,7 @@
         },
         {
             "token": "frmFirstRun.label2.Text",
-            "value": "Level of logs - configures log system to log only basic things, some more, or all the things that happen.\r\nDownloads path - a path for downloads, such as zipped M.E.Doc update files.\r\nTelegram token (if any) - A bot token, to notify all bot users with update messages. You can leave it empty.\r\n"
+            "value": "Level of logs - configures log system to log only basic things, some more, or all the things that happen.\r\nDownloads path - a path for downloads, such as zipped M.E.Doc update files.\r\nTelegram token (if any) - A bot token, to notify all bot users with update messages. You can leave it empty."
         },
         {
             "token": "frmFirstRun.Text",

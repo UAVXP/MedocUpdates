@@ -41,6 +41,9 @@
 			this.fbdDownloadPath = new Ookii.Dialogs.WinForms.VistaFolderBrowserDialog();
 			this.btnDownloadsPathBrowse = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
+			this.cmbLanguages = new System.Windows.Forms.ComboBox();
+			this.lblLanguage = new System.Windows.Forms.Label();
+			this.lblLanguageNote = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -59,7 +62,7 @@
 			// 
 			this.lblTelegramToken.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.lblTelegramToken.AutoSize = true;
-			this.lblTelegramToken.Location = new System.Drawing.Point(88, 281);
+			this.lblTelegramToken.Location = new System.Drawing.Point(88, 242);
 			this.lblTelegramToken.Name = "lblTelegramToken";
 			this.lblTelegramToken.Size = new System.Drawing.Size(84, 13);
 			this.lblTelegramToken.TabIndex = 3;
@@ -68,7 +71,7 @@
 			// tbTelegramToken
 			// 
 			this.tbTelegramToken.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-			this.tbTelegramToken.Location = new System.Drawing.Point(181, 278);
+			this.tbTelegramToken.Location = new System.Drawing.Point(181, 239);
 			this.tbTelegramToken.Name = "tbTelegramToken";
 			this.tbTelegramToken.Size = new System.Drawing.Size(150, 20);
 			this.tbTelegramToken.TabIndex = 2;
@@ -77,7 +80,7 @@
 			// 
 			this.lblDownloadPath.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.lblDownloadPath.AutoSize = true;
-			this.lblDownloadPath.Location = new System.Drawing.Point(88, 255);
+			this.lblDownloadPath.Location = new System.Drawing.Point(88, 216);
 			this.lblDownloadPath.Name = "lblDownloadPath";
 			this.lblDownloadPath.Size = new System.Drawing.Size(87, 13);
 			this.lblDownloadPath.TabIndex = 5;
@@ -86,7 +89,7 @@
 			// tbDownloadsPath
 			// 
 			this.tbDownloadsPath.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-			this.tbDownloadsPath.Location = new System.Drawing.Point(181, 252);
+			this.tbDownloadsPath.Location = new System.Drawing.Point(181, 213);
 			this.tbDownloadsPath.Name = "tbDownloadsPath";
 			this.tbDownloadsPath.Size = new System.Drawing.Size(150, 20);
 			this.tbDownloadsPath.TabIndex = 4;
@@ -96,7 +99,7 @@
 			this.cmbLogLevels.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.cmbLogLevels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cmbLogLevels.FormattingEnabled = true;
-			this.cmbLogLevels.Location = new System.Drawing.Point(181, 225);
+			this.cmbLogLevels.Location = new System.Drawing.Point(181, 186);
 			this.cmbLogLevels.Name = "cmbLogLevels";
 			this.cmbLogLevels.Size = new System.Drawing.Size(150, 21);
 			this.cmbLogLevels.TabIndex = 7;
@@ -105,7 +108,7 @@
 			// 
 			this.lblLogLevels.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.lblLogLevels.AutoSize = true;
-			this.lblLogLevels.Location = new System.Drawing.Point(88, 228);
+			this.lblLogLevels.Location = new System.Drawing.Point(88, 189);
 			this.lblLogLevels.Name = "lblLogLevels";
 			this.lblLogLevels.Size = new System.Drawing.Size(70, 13);
 			this.lblLogLevels.TabIndex = 6;
@@ -140,7 +143,7 @@
 			// btnDownloadsPathBrowse
 			// 
 			this.btnDownloadsPathBrowse.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-			this.btnDownloadsPathBrowse.Location = new System.Drawing.Point(337, 252);
+			this.btnDownloadsPathBrowse.Location = new System.Drawing.Point(337, 213);
 			this.btnDownloadsPathBrowse.Name = "btnDownloadsPathBrowse";
 			this.btnDownloadsPathBrowse.Size = new System.Drawing.Size(75, 21);
 			this.btnDownloadsPathBrowse.TabIndex = 10;
@@ -159,12 +162,45 @@
 			this.label2.Text = resources.GetString("label2.Text");
 			this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
+			// cmbLanguages
+			// 
+			this.cmbLanguages.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+			this.cmbLanguages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cmbLanguages.FormattingEnabled = true;
+			this.cmbLanguages.Location = new System.Drawing.Point(181, 265);
+			this.cmbLanguages.Name = "cmbLanguages";
+			this.cmbLanguages.Size = new System.Drawing.Size(150, 21);
+			this.cmbLanguages.TabIndex = 12;
+			// 
+			// lblLanguage
+			// 
+			this.lblLanguage.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+			this.lblLanguage.AutoSize = true;
+			this.lblLanguage.Location = new System.Drawing.Point(88, 268);
+			this.lblLanguage.Name = "lblLanguage";
+			this.lblLanguage.Size = new System.Drawing.Size(58, 13);
+			this.lblLanguage.TabIndex = 11;
+			this.lblLanguage.Text = "Language:";
+			// 
+			// lblLanguageNote
+			// 
+			this.lblLanguageNote.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+			this.lblLanguageNote.AutoSize = true;
+			this.lblLanguageNote.Location = new System.Drawing.Point(65, 289);
+			this.lblLanguageNote.Name = "lblLanguageNote";
+			this.lblLanguageNote.Size = new System.Drawing.Size(325, 13);
+			this.lblLanguageNote.TabIndex = 13;
+			this.lblLanguageNote.Text = "Note that the language will change only after the application restart.";
+			// 
 			// frmFirstRun
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(466, 370);
 			this.ControlBox = false;
+			this.Controls.Add(this.lblLanguageNote);
+			this.Controls.Add(this.cmbLanguages);
+			this.Controls.Add(this.lblLanguage);
 			this.Controls.Add(this.btnDownloadsPathBrowse);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnSave);
@@ -202,5 +238,8 @@
 		private Ookii.Dialogs.WinForms.VistaFolderBrowserDialog fbdDownloadPath;
 		private System.Windows.Forms.Button btnDownloadsPathBrowse;
 		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.ComboBox cmbLanguages;
+		private System.Windows.Forms.Label lblLanguage;
+		private System.Windows.Forms.Label lblLanguageNote;
 	}
 }
