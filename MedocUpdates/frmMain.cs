@@ -103,7 +103,7 @@ namespace MedocUpdates
 			// Cleaning up a bit
 			//flowDownloads.Controls.Clear();
 
-			labelVersion.Text = Loc.Get("frmMain.labelVersion.Text.CheckingRoutine");
+			labelVersion.Text = Loc.Get("frmMain.labelVersion.Text.CheckingRoutine.Checking");
 			Log.Write("Checking for updates on the medoc.ua server");
 
 			bool success = medoc.RefreshDoc();
