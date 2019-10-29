@@ -131,7 +131,7 @@ namespace MedocUpdates
 				}
 			}
 
-			Write(LogLevel.BASIC, logMessage);
+			Write(logLevel, logMessage);
 		}
 
 		public static void Write(int logLevel, string logMessage)
