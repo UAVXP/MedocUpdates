@@ -47,7 +47,7 @@ namespace MedocUpdates
 	{
 		private static bool m_bInit = false;
 		private static string m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-		private static string m_logPath = m_exePath + "\\mu_logs\\" + String.Format("log_{0}.txt", DateTime.Now.ToString("yyyy-MM-dd"));
+		private static string m_logPath = Path.Combine(m_exePath, "\\mu_logs\\", String.Format("log_{0}.txt", DateTime.Now.ToString("yyyy-MM-dd")));
 		private static bool m_Enabled = SessionStorage.inside.LogsEnabled;
 		private static int m_logLevel = SessionStorage.inside.LoggingLevel;
 
