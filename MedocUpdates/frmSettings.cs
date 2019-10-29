@@ -57,9 +57,7 @@ namespace MedocUpdates
 
 			string[] locfiles;
 			string[] locs;
-
-			Loc.GetLanguageFiles(out locfiles); // TODO: Check
-			Loc.GetLocalizations(out locs); // TODO: Check
+			Loc.GetLocalizations(out locs, out locfiles); // TODO: Check
 
 			for (int i = 0; i < locs.Length; i++)
 			{

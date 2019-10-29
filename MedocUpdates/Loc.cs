@@ -121,21 +121,19 @@ namespace MedocUpdates
 			return true;
 		}
 
-		public static bool GetLocalizations(out string[] names)
+		public static bool GetLocalizations(out string[] names, out string[] files)
 		{
 			names = new string[0];
+			GetLanguageFiles(out files); // TODO: Check
 
 			List<string> namesHelper = new List<string>();
 
 			string json;
 			LocFile locfile;
 
-			string[] langfiles;
-			GetLanguageFiles(out langfiles); // TODO: Check
-
 			try
 			{
-				foreach (string langfile in langfiles)
+				foreach (string langfile in files)
 				{
 					string langname = Path.GetFileNameWithoutExtension(langfile);
 
