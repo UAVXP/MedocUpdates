@@ -47,7 +47,7 @@ namespace MedocUpdates
 	{
 		private static bool m_bInit = false;
 		private static string m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-		private static string m_logPath = Path.Combine(m_exePath, "\\mu_logs\\", String.Format("log_{0}.txt", DateTime.Now.ToString("yyyy-MM-dd")));
+		private static string m_logPath = Path.Combine(m_exePath, "mu_logs", String.Format("log_{0}.txt", DateTime.Now.ToString("yyyy-MM-dd")));
 		private static bool m_Enabled = SessionStorage.inside.LogsEnabled;
 		private static int m_logLevel = SessionStorage.inside.LoggingLevel;
 
@@ -154,10 +154,12 @@ namespace MedocUpdates
 					foreach (string rawline in parsed)
 					{
 						string line = rawline;
+
+						// Add an extra tab char if the message have more than one line
 						if (i > 0 && line.Length > 0)
 							line = "\t" + line;
 
-						LogInternal(line, w);
+						LogInternal(line, w, logLevel);
 
 						i++;
 					}
@@ -169,11 +171,11 @@ namespace MedocUpdates
 			}
 		}
 
-		public static void LogInternal(string logMessage, TextWriter txtWriter)
+		public static void LogInternal(string logMessage, TextWriter txtWriter, int logLevel)
 		{
 			try
 			{
-				txtWriter.WriteLine("{0}\t\t\t{1}", DateTime.Now.ToString("dd.MM.yy HH:mm:ss.fff"), logMessage);
+				txtWriter.WriteLine("{0}\t{1}\t\t{2}", DateTime.Now.ToString("dd.MM.yy HH:mm:ss.fff"), logLevel, logMessage);
 			}
 			catch (Exception ex)
 			{

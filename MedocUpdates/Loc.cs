@@ -112,7 +112,7 @@ namespace MedocUpdates
 			}
 
 
-			//Loc.lang = forcelang;
+			//Loc.lang = forcelang; // Already defined at the beginning of the class
 			return true;
 		}
 
