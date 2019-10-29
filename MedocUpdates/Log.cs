@@ -108,6 +108,11 @@ namespace MedocUpdates
 			Write(LogLevel.BASIC, logMessage);
 		}
 
+		private static string FormatLogMessage(string logMessage, int logLevel = LogLevel.BASIC)
+		{
+			return String.Format("{0}\t{1}\t\t{2}", DateTime.Now.ToString("dd.MM.yy HH:mm:ss.fff"), logLevel, logMessage);
+		}
+
 		public static void Write(int logLevel, bool forceConsole, string logMessage)
 		{
 			if(forceConsole)
@@ -135,7 +140,7 @@ namespace MedocUpdates
 			{
 				// If not initialized - something was probably wrong with creating a log directory.
 				// Falling back to console method
-				LogFallbackInternal(logMessage);
+				LogFallbackInternal(FormatLogMessage(logMessage, logLevel));
 				return;
 			}
 
@@ -167,26 +172,29 @@ namespace MedocUpdates
 			}
 			catch (Exception ex)
 			{
-				LogFallbackInternal(ex.Message);
+				LogFallbackInternal(FormatLogMessage(logMessage, logLevel), ex.Message);
 			}
 		}
 
 		public static void LogInternal(string logMessage, TextWriter txtWriter, int logLevel)
 		{
+			string endMessage = FormatLogMessage(logMessage, logLevel);
 			try
 			{
-				txtWriter.WriteLine("{0}\t{1}\t\t{2}", DateTime.Now.ToString("dd.MM.yy HH:mm:ss.fff"), logLevel, logMessage);
+				txtWriter.WriteLine(endMessage);
 			}
 			catch (Exception ex)
 			{
-				LogFallbackInternal(ex.Message);
+				LogFallbackInternal(endMessage, ex.Message);
 			}
 		}
 
-		private static void LogFallbackInternal(string logMessage)
+		private static void LogFallbackInternal(string logMessage, string errorMessage = "")
 		{
-			Console.Error.WriteLine(logMessage);
-			Console.Out.WriteLine(logMessage); // Doubling that to standart output just in case
+			Console.Out.WriteLine(logMessage);
+
+			if(errorMessage.Trim().Length > 0)
+				Console.Error.WriteLine(errorMessage);
 		}
 	}
 }
