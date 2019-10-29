@@ -57,7 +57,17 @@ namespace MedocUpdates
 
 			string[] locfiles;
 			string[] locs;
-			Loc.GetLocalizations(out locs, out locfiles); // TODO: Check
+			if(!Loc.GetLocalizations(out locs, out locfiles))
+			{
+				Log.Write(LogLevel.NORMAL, "frmFirstRun: Cannot get proper language files!");
+				return;
+			}
+
+			if(locs.Length != locfiles.Length)
+			{
+				Log.Write(LogLevel.NORMAL, "frmFirstRun: Cannot properly fill the language combobox!");
+				return;
+			}
 
 			for (int i = 0; i < locs.Length; i++)
 			{
@@ -76,6 +86,7 @@ namespace MedocUpdates
 
 			tbDownloadsPath.Text = SessionStorage.inside.DownloadsFolderPath;
 
+			cmbLanguages.Enabled = (languages.Count > 0);
 			cmbLanguages.DisplayMember = "Name";
 			cmbLanguages.ValueMember = "Abbr";
 			cmbLanguages.DataSource = languages;

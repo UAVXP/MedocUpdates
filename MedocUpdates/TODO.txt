@@ -73,3 +73,5 @@ Localization
 	+Force localization command-line parameter
 		All is okay, if choosed forcelanguage doesn't exist - program logs this out and continues with the saved one language
 	+Check what happens if one of Loc.Get would have forced lang set to unknown language
+
+?Replace string.Trim(). with the string.IsNullOrWhiteSpace

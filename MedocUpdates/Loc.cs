@@ -64,22 +64,51 @@ namespace MedocUpdates
 			string json;
 			LocFile locfile;
 
-
 			// If the language was forcebly set in the parameters, then check it first
 			if(forcelang.Trim().Length > 0)
 			{
+				Log.Write("Loc: Forcing application language set to " + forcelang);
 				if(File.Exists(Path.Combine(m_languagePath, forcelang + ".json")))
 				{
 					string langfile = Path.Combine(m_languagePath, forcelang + ".json");
 					string langname = forcelang;
-
 					strs = new List<LocalizePair>();
+
+					if (!File.Exists(langfile)) // File exist in file list, but not now?
+					{
+						Log.Write(LogLevel.NORMAL, "Loc: " + langfile + " doesn't exist");
+						return false;
+					}
+
 					json = File.ReadAllText(langfile);
+					if (json.Trim().Length <= 0) // Cannot read file
+					{
+						Log.Write(LogLevel.NORMAL, "Loc: Cannot read " + langfile);
+						return false;
+					}
+
 					locfile = JsonConvert.DeserializeObject<LocFile>(json);
+					if (locfile == null)
+					{
+						Log.Write(LogLevel.NORMAL, "Loc: Cannot load " + langfile);
+						return false;
+					}
+
+					if (locfile.tokens == null || locfile.tokens.Count <= 0) // No tokens in the file
+					{
+						Log.Write(LogLevel.NORMAL, "Loc: " + langfile + " doesn't seem to be a proper language file");
+						return false;
+					}
+
 					strs.AddRange(locfile.tokens);
 
 					// Clearing up the "comments" (objects with empty tokens)
 					strs = strs.Where(elem => !String.IsNullOrWhiteSpace(elem.token)).Distinct().ToList(); // FIXME: Distinct is very uneffective
+					if (strs.Count <= 0) // Something went wrong with searching for empty tokens, or the whole file is filled with those ones
+					{
+						Log.Write(LogLevel.NORMAL, "Loc: " + langfile + " contains only empty tokens");
+						return false;
+					}
 
 					langstrs.Add(new LocLanguage(strs, langname));
 
@@ -89,34 +118,67 @@ namespace MedocUpdates
 				else
 				{
 					Log.Write(LogLevel.NORMAL,
-						String.Format("Localization: Cannot use -forcelanguage because language {0} doesn't exist! Proceeding to the saved language.", forcelang));
+						String.Format("Loc: Cannot use -forcelanguage because language {0} doesn't exist! Proceeding to the saved language.", forcelang));
 				}
 			}
 
 
 			string[] langfiles;
-			GetLanguageFiles(out langfiles); // TODO: Check
+			if(!GetLanguageFiles(out langfiles))
+			{
+				Log.Write(LogLevel.NORMAL, "Loc: Cannot get any language files from \"lang\" folder");
+				return false;
+			}
 
 			try
 			{
 				foreach (string langfile in langfiles)
 				{
 					string langname = Path.GetFileNameWithoutExtension(langfile);
-
 					strs = new List<LocalizePair>();
+
+					if(!File.Exists(langfile)) // File exist in file list, but not now?
+					{
+						Log.Write(LogLevel.NORMAL, "Loc: " + langfile + " doesn't exist");
+						continue;
+					}
+
 					json = File.ReadAllText(langfile);
+					if(json.Trim().Length <= 0) // Cannot read file
+					{
+						Log.Write(LogLevel.NORMAL, "Loc: Cannot read " + langfile);
+						continue;
+					}
+
 					locfile = JsonConvert.DeserializeObject<LocFile>(json);
+					if(locfile == null)
+					{
+						Log.Write(LogLevel.NORMAL, "Loc: Cannot load " + langfile);
+						continue;
+					}
+
+					if(locfile.tokens == null || locfile.tokens.Count <= 0) // No tokens in the file
+					{
+						Log.Write(LogLevel.NORMAL, "Loc: " + langfile + " doesn't seem to be a proper language file");
+						continue;
+					}
+
 					strs.AddRange(locfile.tokens);
 
 					// Clearing up the "comments" (objects with empty tokens)
 					strs = strs.Where(elem => !String.IsNullOrWhiteSpace(elem.token)).Distinct().ToList(); // FIXME: Distinct is very uneffective
+					if(strs.Count <= 0) // Something went wrong with searching for empty tokens, or the whole file is filled with those ones
+					{
+						Log.Write(LogLevel.NORMAL, "Loc: " + langfile + " contains only empty tokens");
+						continue;
+					}
 
 					langstrs.Add(new LocLanguage(strs, langname));
 				}
 			}
 			catch (Exception ex)
 			{
-				Log.Write(LogLevel.NORMAL, "Localization: Cannot process the localization\r\n" + ex.Message);
+				Log.Write(LogLevel.NORMAL, "Loc: Cannot process the localization\r\n" + ex.Message);
 				return false;
 			}
 
@@ -129,11 +191,17 @@ namespace MedocUpdates
 		{
 			files = new string[0];
 			if (!Directory.Exists(m_languagePath))
+			{
+				Log.Write(LogLevel.NORMAL, "Loc: \"lang\" folder doesn't exist");
 				return false;
+			}
 
 			files = Directory.GetFiles(m_languagePath, "*.json");
 			if (files.Length <= 0)
+			{
+				Log.Write(LogLevel.NORMAL, "Loc: \"lang\" folder doesn't contain any language files in it");
 				return false;
+			}
 
 			return true;
 		}
@@ -141,7 +209,11 @@ namespace MedocUpdates
 		public static bool GetLocalizations(out string[] names, out string[] files)
 		{
 			names = new string[0];
-			GetLanguageFiles(out files); // TODO: Check
+			if(!GetLanguageFiles(out files))
+			{
+				Log.Write(LogLevel.NORMAL, "Loc: Cannot get any language files from \"lang\" folder");
+				return false;
+			}
 
 			List<string> namesHelper = new List<string>();
 
@@ -154,18 +226,57 @@ namespace MedocUpdates
 				{
 					string langname = Path.GetFileNameWithoutExtension(langfile);
 
+					if (!File.Exists(langfile)) // File exist in file list, but not now?
+					{
+						Log.Write(LogLevel.NORMAL, "Loc: " + langfile + " doesn't exist");
+						continue;
+					}
+
 					json = File.ReadAllText(langfile);
+					if (json.Trim().Length <= 0) // Cannot read file
+					{
+						Log.Write(LogLevel.NORMAL, "Loc: Cannot read " + langfile);
+						continue;
+					}
+
 					locfile = JsonConvert.DeserializeObject<LocFile>(json);
-					namesHelper.Add(locfile.language);
+					if(locfile == null)
+					{
+						Log.Write(LogLevel.NORMAL, "Loc: Cannot load " + langfile);
+						continue;
+					}
+
+					if(locfile.language == null || locfile.language.Trim().Length <= 0)
+					{
+						//namesHelper.Add(Loc.m_defaultLang);
+						Log.Write(LogLevel.NORMAL, "Loc: " + langfile + " is corrupted or is not a valid language file");
+						continue;
+					}
+					else
+					{
+						namesHelper.Add(locfile.language);
+					}
 				}
 			}
 			catch (Exception ex)
 			{
-				Log.Write(LogLevel.NORMAL, "Localization: Cannot process the localization\r\n" + ex.Message);
+				Log.Write(LogLevel.NORMAL, "Loc: Cannot process the localization\r\n" + ex.Message);
+				return false;
+			}
+
+			if(namesHelper.Count <= 0)
+			{
+				Log.Write(LogLevel.NORMAL, "Loc: None of the language files were added");
 				return false;
 			}
 
 			names = namesHelper.ToArray();
+			if(names.Length <= 0) // How's this would happen?
+			{
+				Log.Write(LogLevel.NORMAL, "Loc: Something went wrong with getting a localizations (cannot convert list to array)");
+				return false;
+			}
+
 			return true;
 		}
 
