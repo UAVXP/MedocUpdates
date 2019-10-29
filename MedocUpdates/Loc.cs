@@ -49,7 +49,8 @@ namespace MedocUpdates
 		private static List<LocLanguage> langstrs = new List<LocLanguage>();
 		private static string m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 		private static string m_languagePath = Path.Combine(m_exePath, "lang");
-		private static string lang = SessionStorage.inside.SelectedLanguage; // "en" by default
+		public static string m_defaultLang = "en";
+		private static string m_lang = SessionStorage.inside.SelectedLanguage;
 
 		public static bool Init(string forcelang = "")
 		{
@@ -80,7 +81,7 @@ namespace MedocUpdates
 
 				langstrs.Add(new LocLanguage(strs, langname));
 
-				Loc.lang = forcelang;
+				Loc.m_lang = forcelang;
 				return true;
 			}
 
@@ -160,48 +161,59 @@ namespace MedocUpdates
 			return true;
 		}
 
-		public static string Get(string token, string forceLang = "")
+		private static bool IsDefaultLang(string lang)
+		{
+			return lang.Equals(m_defaultLang);
+		}
+
+		private static string GetDefaultLangToken(string token)
 		{
 			LocLanguage loclang;
 			LocalizePair locpair;
 
-
-			// Checking forced lang first
-			if (forceLang.Trim().Length > 0)
-			{
-				loclang = langstrs.FirstOrDefault(elem => elem.lang.Equals(forceLang));
-				if (loclang == null)
-					return token;
-
-				locpair = loclang.str.FirstOrDefault(elem => elem.token.Equals(token));
-				if (locpair != null)
-					return locpair.value;
-			}
-
-			// Checking selected lang
-			if (Loc.lang.Trim().Length > 0)
-			{
-				loclang = langstrs.FirstOrDefault(elem => elem.lang.Equals(Loc.lang));
-				if(loclang == null)
-					return token;
-
-				locpair = loclang.str.FirstOrDefault(elem => elem.token.Equals(token));
-				if(locpair != null)
-					return locpair.value;
-			}
-
-
-			// Checking default lang first (en)
-			loclang = langstrs.FirstOrDefault(elem => elem.lang.Equals("en"));
+			loclang = langstrs.FirstOrDefault(elem => IsDefaultLang(elem.lang));
 			if (loclang == null)
-				return token;
+				return token; // Give up and just return the passed token - we don't have any localizations for it
 
 			locpair = loclang.str.FirstOrDefault(elem => elem.token.Equals(token));
 			if (locpair != null)
 				return locpair.value;
 
+			return token; // Give up and just return the passed token - we don't have any localizations for it
+		}
 
-			return token;
+		private static string GetLangToken(string token, string lang)
+		{
+			LocLanguage loclang;
+			LocalizePair locpair;
+
+			loclang = langstrs.FirstOrDefault(elem => elem.lang.Equals(lang));
+			if (loclang == null)
+				return GetDefaultLangToken(token);
+
+			locpair = loclang.str.FirstOrDefault(elem => elem.token.Equals(token));
+			if (locpair != null)
+				return locpair.value;
+
+			return GetDefaultLangToken(token);
+		}
+
+		public static string Get(string token, string forceLang = "")
+		{
+			// Checking forced lang first
+			if (forceLang.Trim().Length > 0)
+			{
+				return GetLangToken(token, forceLang);
+			}
+
+			// Checking selected lang
+			if (Loc.m_lang.Trim().Length > 0 && !IsDefaultLang(Loc.m_lang)) // We don't need to search for token for this lang, if it's already a default lang. Just pass to the end
+			{
+				return GetLangToken(token, Loc.m_lang);
+			}
+
+			// Checking default lang (en)
+			return GetDefaultLangToken(token);
 		}
 	}
 }

@@ -49,7 +49,7 @@ namespace MedocUpdates
 			public string		TelegramToken = "";
 			public string		DownloadsFolderPath = new KnownFolder(KnownFolderType.Downloads).Path;
 			public bool			RemoveUpdateFileAfterInstall = true;
-			public string		SelectedLanguage = "en";
+			public string		SelectedLanguage = "en"; // Loc.m_defaultLang
 
 			public static implicit operator Inside_v3(Inside_v2 v)
 			{
