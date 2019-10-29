@@ -160,13 +160,25 @@ namespace MedocUpdates
 			return true;
 		}
 
-		public static string Get(string token)
+		public static string Get(string token, string forceLang = "")
 		{
 			LocLanguage loclang;
 			LocalizePair locpair;
 
 
-			// Checking selected lang first
+			// Checking forced lang first
+			if (forceLang.Trim().Length > 0)
+			{
+				loclang = langstrs.FirstOrDefault(elem => elem.lang.Equals(forceLang));
+				if (loclang == null)
+					return token;
+
+				locpair = loclang.str.FirstOrDefault(elem => elem.token.Equals(token));
+				if (locpair != null)
+					return locpair.value;
+			}
+
+			// Checking selected lang
 			if (Loc.lang.Trim().Length > 0)
 			{
 				loclang = langstrs.FirstOrDefault(elem => elem.lang.Equals(Loc.lang));
@@ -179,7 +191,7 @@ namespace MedocUpdates
 			}
 
 
-			// Check default lang first (en)
+			// Checking default lang first (en)
 			loclang = langstrs.FirstOrDefault(elem => elem.lang.Equals("en"));
 			if (loclang == null)
 				return token;
