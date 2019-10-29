@@ -1,6 +1,10 @@
 {
-  "language": "Русский",
+    "language": "Русский",
     "tokens": [
+        {
+            "token": "",
+            "value": "Комментарий"
+        },
         {
             "token": "frmMain_Done",
             "value": "Готово!"

@@ -63,12 +63,11 @@ Services:
 
 +When updates are performing, do something with user be possible to Check for updates and frick up the buttons
 
-Small "first run" form (or wizard), where user can define some of the important settings
++Small "first run" form (or wizard), where user can define some of the important settings
 Localization
 	First - the interface
 	Second - logs (maybe)
 	Loc.Get should have 2nd parameter that defines a default string, if none of the localization file is available
-	Check for empty token in lang files and don't add them - they will act like a comments
-	Fix duplicate lang entries (i.e. for frmSettings and frmFirstRun)
-
-Make frmMain contain frmFirstRun launch button
+	+Check for empty token in lang files and don't add them - they will act like a comments
+	Manually fix duplicate lang entries (i.e. for frmSettings and frmFirstRun)
+	Force localization command-line parameter

@@ -2,6 +2,10 @@
     "language": "English",
     "tokens": [
         {
+            "token": "",
+            "value": "Comment"
+        },
+        {
             "token": "frmMain_Done",
             "value": "Done!"
         },

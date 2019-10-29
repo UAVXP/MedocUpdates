@@ -74,6 +74,10 @@ namespace MedocUpdates
 				json = File.ReadAllText(langfile);
 				locfile = JsonConvert.DeserializeObject<LocFile>(json);
 				strs.AddRange(locfile.tokens);
+
+				// Clearing up the "comments" (objects with empty tokens)
+				strs = strs.Where(elem => !String.IsNullOrWhiteSpace(elem.token)).Distinct().ToList(); // FIXME: Distinct is very uneffective
+
 				langstrs.Add(new LocLanguage(strs, langname));
 
 				Loc.lang = forcelang;
@@ -94,6 +98,10 @@ namespace MedocUpdates
 					json = File.ReadAllText(langfile);
 					locfile = JsonConvert.DeserializeObject<LocFile>(json);
 					strs.AddRange(locfile.tokens);
+
+					// Clearing up the "comments" (objects with empty tokens)
+					strs = strs.Where(elem => !String.IsNullOrWhiteSpace(elem.token)).Distinct().ToList(); // FIXME: Distinct is very uneffective
+
 					langstrs.Add(new LocLanguage(strs, langname));
 				}
 			}
