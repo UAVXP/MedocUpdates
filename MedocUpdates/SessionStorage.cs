@@ -49,6 +49,7 @@ namespace MedocUpdates
 			public string		TelegramToken = "";
 			public string		DownloadsFolderPath = new KnownFolder(KnownFolderType.Downloads).Path;
 			public bool			RemoveUpdateFileAfterInstall = true;
+			public string		SelectedLanguage = "en";
 
 			public static implicit operator Inside_v3(Inside_v2 v)
 			{
@@ -87,6 +88,7 @@ namespace MedocUpdates
 		public static event EventHandler TelegramTokenChanged = delegate { };
 		public static event EventHandler DownloadsFolderPathChanged = delegate { };
 		public static event EventHandler RemoveUpdateFileAfterInstallChanged = delegate { };
+		public static event EventHandler SelectedLanguageChanged = delegate { };
 
 		// TODO: Maybe do this in properties and not calling ...ChangedFunc?
 		// Actually, then I cannot use sender object
@@ -114,6 +116,10 @@ namespace MedocUpdates
 		public static void RemoveUpdateFileAfterInstallChangedFunc(object sender)
 		{
 			RemoveUpdateFileAfterInstallChanged.Invoke(sender, new EventArgs());
+		}
+		public static void SelectedLanguageChangedFunc(object sender)
+		{
+			SelectedLanguageChanged.Invoke(sender, new EventArgs());
 		}
 
 		public static void Save()

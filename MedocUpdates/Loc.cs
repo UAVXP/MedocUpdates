@@ -46,10 +46,12 @@ namespace MedocUpdates
 
 	public static class Loc
 	{
-		private static string lang = "en"; // SessionStorage
 		private static List<LocLanguage> langstrs = new List<LocLanguage>();
+		private static string m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+		private static string m_languagePath = Path.Combine(m_exePath, "lang");
+		private static string lang = SessionStorage.inside.SelectedLanguage; // "en" by default
 
-		public static bool Init(string lang)
+		public static bool Init(string forcelang = "")
 		{
 			//LocFile locfileWrite = new LocFile();
 			//locfileWrite.language = "English";
@@ -61,19 +63,30 @@ namespace MedocUpdates
 			string json;
 			LocFile locfile;
 
-			string exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string languagePath = Path.Combine(exePath, "lang");
 
-			if (!Directory.Exists(languagePath))
-				return false;
+			// If the language was forcebly set in the parameters, then check it first
+			if(forcelang.Trim().Length > 0 && File.Exists(Path.Combine(m_languagePath, forcelang + ".json")))
+			{
+				string langfile = Path.Combine(m_languagePath, forcelang + ".json");
+				string langname = forcelang;
 
-			string[] langfiles = Directory.GetFiles(languagePath, "*.json");
-			if(langfiles.Length <= 0)
-				return false;
+				strs = new List<LocalizePair>();
+				json = File.ReadAllText(langfile);
+				locfile = JsonConvert.DeserializeObject<LocFile>(json);
+				strs.AddRange(locfile.tokens);
+				langstrs.Add(new LocLanguage(strs, langname));
+
+				Loc.lang = forcelang;
+				return true;
+			}
+
+
+			string[] langfiles;
+			GetLanguageFiles(out langfiles); // TODO: Check
 
 			try
 			{
-				foreach(string langfile in langfiles)
+				foreach (string langfile in langfiles)
 				{
 					string langname = Path.GetFileNameWithoutExtension(langfile);
 
@@ -84,29 +97,91 @@ namespace MedocUpdates
 					langstrs.Add(new LocLanguage(strs, langname));
 				}
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
-				Log.Write(LogLevel.NORMAL, "");
+				Log.Write(LogLevel.NORMAL, "Localization: Cannot process the localization\r\n" + ex.Message);
 				return false;
 			}
 
-			Loc.lang = lang;
+
+			//Loc.lang = forcelang;
+			return true;
+		}
+
+		public static bool GetLanguageFiles(out string[] files)
+		{
+			files = new string[0];
+			if (!Directory.Exists(m_languagePath))
+				return false;
+
+			files = Directory.GetFiles(m_languagePath, "*.json");
+			if (files.Length <= 0)
+				return false;
+
+			return true;
+		}
+
+		public static bool GetLocalizations(out string[] names)
+		{
+			names = new string[0];
+
+			List<string> namesHelper = new List<string>();
+
+			string json;
+			LocFile locfile;
+
+			string[] langfiles;
+			GetLanguageFiles(out langfiles); // TODO: Check
+
+			try
+			{
+				foreach (string langfile in langfiles)
+				{
+					string langname = Path.GetFileNameWithoutExtension(langfile);
+
+					json = File.ReadAllText(langfile);
+					locfile = JsonConvert.DeserializeObject<LocFile>(json);
+					namesHelper.Add(locfile.language);
+				}
+			}
+			catch (Exception ex)
+			{
+				Log.Write(LogLevel.NORMAL, "Localization: Cannot process the localization\r\n" + ex.Message);
+				return false;
+			}
+
+			names = namesHelper.ToArray();
 			return true;
 		}
 
 		public static string Get(string token)
 		{
 			LocLanguage loclang;
+			LocalizePair locpair;
 
-			loclang = langstrs.FirstOrDefault(elem => elem.lang.Equals(Loc.lang)); // Checking selected lang first
-			LocalizePair locpair = loclang.str.FirstOrDefault(elem => elem.token.Equals(token));
-			if(locpair != null)
-				return locpair.value;
 
-			loclang = langstrs.FirstOrDefault(elem => elem.lang.Equals("en")); // Check default lang first (en)
+			// Checking selected lang first
+			if (Loc.lang.Trim().Length > 0)
+			{
+				loclang = langstrs.FirstOrDefault(elem => elem.lang.Equals(Loc.lang));
+				if(loclang == null)
+					return token;
+
+				locpair = loclang.str.FirstOrDefault(elem => elem.token.Equals(token));
+				if(locpair != null)
+					return locpair.value;
+			}
+
+
+			// Check default lang first (en)
+			loclang = langstrs.FirstOrDefault(elem => elem.lang.Equals("en"));
+			if (loclang == null)
+				return token;
+
 			locpair = loclang.str.FirstOrDefault(elem => elem.token.Equals(token));
 			if (locpair != null)
 				return locpair.value;
+
 
 			return token;
 		}

@@ -44,9 +44,14 @@
 			this.lblDownloadPath = new System.Windows.Forms.Label();
 			this.tbDownloadsPath = new System.Windows.Forms.TextBox();
 			this.fbdDownloadPath = new Ookii.Dialogs.WinForms.VistaFolderBrowserDialog();
+			this.gbLanguage = new System.Windows.Forms.GroupBox();
+			this.lblLanguage = new System.Windows.Forms.Label();
+			this.cmbLanguages = new System.Windows.Forms.ComboBox();
+			this.lblLanguageNote = new System.Windows.Forms.Label();
 			this.gbLogLevels.SuspendLayout();
 			this.gbTelegram.SuspendLayout();
 			this.gbDownloads.SuspendLayout();
+			this.gbLanguage.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// gbLogLevels
@@ -120,7 +125,7 @@
 			// btnSave
 			// 
 			this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnSave.Location = new System.Drawing.Point(587, 169);
+			this.btnSave.Location = new System.Drawing.Point(587, 278);
 			this.btnSave.Name = "btnSave";
 			this.btnSave.Size = new System.Drawing.Size(75, 23);
 			this.btnSave.TabIndex = 2;
@@ -131,7 +136,7 @@
 			// btnCancel
 			// 
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCancel.Location = new System.Drawing.Point(668, 169);
+			this.btnCancel.Location = new System.Drawing.Point(668, 278);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
 			this.btnCancel.TabIndex = 3;
@@ -192,11 +197,53 @@
 			// 
 			this.fbdDownloadPath.RootFolder = System.Environment.SpecialFolder.MyComputer;
 			// 
+			// gbLanguage
+			// 
+			this.gbLanguage.Controls.Add(this.lblLanguageNote);
+			this.gbLanguage.Controls.Add(this.cmbLanguages);
+			this.gbLanguage.Controls.Add(this.lblLanguage);
+			this.gbLanguage.Location = new System.Drawing.Point(12, 160);
+			this.gbLanguage.Name = "gbLanguage";
+			this.gbLanguage.Size = new System.Drawing.Size(234, 104);
+			this.gbLanguage.TabIndex = 5;
+			this.gbLanguage.TabStop = false;
+			this.gbLanguage.Text = "Language setup";
+			// 
+			// lblLanguage
+			// 
+			this.lblLanguage.AutoSize = true;
+			this.lblLanguage.Location = new System.Drawing.Point(15, 25);
+			this.lblLanguage.Name = "lblLanguage";
+			this.lblLanguage.Size = new System.Drawing.Size(58, 13);
+			this.lblLanguage.TabIndex = 0;
+			this.lblLanguage.Text = "Language:";
+			// 
+			// cmbLanguages
+			// 
+			this.cmbLanguages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cmbLanguages.FormattingEnabled = true;
+			this.cmbLanguages.Location = new System.Drawing.Point(103, 22);
+			this.cmbLanguages.Name = "cmbLanguages";
+			this.cmbLanguages.Size = new System.Drawing.Size(109, 21);
+			this.cmbLanguages.TabIndex = 1;
+			// 
+			// lblLanguageNote
+			// 
+			this.lblLanguageNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblLanguageNote.Location = new System.Drawing.Point(15, 46);
+			this.lblLanguageNote.Name = "lblLanguageNote";
+			this.lblLanguageNote.Size = new System.Drawing.Size(213, 45);
+			this.lblLanguageNote.TabIndex = 2;
+			this.lblLanguageNote.Text = "Note that the language will change only after the application restart.";
+			// 
 			// frmSettings
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(755, 204);
+			this.ClientSize = new System.Drawing.Size(755, 313);
+			this.Controls.Add(this.gbLanguage);
 			this.Controls.Add(this.gbDownloads);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnSave);
@@ -212,6 +259,8 @@
 			this.gbTelegram.PerformLayout();
 			this.gbDownloads.ResumeLayout(false);
 			this.gbDownloads.PerformLayout();
+			this.gbLanguage.ResumeLayout(false);
+			this.gbLanguage.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -233,5 +282,9 @@
 		private System.Windows.Forms.TextBox tbDownloadsPath;
 		private Ookii.Dialogs.WinForms.VistaFolderBrowserDialog fbdDownloadPath;
 		private System.Windows.Forms.CheckBox cbRemoveUpdateFile;
+		private System.Windows.Forms.GroupBox gbLanguage;
+		private System.Windows.Forms.ComboBox cmbLanguages;
+		private System.Windows.Forms.Label lblLanguage;
+		private System.Windows.Forms.Label lblLanguageNote;
 	}
 }

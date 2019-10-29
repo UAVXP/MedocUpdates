@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.IO;
+
 namespace MedocUpdates
 {
 	public partial class frmSettings : Form
@@ -18,7 +20,14 @@ namespace MedocUpdates
 			public string Name { get; set; }
 		}
 
+		private class LanguageHelper
+		{
+			public string Abbr { get; set; }
+			public string Name { get; set; }
+		}
+
 		private List<LogLevelHelper> logLevels = new List<LogLevelHelper>();
+		private List<LanguageHelper> languages = new List<LanguageHelper>();
 
 		private void InitializeLocalization()
 		{
@@ -45,6 +54,17 @@ namespace MedocUpdates
 			{
 				logLevels.Add( new LogLevelHelper() { Level = i, Name = LogLevel.GetName(i) });
 			}
+
+			string[] locfiles;
+			string[] locs;
+
+			Loc.GetLanguageFiles(out locfiles); // TODO: Check
+			Loc.GetLocalizations(out locs); // TODO: Check
+
+			for (int i = 0; i < locs.Length; i++)
+			{
+				languages.Add(new LanguageHelper() { Abbr = Path.GetFileNameWithoutExtension(locfiles[i]), Name = locs[i] });
+			}
 		}
 
 		private void frmSettings_Load(object sender, EventArgs e)
@@ -63,6 +83,11 @@ namespace MedocUpdates
 			fbdDownloadPath.SelectedPath = tbDownloadsPath.Text;
 
 			cbRemoveUpdateFile.Checked = SessionStorage.inside.RemoveUpdateFileAfterInstall;
+
+			cmbLanguages.DisplayMember = "Name";
+			cmbLanguages.ValueMember = "Abbr";
+			cmbLanguages.DataSource = languages;
+			cmbLanguages.SelectedValue = SessionStorage.inside.SelectedLanguage;
 		}
 
 		private void cbLogs_CheckedChanged(object sender, EventArgs e)
@@ -100,6 +125,12 @@ namespace MedocUpdates
 			{
 				SessionStorage.inside.RemoveUpdateFileAfterInstall = cbRemoveUpdateFile.Checked;
 				SessionStorage.RemoveUpdateFileAfterInstallChangedFunc(this);
+			}
+
+			if (SessionStorage.inside.SelectedLanguage != cmbLanguages.SelectedValue.ToString())
+			{
+				SessionStorage.inside.SelectedLanguage = cmbLanguages.SelectedValue.ToString();
+				SessionStorage.SelectedLanguageChangedFunc(this);
 			}
 
 			Log.SetEnabled(SessionStorage.inside.LogsEnabled);

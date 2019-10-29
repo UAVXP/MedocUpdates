@@ -21,12 +21,14 @@ namespace MedocUpdates
 				return;
 			}
 
-			Loc.Init("ru");
-
 			ParsedArgs.SetArgs(Environment.GetCommandLineArgs());
 			ParsedArgs.PrintArgs();
 
 			bool bSettingsWasRestoredFromFile = SessionStorage.Restore();
+
+			Loc.Init(/*"ru"*/);
+			//string[] names;
+			//Loc.GetLocalizations(out names);
 
 			Log.Init();
 			Log.Write("");
