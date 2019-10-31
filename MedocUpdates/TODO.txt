@@ -75,3 +75,4 @@ Localization
 	+Check what happens if one of Loc.Get would have forced lang set to unknown language
 
 ?Replace "string.Trim().Length <= 0" with the "string.IsNullOrWhiteSpace"
+?Replace MedocVersion with Version
