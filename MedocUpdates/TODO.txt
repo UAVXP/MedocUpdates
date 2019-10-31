@@ -76,3 +76,4 @@ Localization
 
 ?Replace "string.Trim().Length <= 0" with the "string.IsNullOrWhiteSpace"
 ?Replace MedocVersion with Version
+	Probably, if I will, I'll do this internally in MedocVersion, for comparison only
