@@ -49,6 +49,7 @@
 			// 
 			this.labelVersion.AutoSize = true;
 			this.labelVersion.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.labelVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(53)))), ((int)(((byte)(55)))));
 			this.labelVersion.Location = new System.Drawing.Point(3, 10);
 			this.labelVersion.Name = "labelVersion";
 			this.labelVersion.Size = new System.Drawing.Size(193, 29);

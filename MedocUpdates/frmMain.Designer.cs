@@ -102,6 +102,7 @@
 			// 
 			this.labelVersion.AutoSize = true;
 			this.labelVersion.Font = new System.Drawing.Font("Arial", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.labelVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(53)))), ((int)(((byte)(55)))));
 			this.labelVersion.Location = new System.Drawing.Point(38, 28);
 			this.labelVersion.Name = "labelVersion";
 			this.labelVersion.Size = new System.Drawing.Size(278, 41);
@@ -146,6 +147,7 @@
 			// 
 			this.labelLocalVersion.AutoSize = true;
 			this.labelLocalVersion.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.labelLocalVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(53)))), ((int)(((byte)(55)))));
 			this.labelLocalVersion.Location = new System.Drawing.Point(42, 271);
 			this.labelLocalVersion.Name = "labelLocalVersion";
 			this.labelLocalVersion.Size = new System.Drawing.Size(182, 18);

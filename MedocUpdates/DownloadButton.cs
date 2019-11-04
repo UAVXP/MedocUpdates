@@ -77,8 +77,8 @@ namespace MedocUpdates
 			if (this.IsHighlighted)
 			{
 				//this.BackColor = SystemColors.Highlight;
-				this.BackColor = SystemColors.ActiveCaption;
-				llblDownload.LinkColor = Color.Yellow;
+				this.BackColor = Color.FromArgb(0, 142, 69);
+				llblDownload.LinkColor = Color.FromArgb(255, 226, 0); // Color.Yellow;
 				llblDownload.Font = new Font(llblDownload.Font.Name, llblDownload.Font.Size, FontStyle.Bold);
 			}
 		}
