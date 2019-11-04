@@ -65,9 +65,9 @@ Services:
 
 +Small "first run" form (or wizard), where user can define some of the important settings
 Localization
-	First - the interface
+	+First - the interface
 	Second - logs (maybe)
-	Loc.Get should have 2nd parameter that defines a default string, if none of the localization file is available
+	+Loc.Get should have 2nd parameter that defines a default string, if none of the localization file is available
 	+Check for empty token in lang files and don't add them - they will act like a comments
 	Manually fix duplicate lang entries (i.e. for frmSettings and frmFirstRun)
 	+Force localization command-line parameter
@@ -78,6 +78,7 @@ Localization
 ?Replace MedocVersion with Version
 	Probably, if I will, I'll do this internally in MedocVersion, for comparison only
 
-Store userIDs in a separate file
++Store userIDs in a separate file
 +Telegram updates message should contain links to the changelogs
-Change download progressbar color (or even hightlighted DownloadButton background)
++Change download progressbar color (or even hightlighted DownloadButton background)
+	Changed DownloadButton background color to M.E.Doc's green

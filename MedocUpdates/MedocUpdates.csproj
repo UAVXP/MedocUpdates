@@ -137,6 +137,7 @@
     <Compile Include="SessionStorage.cs" />
     <Compile Include="MedocTelegram.cs" />
     <Compile Include="External\sscanf\TextParser.cs" />
+    <Compile Include="TelegramChatsStorage.cs" />
     <Compile Include="TimeChooser.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -71,7 +71,7 @@ namespace MedocUpdates
 				return;
 			}
 
-			if (SessionStorage.inside.TelegramChats == null) // May be rare
+			if (TelegramChatsStorage.TelegramChats == null) // May be rare
 			{
 				Log.Write(LogLevel.EXPERT, "MedocTelegram: Internal chat list is null");
 				return;
@@ -114,7 +114,7 @@ namespace MedocUpdates
 
 		private bool IsSubscribed(long chatID)
 		{
-			return SessionStorage.inside.TelegramChats.IndexOf(chatID) >= 0;
+			return TelegramChatsStorage.TelegramChats.IndexOf(chatID) >= 0;
 		}
 
 		private bool SubscribeInternal(long chatID)
@@ -125,7 +125,7 @@ namespace MedocUpdates
 				return false;
 			}
 
-			SessionStorage.inside.TelegramChats.Add(chatID);
+			TelegramChatsStorage.TelegramChats.Add(chatID);
 
 			// Double check
 			if (!IsSubscribed(chatID))
@@ -134,7 +134,7 @@ namespace MedocUpdates
 				return false;
 			}
 
-			// TODO: Should I call SessionStorage.Save() immediately here?
+			TelegramChatsStorage.Save();
 
 			return true;
 		}
@@ -147,7 +147,7 @@ namespace MedocUpdates
 				return false;
 			}
 
-			if(!SessionStorage.inside.TelegramChats.Remove(chatID))
+			if(!TelegramChatsStorage.TelegramChats.Remove(chatID))
 			{
 				Log.Write(LogLevel.NORMAL, "MedocTelegram: Cannot unsubscribe chat #" + chatID + " - something wrong with internal chat list");
 				return false;
@@ -160,7 +160,7 @@ namespace MedocUpdates
 				return false;
 			}
 
-			// TODO: Should I call SessionStorage.Save() immediately here?
+			TelegramChatsStorage.Save();
 
 			return true;
 		}
@@ -188,10 +188,14 @@ namespace MedocUpdates
 		public void SendMessageAll(string textmessage, ParseMode parsemode = ParseMode.Default)
 		{
 			Log.Write(LogLevel.NORMAL, "MedocTelegram: Sending message to all chats\r\n" + textmessage);
-			foreach (long chatID in SessionStorage.inside.TelegramChats)
+
+			string logChatIDs = "";
+			foreach (long chatID in TelegramChatsStorage.TelegramChats)
 			{
 				SendMessage(chatID, textmessage, parsemode);
+				logChatIDs += chatID + ", ";
 			}
+			Log.Write(LogLevel.NORMAL, String.Format("MedocTelegram: Sending message to chats {0}\r\n{1}", logChatIDs, textmessage));
 		}
 
 		private async void Subscribe(long chatID, ChatMember member)
@@ -211,7 +215,7 @@ namespace MedocUpdates
 				return;
 			}
 
-			SendMessage(chatID, member.User + " have subscribed this chat to M.E.Doc updates.");
+			SendMessage(chatID, member.User + " have subscribed this chat to M.E.Doc updates."); // TODO: Adaptive choice between member.User Username and FirstName
 			Log.Write(LogLevel.NORMAL, "MedocTelegram: Chat #" + chatID + " was subscribed by @" + member.User);
 		}
 
@@ -233,7 +237,7 @@ namespace MedocUpdates
 				return;
 			}
 
-			SendMessage(chatID, member.User + " have unsubscribed this chat from M.E.Doc updates.");
+			SendMessage(chatID, member.User + " have unsubscribed this chat from M.E.Doc updates."); // TODO: Adaptive choice between member.User Username and FirstName
 			Log.Write(LogLevel.NORMAL, "MedocTelegram:  Chat #" + chatID + " was unsubscribed by @" + member.User);
 		}
 
@@ -342,7 +346,7 @@ namespace MedocUpdates
 			ChatMember member = new ChatMember();
 			try
 			{
-				await botClient.GetChatMemberAsync(chatID, user.Id);
+				member = await botClient.GetChatMemberAsync(chatID, user.Id);
 			}
 			catch(Exception ex)
 			{

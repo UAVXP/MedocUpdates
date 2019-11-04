@@ -25,6 +25,7 @@ namespace MedocUpdates
 			ParsedArgs.PrintArgs();
 
 			bool bSettingsWasRestoredFromFile = SessionStorage.Restore();
+			TelegramChatsStorage.Restore();
 
 			Log.Init();
 			Log.Write("");
