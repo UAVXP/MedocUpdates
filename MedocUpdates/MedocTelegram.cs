@@ -216,7 +216,7 @@ namespace MedocUpdates
 			}
 
 			SendMessage(chatID, member.User + " have subscribed this chat to M.E.Doc updates."); // TODO: Adaptive choice between member.User Username and FirstName
-			Log.Write(LogLevel.NORMAL, "MedocTelegram: Chat #" + chatID + " was subscribed by @" + member.User);
+			Log.Write(LogLevel.NORMAL, "MedocTelegram: Chat " + (chat.Type != ChatType.Private ? chat.Title : chat.Username) + " was subscribed by " + member.User); // TODO: Adaptive choice between chat.Username and FirstName
 		}
 
 		private async void Unsubscribe(long chatID, ChatMember member)
@@ -238,7 +238,7 @@ namespace MedocUpdates
 			}
 
 			SendMessage(chatID, member.User + " have unsubscribed this chat from M.E.Doc updates."); // TODO: Adaptive choice between member.User Username and FirstName
-			Log.Write(LogLevel.NORMAL, "MedocTelegram:  Chat #" + chatID + " was unsubscribed by @" + member.User);
+			Log.Write(LogLevel.NORMAL, "MedocTelegram: Chat " + (chat.Type != ChatType.Private ? chat.Title : chat.Username) + " was unsubscribed by " + member.User); // TODO: Adaptive choice between chat.Username and FirstName
 		}
 
 		private async void OnMessageReceived(object sender, MessageEventArgs e)
