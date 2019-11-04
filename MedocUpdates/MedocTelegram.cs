@@ -185,12 +185,12 @@ namespace MedocUpdates
 			}
 		}
 
-		public void SendMessageAll(string textmessage)
+		public void SendMessageAll(string textmessage, ParseMode parsemode = ParseMode.Default)
 		{
 			Log.Write(LogLevel.NORMAL, "MedocTelegram: Sending message to all chats\r\n" + textmessage);
 			foreach (long chatID in SessionStorage.inside.TelegramChats)
 			{
-				SendMessage(chatID, textmessage);
+				SendMessage(chatID, textmessage, parsemode);
 			}
 		}
 

@@ -125,7 +125,7 @@ namespace MedocUpdates
 					if (i > 0 && line.Length > 0)
 						line = "\t" + line;
 
-					Console.WriteLine(line);
+					LogFallbackInternal(line);
 
 					i++;
 				}
@@ -136,7 +136,11 @@ namespace MedocUpdates
 
 		public static void Write(int logLevel, string logMessage)
 		{
-			if(!m_bInit)
+#if DEBUG
+			LogFallbackInternal(logMessage);
+#endif
+
+			if (!m_bInit)
 			{
 				// If not initialized - something was probably wrong with creating a log directory.
 				// Falling back to console method

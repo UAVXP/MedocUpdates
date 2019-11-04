@@ -227,8 +227,14 @@ namespace MedocUpdates
 																				labelLocalVersion.Text), ToolTipIcon.Info);
 				}
 
-				if(ParsedArgs.GetToken("telegramforcemsg") || localversion != version)
-					telegram.SendMessageAll(String.Format(Loc.Get("frmMain.telegram.CheckingRoutine.UpdateAvailable", "Update from {0} to {1} is available"), localversion, version));
+				if (ParsedArgs.GetToken("telegramforcemsg") || localversion != version)
+				{
+					string versionChangelog = medoc.GetLatestChangelog();
+
+					telegram.SendMessageAll(String.Format(	Loc.Get("frmMain.telegram.CheckingRoutine.UpdateAvailable", "Update from {0} to [{1}]({2}) is available"),
+															localversion, version, versionChangelog),
+											Telegram.Bot.Types.Enums.ParseMode.Markdown);
+				}
 			}
 			else
 			{

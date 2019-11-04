@@ -10,5 +10,6 @@ namespace MedocUpdates
 	{
 		public MedocVersion version;
 		public string link;
+		public string changelog;
 	}
 }

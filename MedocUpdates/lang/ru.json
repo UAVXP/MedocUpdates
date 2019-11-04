@@ -91,7 +91,7 @@
         },
         {
             "token": "frmMain.telegram.CheckingRoutine.UpdateAvailable",
-            "value": "Доступно обновление с версии {0} по {1}"
+            "value": "Доступно обновление с версии {0} по [{1}]({2})"
         },
         {
             "token": "frmMain.labelVersion.Text.CheckingRoutine.Error",

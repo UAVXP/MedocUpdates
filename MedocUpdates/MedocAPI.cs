@@ -129,6 +129,7 @@ namespace MedocUpdates
 				MedocDownloadItem item = new MedocDownloadItem();
 				item.version = GetVersion(node);
 				item.link = GetDownload(node);
+				item.changelog = GetChangelog(node);
 
 				items[i] = item;
 				i++;
@@ -179,6 +180,7 @@ namespace MedocUpdates
 			return link.GetAttributeValue("href", "<no link>");
 		}
 
+	/*	// FIXME: Unused
 		internal string GetLatestDownload()
 		{
 			HtmlNodeCollection downloadsItems = DownloadsItems();
@@ -193,6 +195,52 @@ namespace MedocUpdates
 			Console.WriteLine("{0}", downloadStr);
 
 			return downloadStr;
+		}
+	*/
+
+		internal string GetChangelog(HtmlNode node)
+		{
+			HtmlNodeCollection downloadbuttons = node.SelectNodes(".//div[@class='download-dist-specification-item-box-btn']");
+			if (downloadbuttons == null)
+			{
+				return "";
+			}
+
+			HtmlNode changelognode = downloadbuttons[1];
+			if (changelognode == null)
+			{
+				return "";
+			}
+
+			if (!changelognode.HasChildNodes)
+			{
+				Log.Write(LogLevel.EXPERT, "MedocAPI: Download link node doesn't contain any external links");
+				return "";
+			}
+
+			HtmlNode link = changelognode.SelectSingleNode(".//a[@class='main-btn update-change']");
+			if (link == null)
+			{
+				return "";
+			}
+
+			return "https://medoc.ua" + link.GetAttributeValue("href", "<no link>");
+		}
+
+		internal string GetLatestChangelog()
+		{
+			HtmlNodeCollection downloadsItems = DownloadsItems();
+			if (downloadsItems == null)
+			{
+				Log.Write(LogLevel.EXPERT, "MedocAPI: GetLatestChangelog(): Cannot get items from the download-items");
+				return "";
+			}
+
+			string changelog = GetChangelog(downloadsItems[0]);
+
+			Console.WriteLine("{0}", changelog);
+
+			return changelog;
 		}
 	}
 }

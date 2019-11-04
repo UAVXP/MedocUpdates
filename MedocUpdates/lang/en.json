@@ -91,7 +91,7 @@
         },
         {
             "token": "frmMain.telegram.CheckingRoutine.UpdateAvailable",
-            "value": "Update from {0} to {1} is available"
+            "value": "Update from {0} to [{1}]({2}) is available"
         },
         {
             "token": "frmMain.labelVersion.Text.CheckingRoutine.Error",
