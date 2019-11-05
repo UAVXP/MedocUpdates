@@ -73,7 +73,7 @@ namespace MedocUpdates
 				return false;
 			}
 
-			long[] userIDs = Array.ConvertAll(userIDsStr, long.Parse);
+			long[] userIDs = Array.ConvertAll(userIDsStr, long.Parse); // TODO: try-catch
 			if(userIDs.Length <= 0)
 			{
 				Log.Write(LogLevel.NORMAL, "TelegramChatsStorage: Restore(): Cannot restore - convertation error");
