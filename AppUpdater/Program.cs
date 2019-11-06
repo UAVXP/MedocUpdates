@@ -21,14 +21,16 @@ namespace AppUpdater
 			//	user.PublicRepos,
 			//	user.Url);
 
-			var releases = await client.Repository.Release.GetAll("UAVXP", "MedocUpdates");
-			var latest = releases[0];
+			IReadOnlyList<Release> releases = await client.Repository.Release.GetAll("UAVXP", "MedocUpdates");
+			Release latest = releases[0];
 			Console.WriteLine(
 				"The latest release is tagged at {0} and is named {1}",
 				latest.TagName,
 				latest.Name);
 
-			string versionStr = latest.TagName.Substring(1); // Remove "v"
+			//string versionStr = latest.TagName.Substring(1); // Remove "v"
+			string versionStr = latest.TagName; // Don't need to remove "v" anymore
+
 			Version versionOnline = new Version(versionStr);
 			//Version versionOnline = new Version("11.01.025");
 
@@ -36,16 +38,29 @@ namespace AppUpdater
 			Version versionLocal = new Version(vinfo.ProductVersion);
 			//Version versionLocal = new Version("11.01.020");
 
+			Console.WriteLine("MedocUpdates version is " + versionLocal);
+
 			switch (versionOnline.CompareTo(versionLocal))
 			{
 			case 0:
 				Console.WriteLine("Versions are equal");
+
+				Console.WriteLine("You can proceed by pressing any key now...");
+				Process.Start("MedocUpdates.exe");
 				break;
 			case 1:
 				Console.WriteLine("Online version is newer");
+				// TODO: Trigger the update
+
+
+				Console.WriteLine("You can proceed by pressing any key now...");
+				Process.Start("MedocUpdates.exe");
 				break;
 			case -1:
 				Console.WriteLine("Local version is newer");
+
+				Console.WriteLine("You can proceed by pressing any key now...");
+				Process.Start("MedocUpdates.exe");
 				break;
 			default:
 				Console.WriteLine("Something went wrong");

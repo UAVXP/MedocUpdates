@@ -14,6 +14,13 @@ namespace MedocUpdates
         [STAThread]
         static void Main()
         {
+			// Windows Forms specific
+			Application.ThreadException += Application_ThreadException;
+			Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+
+			// Non-UI specific
+			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
 			System.Reflection.Assembly entryassembly = System.Reflection.Assembly.GetEntryAssembly();
 			if (System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(entryassembly.Location)).Count() > 1)
 			{
@@ -40,7 +47,12 @@ namespace MedocUpdates
 			Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-			if(/*true || */!bSettingsWasRestoredFromFile)
+#if DEBUG
+			// Crash test zone
+			throw new ArgumentException("The parameter was invalid");
+#endif
+
+			if (/*true || */!bSettingsWasRestoredFromFile)
 				Application.Run(new frmFirstRun()); // Only show if SessionStorage file doesn't exist
 
 			Application.Run(new frmMain());
@@ -48,5 +60,25 @@ namespace MedocUpdates
 			Log.Write("MedocUpdates: Shutting down the application");
 			SessionStorage.Save();
 		}
-    }
+
+		private static void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
+		{
+			Log.Write(LogLevel.EXPERT, true, "MedocUpdates: Application was crashed in the UI thread\r\n" + e.Exception.Message);
+
+			// TODO: Restart the app
+			System.Diagnostics.Process.Start("AppUpdater.exe");
+			Environment.Exit(2);
+		}
+
+		private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+		{
+			Exception ex = (Exception)e.ExceptionObject;
+			Log.Write(LogLevel.EXPERT, true, String.Format("MedocUpdates: Application was crashed in non-UI thread\r\n{0}\r\n{1}",
+															ex.Message, (e.IsTerminating ? "CLR is terminating" : "CLR isn't terminating")));
+
+			// TODO: Restart the app
+			System.Diagnostics.Process.Start("AppUpdater.exe");
+			Environment.Exit(3);
+		}
+	}
 }
