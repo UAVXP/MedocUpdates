@@ -17,9 +17,17 @@ namespace MedocUpdates
 		Version remoteVersion;
 		Version localVersion;
 
+		private void InitializeLocalization()
+		{
+			this.button1.Text = Loc.Get("frmMUUpdates.button1.Text", "Update");
+			this.lblUpdateStatus.Text = Loc.Get("frmMUUpdates.lblUpdateStatus.Text", "Cannot check for MedocUpdates updates");
+			this.Text = Loc.Get("frmMUUpdates.Text", "MedocUpdates updates");
+		}
+
 		public frmMUUpdates()
 		{
 			InitializeComponent();
+			InitializeLocalization();
 		}
 
 		public int GetUpdateState()
@@ -37,19 +45,19 @@ namespace MedocUpdates
 			switch (GetUpdateState())
 			{
 			case 0:
-				lblUpdateStatus.Text = "No updates for MedocUpdates\r\nVersion " + this.remoteVersion;
+				lblUpdateStatus.Text = String.Format(Loc.Get("frmMUUpdates.UpdateState.NoUpdates", "No updates for MedocUpdates\r\nVersion {0}"), this.remoteVersion);
 				break;
 			case 1:
-				lblUpdateStatus.Text = String.Format("New build of MedocUpdates was released!\r\n\r\nRemote version: {0}\r\nLocal version: {1}",
+				lblUpdateStatus.Text = String.Format(Loc.Get("frmMUUpdates.UpdateState.NewUpdates", "New build of MedocUpdates was released!\r\n\r\nRemote version: {0}\r\nLocal version: {1}"),
 														this.remoteVersion, this.localVersion);
 				break;
 			case -1:
 				lblUpdateStatus.Text =
-					String.Format("You probably have a development build. It's not recommended to update from the public builds\r\n\r\nRemote version: {0}\r\nLocal version: {1}",
+					String.Format(Loc.Get("frmMUUpdates.UpdateState.DevBuild", "You probably have a development build. It's not recommended to update from the public builds\r\n\r\nRemote version: {0}\r\nLocal version: {1}"),
 									this.remoteVersion, this.localVersion);
 				break;
 			default:
-				lblUpdateStatus.Text = "Something went wrong";
+				lblUpdateStatus.Text = Loc.Get("frmMUUpdates.UpdateState.Error", "Something went wrong");
 				break;
 			}
 		}
@@ -66,7 +74,7 @@ namespace MedocUpdates
 			switch (GetUpdateState())
 			{
 			case 0:
-				result = MessageBox.Show("MedocUpdates is already up-to-date.\r\n\r\nDo you really want to forcibly update this application?",
+				result = MessageBox.Show(Loc.Get("frmMUUpdates.UpdateButton.NoUpdates", "MedocUpdates is already up-to-date.\r\n\r\nDo you really want to forcibly update this application?"),
 														"Information", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 				if(result == DialogResult.Yes)
 					ForceUpdate();
@@ -76,7 +84,7 @@ namespace MedocUpdates
 				ForceUpdate();
 				break;
 			case -1:
-				result = MessageBox.Show("You have a development build of MedocUpdates\r\n\r\nDo you really want to forcibly update this application?",
+				result = MessageBox.Show(Loc.Get("frmMUUpdates.UpdateState.DevBuild", "You have a development build of MedocUpdates\r\n\r\nDo you really want to forcibly update this application?"),
 														"Information", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 				if (result == DialogResult.Yes)
 					ForceUpdate();

@@ -280,6 +280,42 @@
         {
             "token": "frmMain.checkForMedocUpdatesNewVersionToolStripMenuItem.Text",
             "value": "Обновления MedocUpdates..."
+        },
+        {
+            "token": "frmMUUpdates.button1.Text",
+            "value": "Обновить"
+        },
+        {
+            "token": "frmMUUpdates.lblUpdateStatus.Text",
+            "value": "Невозможно проверить наличие обновлений для MedocUpdates"
+        },
+        {
+            "token": "frmMUUpdates.Text",
+            "value": "Обновления MedocUpdates"
+        },
+        {
+            "token": "frmMUUpdates.UpdateState.NoUpdates",
+            "value": "Для MedocUpdates нет обновлений\r\nВерсия {0}"
+        },
+        {
+            "token": "frmMUUpdates.UpdateState.NewUpdates",
+            "value": "Обновление готово!\r\n\r\nВерсия обновления: {0}\r\nУстановленная версия: {1}"
+        },
+        {
+            "token": "frmMUUpdates.UpdateState.DevBuild",
+            "value": "Скорее всего, Вы пользуетесь версией программы для разработчиков. Обновлять её не рекомендуется.\r\n\r\nВерсия обновления: {0}\r\nУстановленная версия: {1}"
+        },
+        {
+            "token": "frmMUUpdates.UpdateState.Error",
+            "value": "Что-то пошло не так"
+        },
+        {
+            "token": "frmMUUpdates.UpdateButton.NoUpdates",
+            "value": "Ваша версия не нуждается в обновлении.\r\n\r\nВы действительно хотите принудительно обновить приложение?"
+        },
+        {
+            "token": "frmMUUpdates.UpdateState.DevBuild",
+            "value": "У Вас стоит версия MedocUpdates для разработчиков\r\n\r\nВы действительно хотите принудительно обновить приложение?"
         }
     ]
 }

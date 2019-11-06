@@ -280,6 +280,42 @@
         {
             "token": "frmMain.checkForMedocUpdatesNewVersionToolStripMenuItem.Text",
             "value": "MedocUpdates updates..."
+        },
+        {
+            "token": "frmMUUpdates.button1.Text",
+            "value": "Update"
+        },
+        {
+            "token": "frmMUUpdates.lblUpdateStatus.Text",
+            "value": "Cannot check for MedocUpdates updates"
+        },
+        {
+            "token": "frmMUUpdates.Text",
+            "value": "MedocUpdates updates"
+        },
+        {
+            "token": "frmMUUpdates.UpdateState.NoUpdates",
+            "value": "No updates for MedocUpdates\r\nVersion {0}"
+        },
+        {
+            "token": "frmMUUpdates.UpdateState.NewUpdates",
+            "value": "New build of MedocUpdates was released!\r\n\r\nRemote version: {0}\r\nLocal version: {1}"
+        },
+        {
+            "token": "frmMUUpdates.UpdateState.DevBuild",
+            "value": "You probably have a development build. It's not recommended to update from the public builds\r\n\r\nRemote version: {0}\r\nLocal version: {1}"
+        },
+        {
+            "token": "frmMUUpdates.UpdateState.Error",
+            "value": "Something went wrong"
+        },
+        {
+            "token": "frmMUUpdates.UpdateButton.NoUpdates",
+            "value": "MedocUpdates is already up-to-date.\r\n\r\nDo you really want to forcibly update this application?"
+        },
+        {
+            "token": "frmMUUpdates.UpdateState.DevBuild",
+            "value": "You have a development build of MedocUpdates\r\n\r\nDo you really want to forcibly update this application?"
         }
     ]
 }

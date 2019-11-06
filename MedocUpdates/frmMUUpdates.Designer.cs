@@ -35,7 +35,8 @@
 			// 
 			// button1
 			// 
-			this.button1.Location = new System.Drawing.Point(129, 137);
+			this.button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+			this.button1.Location = new System.Drawing.Point(121, 131);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(75, 23);
 			this.button1.TabIndex = 0;
@@ -50,7 +51,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblUpdateStatus.Location = new System.Drawing.Point(30, 28);
 			this.lblUpdateStatus.Name = "lblUpdateStatus";
-			this.lblUpdateStatus.Size = new System.Drawing.Size(277, 91);
+			this.lblUpdateStatus.Size = new System.Drawing.Size(256, 85);
 			this.lblUpdateStatus.TabIndex = 1;
 			this.lblUpdateStatus.Text = "label1";
 			this.lblUpdateStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -59,7 +60,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(337, 175);
+			this.ClientSize = new System.Drawing.Size(316, 169);
 			this.Controls.Add(this.lblUpdateStatus);
 			this.Controls.Add(this.button1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
