@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Octokit;
 using System.Diagnostics;
+using System.Threading;
 
 namespace AppUpdater
 {
@@ -44,23 +45,18 @@ namespace AppUpdater
 			{
 			case 0:
 				Console.WriteLine("Versions are equal");
-
-				Console.WriteLine("You can proceed by pressing any key now...");
-				Process.Start("MedocUpdates.exe");
 				break;
 			case 1:
 				Console.WriteLine("Online version is newer");
 				// TODO: Trigger the update
-
+				Update update = new Update(latest);
+				update.UpdateRoutine();
 
 				Console.WriteLine("You can proceed by pressing any key now...");
 				Process.Start("MedocUpdates.exe");
 				break;
 			case -1:
 				Console.WriteLine("Local version is newer");
-
-				Console.WriteLine("You can proceed by pressing any key now...");
-				Process.Start("MedocUpdates.exe");
 				break;
 			default:
 				Console.WriteLine("Something went wrong");
@@ -70,6 +66,38 @@ namespace AppUpdater
 
 		static void Main(string[] args)
 		{
+			// TODO: Prompt if MedocUpdates is still running, to kill it or not updating
+			Process[] mainAppProcesses = Process.GetProcessesByName("MedocUpdates");
+			while (mainAppProcesses.Count() > 0)
+			{
+				Console.Write("MedocUpdates is still running. Do you want to kill it and continue the updating (Y) or cancel the update (N)? ");
+
+				ConsoleKeyInfo kinfo = Console.ReadKey();
+				Console.WriteLine();
+
+				switch (kinfo.Key)
+				{
+				case ConsoleKey.Y:
+					{
+						foreach (Process proc in mainAppProcesses)
+						{
+							proc.CloseMainWindow();
+						}
+
+						break;
+					}
+				case ConsoleKey.N:
+					{
+						return; // Exit this program
+					}
+				default:
+					break;
+				}
+
+				Thread.Sleep(1 * 1000);
+				mainAppProcesses = Process.GetProcessesByName("MedocUpdates");
+			}
+
 			GetData();
 
 			Console.ReadLine();
