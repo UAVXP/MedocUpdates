@@ -45,6 +45,8 @@
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.timerUpdate = new System.Windows.Forms.Timer(this.components);
+			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.checkForMedocUpdatesNewVersionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
@@ -113,7 +115,8 @@
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.editToolStripMenuItem});
+            this.editToolStripMenuItem,
+            this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(685, 24);
@@ -175,6 +178,21 @@
 			this.timerUpdate.Interval = 10000;
 			this.timerUpdate.Tick += new System.EventHandler(this.timerUpdate_Tick);
 			// 
+			// helpToolStripMenuItem
+			// 
+			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.checkForMedocUpdatesNewVersionToolStripMenuItem});
+			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+			this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+			this.helpToolStripMenuItem.Text = "Help";
+			// 
+			// checkForMedocUpdatesNewVersionToolStripMenuItem
+			// 
+			this.checkForMedocUpdatesNewVersionToolStripMenuItem.Name = "checkForMedocUpdatesNewVersionToolStripMenuItem";
+			this.checkForMedocUpdatesNewVersionToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+			this.checkForMedocUpdatesNewVersionToolStripMenuItem.Text = "MedocUpdates updates...";
+			this.checkForMedocUpdatesNewVersionToolStripMenuItem.Click += new System.EventHandler(this.checkForMedocUpdatesNewVersionToolStripMenuItem_Click);
+			// 
 			// frmMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -218,6 +236,8 @@
 		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem delayNotificationsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem checkForMedocUpdatesNewVersionToolStripMenuItem;
 	}
 }
 

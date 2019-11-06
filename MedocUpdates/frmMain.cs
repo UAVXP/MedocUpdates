@@ -44,6 +44,9 @@ namespace MedocUpdates
 			this.statusStrip1.Text = Loc.Get("frmMain.statusStrip1.Text", "statusStrip1");
 			this.toolStripStatusLabel1.Text = Loc.Get("frmMain.toolStripStatusLabel1.Text", "toolStripStatusLabel1");
 			this.Text = Loc.Get("frmMain.Text", "Medoc Updates");
+
+			this.helpToolStripMenuItem.Text = Loc.Get("frmMain.helpToolStripMenuItem.Text", "Help");
+			this.checkForMedocUpdatesNewVersionToolStripMenuItem.Text = Loc.Get("frmMain.checkForMedocUpdatesNewVersionToolStripMenuItem.Text", "MedocUpdates updates...");
 		}
 
 		public frmMain()
@@ -322,6 +325,12 @@ namespace MedocUpdates
 
 			delay.Dispose();
 			delay = null;
+		}
+
+		private void checkForMedocUpdatesNewVersionToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			frmMUUpdates muUpdates = new frmMUUpdates();
+			muUpdates.ShowDialog();
 		}
 
 		private void frmMain_Resize(object sender, EventArgs e)

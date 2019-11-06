@@ -50,11 +50,11 @@ namespace MedocUpdates
             Application.SetCompatibleTextRenderingDefault(false);
 
 #if DEBUG
+			//MUVersion.Init();
+			//Update update = new Update(MUVersion.latestRelease);
+			//update.UpdateRoutine();
+
 			// Crash test zone
-			MUVersion.Init();
-			Update update = new Update(MUVersion.latestRelease);
-			update.UpdateRoutine();
-			
 			//throw new ArgumentException("The parameter was invalid");
 #endif
 

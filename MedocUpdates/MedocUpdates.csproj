@@ -108,6 +108,12 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmMUUpdates.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMUUpdates.Designer.cs">
+      <DependentUpon>frmMUUpdates.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmNotificationsDelay.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMUUpdates.resx">
+      <DependentUpon>frmMUUpdates.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmNotificationsDelay.resx">
       <DependentUpon>frmNotificationsDelay.cs</DependentUpon>

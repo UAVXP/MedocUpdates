@@ -272,6 +272,14 @@
         {
             "token": "TimeChooser.lblSeconds.Text",
             "value": "s."
+        },
+        {
+            "token": "frmMain.helpToolStripMenuItem.Text",
+            "value": "Help"
+        },
+        {
+            "token": "frmMain.checkForMedocUpdatesNewVersionToolStripMenuItem.Text",
+            "value": "MedocUpdates updates..."
         }
     ]
 }

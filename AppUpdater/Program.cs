@@ -63,7 +63,7 @@ namespace AppUpdater
 				{
 				case ConsoleKey.Y:
 					{
-						Update update = new Update(MUVersion.latestRelease);
+						Update update = new Update(MUVersion.LatestRelease);
 						update.UpdateRoutine();
 
 						// NOTE: This point cannot be reached
@@ -98,7 +98,7 @@ namespace AppUpdater
 			case 1:
 				Console.WriteLine("Online version is newer");
 				// TODO: Trigger the update
-				Update update = new Update(MUVersion.latestRelease);
+				Update update = new Update(MUVersion.LatestRelease);
 				update.UpdateRoutine();
 
 				// NOTE: This point cannot be reached

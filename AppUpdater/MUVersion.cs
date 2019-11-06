@@ -12,7 +12,15 @@ namespace AppUpdater
 	public class MUVersion
 	{
 		static GitHubClient client = new GitHubClient(new ProductHeaderValue("MedocUpdates.AppUpdater"));
-		public static Release latestRelease;
+		static Release latestRelease;
+
+		public static Release LatestRelease
+		{
+			get
+			{
+				return latestRelease;
+			}
+		}
 
 		public static void Init()
 		{
