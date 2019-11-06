@@ -46,7 +46,8 @@ namespace AppUpdater
 				mainAppProcesses = Process.GetProcessesByName("MedocUpdates");
 			}
 
-			MUVersion.Init();
+			if(!MUVersion.Init()) // TODO: Log
+				return;
 
 			Version remoteVersion = MUVersion.GetRemoteData();
 
@@ -97,8 +98,14 @@ namespace AppUpdater
 				break;
 			case 1:
 				Console.WriteLine("Online version is newer");
-				// TODO: Trigger the update
+				
+				if(MUVersion.LatestRelease == null) // TODO: Log
+					return;
+
 				Update update = new Update(MUVersion.LatestRelease);
+				if(update == null) // TODO: Log
+					return;
+
 				update.UpdateRoutine();
 
 				// NOTE: This point cannot be reached

@@ -37,7 +37,8 @@ namespace MedocUpdates
 
 		private void frmMUUpdates_Load(object sender, EventArgs e)
 		{
-			MUVersion.Init();
+			if(!MUVersion.Init()) // TODO: Log
+				return;
 
 			this.remoteVersion = MUVersion.GetRemoteData();
 			this.localVersion = MUVersion.GetLocalData();
@@ -64,7 +65,13 @@ namespace MedocUpdates
 
 		private void ForceUpdate()
 		{
+			if(MUVersion.LatestRelease == null) // TODO: Log
+				return;
+
 			Update update = new Update(MUVersion.LatestRelease);
+			if(update == null) // TODO: Log
+				return;
+
 			update.UpdateRoutine();
 		}
 

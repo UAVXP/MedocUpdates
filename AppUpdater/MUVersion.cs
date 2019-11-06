@@ -22,15 +22,23 @@ namespace AppUpdater
 			}
 		}
 
-		public static void Init()
+		public static bool Init()
 		{
+			if(client == null)
+				return false;
+
 			Task<IReadOnlyList<Release>> releases = client.Repository.Release.GetAll("UAVXP", "MedocUpdates");
+			if(releases.Result.Count <= 0)
+				return false;
+
 			latestRelease = releases.Result[0];
 
 			Console.WriteLine(
 				"The latest release is tagged at {0} and is named {1}",
 				latestRelease.TagName,
 				latestRelease.Name);
+
+			return true;
 		}
 
 		public static Version GetRemoteData()
