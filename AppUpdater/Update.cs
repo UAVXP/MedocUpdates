@@ -8,6 +8,8 @@ using Octokit;
 using System.Net;
 using System.IO;
 using System.ComponentModel;
+using System.IO.Compression;
+using System.Diagnostics;
 
 namespace AppUpdater
 {
@@ -36,7 +38,6 @@ namespace AppUpdater
 		{
 			if (webclient != null)
 			{
-				//webclient.CancelAsync();
 				webclient.Dispose();
 				webclient = null;
 			}
@@ -73,10 +74,66 @@ namespace AppUpdater
 
 		private void RunUpdate()
 		{
+			if (!File.Exists(Path.Combine("downloads", "copyupdate.bat")) ||
+				!Directory.Exists(Path.Combine("downloads", "MedocUpdates")))
+			{
+				return;
+			}
+
+			Process.Start(Path.Combine("downloads", "copyupdate.bat"));
+			Environment.Exit(0); // Exit this program immediately
 		}
 
 		private void UnpackUpdate()
 		{
+			ZipArchive arch = null;
+			try
+			{
+				// Unzip and run
+				arch = ZipFile.OpenRead(this.zipFilename);
+			}
+			catch (Exception ex)
+			{
+				File.Delete(this.zipFilename);
+			}
+
+			// Something went wrong with opening an archive.
+			if (arch == null)
+			{
+				RunDownload();
+				return;
+			}
+
+			try
+			{
+				//ZipArchiveEntry entry = arch.GetEntry(this.updateFilename);
+				//Stream stream = entry.Open();
+
+				// NOTE: Throws an exception if one of the files is already exists, and doesn't proceed to extract the rest
+				//arch.ExtractToDirectory(Path.GetDirectoryName(this.zipFilename));
+
+				// Manually extract all the files
+				string extractPath = Path.GetDirectoryName(this.zipFilename);
+				foreach (ZipArchiveEntry entry in arch.Entries)
+				{
+					string entryPath = Path.GetDirectoryName(entry.FullName);
+
+					if(!Directory.Exists(Path.Combine(extractPath, entryPath)))
+						Directory.CreateDirectory(Path.Combine(extractPath, entryPath));
+
+					if (entry.FullName.EndsWith("/")) // That's a directory
+						continue;
+
+					entry.ExtractToFile(Path.Combine(extractPath, entry.FullName), true);
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				Console.ReadLine();
+			}
+
+			arch.Dispose();
 		}
 
 		public void RunDownload()
@@ -84,36 +141,18 @@ namespace AppUpdater
 			if (webclient != null)
 			{
 				//	return;
-				//webclient.CancelAsync();
 				webclient.Dispose();
 				webclient = null;
 			}
 
 			webclient = new WebClient();
-			webclient.DownloadFileCompleted += WebClient_DownloadFileCompleted;
-			webclient.DownloadProgressChanged += WebClient_DownloadProgressChanged;
 
 			Uri fileURI = new Uri(this.zipReleaseUrl);
 			webclient.DownloadFile(fileURI, this.zipFilename);
-		}
 
-		private void WebClient_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
-		{
-			if (webclient != null)
-			{
-				//webclient.CancelAsync(); // Probably not needed here, but for refactoring reasons I'll leave it
-				webclient.Dispose();
-				webclient = null;
-			}
-
+			// Was at WebClient_DownloadFileCompleted previously
 			UnpackUpdate();
-
 			RunUpdate();
-		}
-
-		private void WebClient_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-		{
-			Console.Write("|");
 		}
 	}
 }
