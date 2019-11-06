@@ -13,7 +13,7 @@ using System.Diagnostics;
 
 namespace AppUpdater
 {
-	class Update
+	public class Update
 	{
 		private Release release;
 		private WebClient webclient;
@@ -136,7 +136,7 @@ namespace AppUpdater
 			arch.Dispose();
 		}
 
-		public void RunDownload()
+		private void RunDownload()
 		{
 			if (webclient != null)
 			{
@@ -146,8 +146,9 @@ namespace AppUpdater
 			}
 
 			webclient = new WebClient();
-
 			Uri fileURI = new Uri(this.zipReleaseUrl);
+
+			Console.WriteLine("Downloading " + this.zipReleaseUrl);
 			webclient.DownloadFile(fileURI, this.zipFilename);
 
 			// Was at WebClient_DownloadFileCompleted previously

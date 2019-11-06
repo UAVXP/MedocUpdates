@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using AppUpdater;
+
 namespace MedocUpdates
 {
     static class Program
@@ -49,7 +51,11 @@ namespace MedocUpdates
 
 #if DEBUG
 			// Crash test zone
-			throw new ArgumentException("The parameter was invalid");
+			MUVersion.Init();
+			Update update = new Update(MUVersion.latestRelease);
+			update.UpdateRoutine();
+			
+			//throw new ArgumentException("The parameter was invalid");
 #endif
 
 			if (/*true || */!bSettingsWasRestoredFromFile)
@@ -66,7 +72,7 @@ namespace MedocUpdates
 			Log.Write(LogLevel.EXPERT, true, "MedocUpdates: Application was crashed in the UI thread\r\n" + e.Exception.Message);
 
 			// TODO: Restart the app
-			System.Diagnostics.Process.Start("AppUpdater.exe");
+			System.Diagnostics.Process.Start("AppUpdater.exe", "-forcerestart");
 			Environment.Exit(2);
 		}
 
@@ -77,7 +83,7 @@ namespace MedocUpdates
 															ex.Message, (e.IsTerminating ? "CLR is terminating" : "CLR isn't terminating")));
 
 			// TODO: Restart the app
-			System.Diagnostics.Process.Start("AppUpdater.exe");
+			System.Diagnostics.Process.Start("AppUpdater.exe", "-forcerestart");
 			Environment.Exit(3);
 		}
 	}

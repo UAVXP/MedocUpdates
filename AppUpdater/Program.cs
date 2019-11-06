@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Octokit;
 using System.Diagnostics;
 using System.Threading;
 using System.IO;
@@ -13,43 +12,6 @@ namespace AppUpdater
 {
 	class Program
 	{
-		static GitHubClient client = new GitHubClient(new ProductHeaderValue("MedocUpdates.AppUpdater"));
-		static Release latestRelease;
-
-		static Version remoteVersion;
-		static Version localVersion;
-
-		private static void GetRemoteData()
-		{
-			//var user = await client.User.Get("UAVXP");
-			//Console.WriteLine("{0} has {1} public repositories - go check out their profile at {2}",
-			//	user.Name,
-			//	user.PublicRepos,
-			//	user.Url);
-
-			Task<IReadOnlyList<Release>> releases = client.Repository.Release.GetAll("UAVXP", "MedocUpdates");
-			latestRelease = releases.Result[0];
-			Console.WriteLine(
-				"The latest release is tagged at {0} and is named {1}",
-				latestRelease.TagName,
-				latestRelease.Name);
-
-			//string versionStr = latestRelease.TagName.Substring(1); // Remove "v"
-			string versionStr = latestRelease.TagName; // Don't need to remove "v" anymore
-
-			remoteVersion = new Version(versionStr);
-			//remoteVersion = new Version("11.01.025");
-		}
-
-		private static void GetLocalData()
-		{
-			FileVersionInfo vinfo = FileVersionInfo.GetVersionInfo("MedocUpdates.exe");
-			localVersion = new Version(vinfo.ProductVersion);
-			//localVersion = new Version("11.01.020");
-
-			Console.WriteLine("Local MedocUpdates version is " + localVersion);
-		}
-
 		static void Main(string[] args)
 		{
 			// Check if the program is running right now
@@ -84,7 +46,9 @@ namespace AppUpdater
 				mainAppProcesses = Process.GetProcessesByName("MedocUpdates");
 			}
 
-			GetRemoteData();
+			MUVersion.Init();
+
+			Version remoteVersion = MUVersion.GetRemoteData();
 
 			// Check if the program is present in current directory
 			while (!File.Exists("MedocUpdates.exe")) // TODO: Proper full path
@@ -99,7 +63,7 @@ namespace AppUpdater
 				{
 				case ConsoleKey.Y:
 					{
-						Update update = new Update(latestRelease);
+						Update update = new Update(MUVersion.latestRelease);
 						update.UpdateRoutine();
 
 						// NOTE: This point cannot be reached
@@ -115,18 +79,26 @@ namespace AppUpdater
 				}
 			}
 
-			GetLocalData();
+			Version localVersion = MUVersion.GetLocalData();
 
 			// Comparing both versions
 			switch (remoteVersion.CompareTo(localVersion))
 			{
 			case 0:
 				Console.WriteLine("Versions are equal");
+
+				string forceRestart = args.FirstOrDefault(elem => elem.Equals("-forcerestart"));
+				if (forceRestart != null && forceRestart.Trim().Length > 0)
+				{
+					Process.Start("MedocUpdates.exe");
+					return; // Exit this program
+				}
+
 				break;
 			case 1:
 				Console.WriteLine("Online version is newer");
 				// TODO: Trigger the update
-				Update update = new Update(latestRelease);
+				Update update = new Update(MUVersion.latestRelease);
 				update.UpdateRoutine();
 
 				// NOTE: This point cannot be reached
