@@ -40,13 +40,13 @@
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.checkForMedocUpdatesNewVersionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.flowDownloads = new System.Windows.Forms.FlowLayoutPanel();
 			this.labelLocalVersion = new System.Windows.Forms.Label();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.timerUpdate = new System.Windows.Forms.Timer(this.components);
-			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.checkForMedocUpdatesNewVersionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
@@ -138,6 +138,21 @@
 			this.settingsToolStripMenuItem.Text = "Settings";
 			this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
 			// 
+			// helpToolStripMenuItem
+			// 
+			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.checkForMedocUpdatesNewVersionToolStripMenuItem});
+			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+			this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+			this.helpToolStripMenuItem.Text = "Help";
+			// 
+			// checkForMedocUpdatesNewVersionToolStripMenuItem
+			// 
+			this.checkForMedocUpdatesNewVersionToolStripMenuItem.Name = "checkForMedocUpdatesNewVersionToolStripMenuItem";
+			this.checkForMedocUpdatesNewVersionToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+			this.checkForMedocUpdatesNewVersionToolStripMenuItem.Text = "MedocUpdates updates...";
+			this.checkForMedocUpdatesNewVersionToolStripMenuItem.Click += new System.EventHandler(this.checkForMedocUpdatesNewVersionToolStripMenuItem_Click);
+			// 
 			// flowDownloads
 			// 
 			this.flowDownloads.AutoScroll = true;
@@ -177,21 +192,6 @@
 			// 
 			this.timerUpdate.Interval = 10000;
 			this.timerUpdate.Tick += new System.EventHandler(this.timerUpdate_Tick);
-			// 
-			// helpToolStripMenuItem
-			// 
-			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.checkForMedocUpdatesNewVersionToolStripMenuItem});
-			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-			this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-			this.helpToolStripMenuItem.Text = "Help";
-			// 
-			// checkForMedocUpdatesNewVersionToolStripMenuItem
-			// 
-			this.checkForMedocUpdatesNewVersionToolStripMenuItem.Name = "checkForMedocUpdatesNewVersionToolStripMenuItem";
-			this.checkForMedocUpdatesNewVersionToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
-			this.checkForMedocUpdatesNewVersionToolStripMenuItem.Text = "MedocUpdates updates...";
-			this.checkForMedocUpdatesNewVersionToolStripMenuItem.Click += new System.EventHandler(this.checkForMedocUpdatesNewVersionToolStripMenuItem_Click);
 			// 
 			// frmMain
 			// 

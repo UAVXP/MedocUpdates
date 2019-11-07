@@ -28,6 +28,9 @@ namespace AppUpdater
 				return false;
 
 			Task<IReadOnlyList<Release>> releases = client.Repository.Release.GetAll("UAVXP", "MedocUpdates");
+			if(releases == null)
+				return false;
+
 			if(releases.Result.Count <= 0)
 				return false;
 
