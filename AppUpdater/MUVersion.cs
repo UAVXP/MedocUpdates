@@ -33,7 +33,13 @@ namespace AppUpdater
 			Task<IReadOnlyList<Release>> releases = client.Repository.Release.GetAll("UAVXP", "MedocUpdates");
 			if(releases == null)
 			{
-				Log.Write(LogLevel.EXPERT, true, "AppUpdater.MUVersion: Cannot get a release list from the GIthub. Probably Internet was down");
+				Log.Write(LogLevel.EXPERT, true, "AppUpdater.MUVersion: Cannot get a release list from the Github. Probably Internet was down");
+				return false;
+			}
+
+			if(releases.Result == null)
+			{
+				Log.Write(LogLevel.EXPERT, true, "AppUpdater.MUVersion: Probably, something wrong with the Github. Try to check for updates again later");
 				return false;
 			}
 
