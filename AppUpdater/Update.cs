@@ -26,7 +26,9 @@ namespace AppUpdater
 			this.release = release;
 
 			string assetUrl = "";
-			this.GetLatestZipReleaseAssetUrl(out assetUrl); // TODO: Check
+			if(!this.GetLatestZipReleaseAssetUrl(out assetUrl))
+				throw new Exception(String.Format("{0}, {1}", release.TagName, release.Url));
+
 			this.zipReleaseUrl = assetUrl;
 
 			this.zipFilename = Path.Combine("downloads", this.zipReleaseUrl.Substring(this.zipReleaseUrl.LastIndexOf('/') + 1));

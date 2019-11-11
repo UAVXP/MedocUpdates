@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Threading;
 using System.IO;
+using MedocUpdates;
+using System.Reflection;
 
 namespace AppUpdater
 {
@@ -14,6 +16,8 @@ namespace AppUpdater
 	{
 		static void Main(string[] args)
 		{
+			Log.Init();
+
 			// Check if the program is running right now
 			Process[] mainAppProcesses = Process.GetProcessesByName("MedocUpdates");
 			while (mainAppProcesses.Count() > 0)
@@ -46,15 +50,19 @@ namespace AppUpdater
 				mainAppProcesses = Process.GetProcessesByName("MedocUpdates");
 			}
 
-			if(!MUVersion.Init()) // TODO: Log
+			if(!MUVersion.Init())
+			{
+				Log.Write(LogLevel.NORMAL, "AppUpdater: Cannot retrieve the latest releases from Github. Check your Internet connection");
 				return;
+			}
 
 			Version remoteVersion = MUVersion.GetRemoteData();
 
 			// Check if the program is present in current directory
-			while (!File.Exists("MedocUpdates.exe")) // TODO: Proper full path
+			string exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			string muExePath = Path.Combine(exePath, "MedocUpdates.exe");
+			while (!File.Exists(muExePath))
 			{
-				// TODO: Prompt if user wants to download the latest version of an app
 				Console.Write("Do you want to download the latest version of MedocUpdates (Y) or exit this program (N)? ");
 
 				ConsoleKeyInfo kinfo = Console.ReadKey();
@@ -64,7 +72,23 @@ namespace AppUpdater
 				{
 				case ConsoleKey.Y:
 					{
-						Update update = new Update(MUVersion.LatestRelease);
+						Update update = null;
+						try
+						{
+							update = new Update(MUVersion.LatestRelease);
+						}
+						catch(Exception ex)
+						{
+							Log.Write(LogLevel.NORMAL, "AppUpdater (first run): Cannot get the latest zip release asset URL\r\n" + ex.Message);
+							return;
+						}
+
+						if(update == null)
+						{
+							Log.Write(LogLevel.NORMAL, "AppUpdater (first run): Cannot find a proper update archive at the latest Github release");
+							return;
+						}
+
 						update.UpdateRoutine();
 
 						// NOTE: This point cannot be reached
@@ -99,12 +123,28 @@ namespace AppUpdater
 			case 1:
 				Console.WriteLine("Online version is newer");
 				
-				if(MUVersion.LatestRelease == null) // TODO: Log
+				if(MUVersion.LatestRelease == null)
+				{
+					Log.Write(LogLevel.NORMAL, "AppUpdater (updating): No Github releases has been loaded");
 					return;
+				}
 
-				Update update = new Update(MUVersion.LatestRelease);
-				if(update == null) // TODO: Log
+				Update update = null;
+				try
+				{
+					update = new Update(MUVersion.LatestRelease);
+				}
+				catch(Exception ex)
+				{
+					Log.Write(LogLevel.NORMAL, "AppUpdater (updating): Cannot get the latest zip release asset URL\r\n" + ex.Message);
 					return;
+				}
+
+				if(update == null)
+				{
+					Log.Write(LogLevel.NORMAL, "AppUpdater (updating): Cannot find a proper update archive at the latest Github release");
+					return;
+				}
 
 				update.UpdateRoutine();
 
@@ -115,7 +155,9 @@ namespace AppUpdater
 				Console.WriteLine("Local version is newer");
 				break;
 			default:
-				Console.WriteLine("Something went wrong");
+				Log.Write(LogLevel.NORMAL,
+							String.Format("frmMUUpdates: Cannot compare the local version with the remote. Wrong version format probably ({0}/{1})",
+											remoteVersion, localVersion));
 				break;
 			}
 

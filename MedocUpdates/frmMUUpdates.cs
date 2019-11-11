@@ -37,13 +37,26 @@ namespace MedocUpdates
 
 		private void frmMUUpdates_Load(object sender, EventArgs e)
 		{
-			if(!MUVersion.Init()) // TODO: Log
+			if(!MUVersion.Init())
+			{
+				Log.Write("frmMUUpdates: Cannot retrieve the latest releases from Github. Check your Internet connection");
 				return;
+			}
 
 			this.remoteVersion = MUVersion.GetRemoteData();
 			this.localVersion = MUVersion.GetLocalData();
 
-			switch (GetUpdateState())
+			if(this.remoteVersion == null || this.localVersion == null)
+			{
+				Log.Write(String.Format("frmMUUpdates: Cannot get any of the versions (remote is {0}, local is {1})",
+										(this.remoteVersion == null ? "null" : "not null"),
+										(this.localVersion == null ? "null" : "not null")));
+				return;
+			}
+
+			int updateState = GetUpdateState();
+
+			switch (updateState)
 			{
 			case 0:
 				lblUpdateStatus.Text = String.Format(Loc.Get("frmMUUpdates.UpdateState.NoUpdates", "No updates for MedocUpdates\r\nVersion {0}"), this.remoteVersion);
@@ -59,18 +72,36 @@ namespace MedocUpdates
 				break;
 			default:
 				lblUpdateStatus.Text = Loc.Get("frmMUUpdates.UpdateState.Error", "Something went wrong");
+				Log.Write(String.Format("frmMUUpdates: Cannot compare the local version with the remote ({0}). Wrong version format probably ({1}/{2})",
+										updateState, this.remoteVersion, this.localVersion));
 				break;
 			}
 		}
 
 		private void ForceUpdate()
 		{
-			if(MUVersion.LatestRelease == null) // TODO: Log
+			if(MUVersion.LatestRelease == null)
+			{
+				Log.Write("frmMUUpdates: ForceUpdate(): No Github releases has been loaded");
 				return;
+			}
 
-			Update update = new Update(MUVersion.LatestRelease);
-			if(update == null) // TODO: Log
+			Update update = null;
+			try
+			{
+				update = new Update(MUVersion.LatestRelease);
+			}
+			catch(Exception ex)
+			{
+				Log.Write("frmMUUpdates: ForceUpdate(): Cannot get the latest zip release asset URL\r\n" + ex.Message);
 				return;
+			}
+
+			if(update == null)
+			{
+				Log.Write("frmMUUpdates: ForceUpdate(): Cannot find a proper update archive at the latest Github release");
+				return;
+			}
 
 			update.UpdateRoutine();
 		}
@@ -78,7 +109,8 @@ namespace MedocUpdates
 		private void button1_Click(object sender, EventArgs e)
 		{
 			DialogResult result;
-			switch (GetUpdateState())
+			int updateState = GetUpdateState();
+			switch (updateState)
 			{
 			case 0:
 				result = MessageBox.Show(Loc.Get("frmMUUpdates.UpdateButton.NoUpdates", "MedocUpdates is already up-to-date.\r\n\r\nDo you really want to forcibly update this application?"),
@@ -98,6 +130,7 @@ namespace MedocUpdates
 
 				break;
 			default:
+				Log.Write(String.Format("frmMUUpdates: Update state is wrong ({0})", updateState));
 				break;
 			}
 		}
