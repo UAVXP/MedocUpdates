@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Reflection;
 
-namespace MedocUpdates
+namespace AppUpdater
 {
 	public static class LogLevel
 	{

@@ -59,6 +59,7 @@ namespace AppUpdater
 				}
 			}
 
+			Log.Write(LogLevel.NORMAL, "AppUpdater.Update: Cannot get latest zip release asset url");
 			return false;
 		}
 
@@ -66,11 +67,13 @@ namespace AppUpdater
 		{
 			if (File.Exists(this.zipFilename))
 			{
+				Log.Write("AppUpdater.Update: Archive does exist, unpacking and updating");
 				UnpackUpdate();
 				RunUpdate();
 				return;
 			}
 
+			Log.Write(LogLevel.NORMAL, "AppUpdater.Update: Downloading the archive");
 			RunDownload();
 		}
 
@@ -79,9 +82,11 @@ namespace AppUpdater
 			if (!File.Exists(Path.Combine("downloads", "copyupdate.bat")) ||
 				!Directory.Exists(Path.Combine("downloads", "MedocUpdates")))
 			{
+				Log.Write("AppUpdater.Update: Cannot find all the needed files for update");
 				return;
 			}
 
+			Log.Write("AppUpdater.Update: Copying the update from the temporary folder");
 			Process.Start(Path.Combine("downloads", "copyupdate.bat"));
 			Environment.Exit(0); // Exit this program immediately
 		}
@@ -97,11 +102,13 @@ namespace AppUpdater
 			catch (Exception ex)
 			{
 				File.Delete(this.zipFilename);
+				Log.Write(LogLevel.NORMAL, "AppUpdater.Update: Update unpacking went wrong\r\n" + ex.Message);
 			}
 
 			// Something went wrong with opening an archive.
 			if (arch == null)
 			{
+				Log.Write(LogLevel.NORMAL, "AppUpdater.Update: Archive is null, redownloading the update");
 				RunDownload();
 				return;
 			}

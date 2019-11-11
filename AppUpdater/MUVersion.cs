@@ -25,14 +25,23 @@ namespace AppUpdater
 		public static bool Init()
 		{
 			if(client == null)
+			{
+				Log.Write(LogLevel.EXPERT, "AppUpdater.MUVersion: Cannot create GithubClient object");
 				return false;
+			}
 
 			Task<IReadOnlyList<Release>> releases = client.Repository.Release.GetAll("UAVXP", "MedocUpdates");
 			if(releases == null)
+			{
+				Log.Write(LogLevel.EXPERT, "AppUpdater.MUVersion: Cannot get a release list from the GIthub. Probably Internet was down");
 				return false;
+			}
 
 			if(releases.Result.Count <= 0)
+			{
+				Log.Write(LogLevel.EXPERT, "AppUpdater.MUVersion: No releases at the Github repository");
 				return false;
+			}
 
 			latestRelease = releases.Result[0];
 
