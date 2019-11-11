@@ -38,10 +38,10 @@ namespace MedocUpdates
 	class LocFile
 	{
 		//[JsonProperty("language")]
-		public string language;
+		public string language = "";
 
 		//[JsonProperty("tokens")]
-		public List<LocalizePair> tokens;
+		public List<LocalizePair> tokens = new List<LocalizePair>();
 	}
 
 	public static class Loc

@@ -54,7 +54,8 @@ namespace AppUpdater
 			}
 			catch(Exception ex)
 			{
-				Log.Write(LogLevel.EXPERT, true, "AppUpdater.MUVersion: Cannot set the security protocol type - TLS/TLS1.1/TLS1.2/SSL3 probably not supported");
+				Log.Write(LogLevel.EXPERT, true,
+							"AppUpdater.MUVersion: Cannot set the security protocol type - TLS/TLS1.1/TLS1.2/SSL3 probably not supported\r\n" + ex.Message);
 				return null;
 			}
 
