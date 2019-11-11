@@ -26,29 +26,27 @@ namespace AppUpdater
 		{
 			if(client == null)
 			{
-				Log.Write(LogLevel.EXPERT, "AppUpdater.MUVersion: Cannot create GithubClient object");
+				Log.Write(LogLevel.EXPERT, true, "AppUpdater.MUVersion: Cannot create GithubClient object");
 				return false;
 			}
 
 			Task<IReadOnlyList<Release>> releases = client.Repository.Release.GetAll("UAVXP", "MedocUpdates");
 			if(releases == null)
 			{
-				Log.Write(LogLevel.EXPERT, "AppUpdater.MUVersion: Cannot get a release list from the GIthub. Probably Internet was down");
+				Log.Write(LogLevel.EXPERT, true, "AppUpdater.MUVersion: Cannot get a release list from the GIthub. Probably Internet was down");
 				return false;
 			}
 
 			if(releases.Result.Count <= 0)
 			{
-				Log.Write(LogLevel.EXPERT, "AppUpdater.MUVersion: No releases at the Github repository");
+				Log.Write(LogLevel.EXPERT, true, "AppUpdater.MUVersion: No releases at the Github repository");
 				return false;
 			}
 
 			latestRelease = releases.Result[0];
 
-			Console.WriteLine(
-				"The latest release is tagged at {0} and is named {1}",
-				latestRelease.TagName,
-				latestRelease.Name);
+			Log.Write( LogLevel.BASIC, true, String.Format("The latest release is tagged at {0} and is named {1}",
+										latestRelease.TagName, latestRelease.Name));
 
 			return true;
 		}
@@ -70,7 +68,7 @@ namespace AppUpdater
 			Version localVersion = new Version(vinfo.ProductVersion);
 			//localVersion = new Version("11.01.020");
 
-			Console.WriteLine("Local MedocUpdates version is " + localVersion);
+			Log.Write(LogLevel.BASIC, true, "Local MedocUpdates version is " + localVersion);
 
 			return localVersion;
 		}

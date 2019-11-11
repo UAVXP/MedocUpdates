@@ -59,7 +59,7 @@ namespace AppUpdater
 				}
 			}
 
-			Log.Write(LogLevel.NORMAL, "AppUpdater.Update: Cannot get latest zip release asset url");
+			Log.Write(LogLevel.NORMAL, true, "AppUpdater.Update: Cannot get latest zip release asset url");
 			return false;
 		}
 
@@ -67,13 +67,13 @@ namespace AppUpdater
 		{
 			if (File.Exists(this.zipFilename))
 			{
-				Log.Write("AppUpdater.Update: Archive does exist, unpacking and updating");
+				Log.Write(LogLevel.BASIC, true, "AppUpdater.Update: Archive does exist, unpacking and updating");
 				UnpackUpdate();
 				RunUpdate();
 				return;
 			}
 
-			Log.Write(LogLevel.NORMAL, "AppUpdater.Update: Downloading the archive");
+			Log.Write(LogLevel.NORMAL, true, "AppUpdater.Update: Downloading the archive");
 			RunDownload();
 		}
 
@@ -82,11 +82,11 @@ namespace AppUpdater
 			if (!File.Exists(Path.Combine("downloads", "copyupdate.bat")) ||
 				!Directory.Exists(Path.Combine("downloads", "MedocUpdates")))
 			{
-				Log.Write("AppUpdater.Update: Cannot find all the needed files for update");
+				Log.Write(LogLevel.BASIC, true, "AppUpdater.Update: Cannot find all the needed files for update");
 				return;
 			}
 
-			Log.Write("AppUpdater.Update: Copying the update from the temporary folder");
+			Log.Write(LogLevel.BASIC, true, "AppUpdater.Update: Copying the update from the temporary folder");
 			Process.Start(Path.Combine("downloads", "copyupdate.bat"));
 			Environment.Exit(0); // Exit this program immediately
 		}
@@ -102,13 +102,13 @@ namespace AppUpdater
 			catch (Exception ex)
 			{
 				File.Delete(this.zipFilename);
-				Log.Write(LogLevel.NORMAL, "AppUpdater.Update: Update unpacking went wrong\r\n" + ex.Message);
+				Log.Write(LogLevel.NORMAL, true, "AppUpdater.Update: Update unpacking went wrong\r\n" + ex.Message);
 			}
 
 			// Something went wrong with opening an archive.
 			if (arch == null)
 			{
-				Log.Write(LogLevel.NORMAL, "AppUpdater.Update: Archive is null, redownloading the update");
+				Log.Write(LogLevel.NORMAL, true, "AppUpdater.Update: Archive is null, redownloading the update");
 				RunDownload();
 				return;
 			}
@@ -138,7 +138,7 @@ namespace AppUpdater
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex.Message);
+				Log.Write(LogLevel.NORMAL, true, "AppUpdater.Update: Update extracting went wrong\r\n" + ex.Message);
 				Console.ReadLine();
 			}
 
@@ -157,7 +157,7 @@ namespace AppUpdater
 			webclient = new WebClient();
 			Uri fileURI = new Uri(this.zipReleaseUrl);
 
-			Console.WriteLine("Downloading " + this.zipReleaseUrl);
+			Log.Write(LogLevel.NORMAL, true, "Downloading " + this.zipReleaseUrl);
 			webclient.DownloadFile(fileURI, this.zipFilename);
 
 			// Was at WebClient_DownloadFileCompleted previously
