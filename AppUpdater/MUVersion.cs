@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Octokit;
 using System.Diagnostics;
+using System.Net;
 
 namespace AppUpdater
 {
@@ -22,39 +23,84 @@ namespace AppUpdater
 			}
 		}
 
-		public static bool Init()
+		public static async Task<Release> Init()
 		{
-			if(client == null)
+			if (client == null)
 			{
 				Log.Write(LogLevel.EXPERT, true, "AppUpdater.MUVersion: Cannot create GithubClient object");
-				return false;
+				return null;
 			}
 
-			Task<IReadOnlyList<Release>> releases = client.Repository.Release.GetAll("UAVXP", "MedocUpdates");
-			if(releases == null)
+			if(client.Repository == null)
+			{
+				Log.Write(LogLevel.EXPERT, true, "AppUpdater.MUVersion: client.Repository == null");
+				return null;
+			}
+
+			if (client.Repository.Release == null)
+			{
+				Log.Write(LogLevel.EXPERT, true, "AppUpdater.MUVersion: client.Repository.Release == null");
+				return null;
+			}
+
+			// Fixes the "Could not create SSL/TLS secure channel." on Windows Server 2008 R2
+			try
+			{
+				ServicePointManager.Expect100Continue = true;
+				ServicePointManager.SecurityProtocol =	SecurityProtocolType.Tls |
+														SecurityProtocolType.Tls11 |
+														SecurityProtocolType.Tls12 |
+														SecurityProtocolType.Ssl3;
+			}
+			catch(Exception ex)
+			{
+				Log.Write(LogLevel.EXPERT, true, "AppUpdater.MUVersion: Cannot set the security protocol type - TLS/TLS1.1/TLS1.2/SSL3 probably not supported");
+				return null;
+			}
+
+			//IReadOnlyList<Release> releases = await client.Repository.Release.GetAll("UAVXP", "MedocUpdates");
+
+			Task<Release> release = client.Repository.Release.GetLatest("UAVXP", "MedocUpdates");
+			//Release release = await client.Repository.Release.GetLatest("UAVXP", "MedocUpdates");
+			if (release == null)
 			{
 				Log.Write(LogLevel.EXPERT, true, "AppUpdater.MUVersion: Cannot get a release list from the Github. Probably Internet was down");
-				return false;
+				return null;
 			}
 
-			if(releases.Result == null)
+			try
 			{
-				Log.Write(LogLevel.EXPERT, true, "AppUpdater.MUVersion: Probably, something wrong with the Github. Try to check for updates again later");
-				return false;
+				//latestRelease = releases.Result[0];
+				//latestRelease = releases[0];
+				latestRelease = await release;
+				//latestRelease = release;
+				//latestRelease = release.Result;
 			}
-
-			if(releases.Result.Count <= 0)
+			catch(Exception ex)
 			{
-				Log.Write(LogLevel.EXPERT, true, "AppUpdater.MUVersion: No releases at the Github repository");
-				return false;
+				Log.Write(LogLevel.EXPERT, true, "AppUpdater.MUVersion: latestRelease task failed\r\n" + ex.Message);
+
+				// FIXME: Ugly solution
+				if(ex.InnerException != null)
+				{
+					Log.Write(LogLevel.EXPERT, true, "\t" + ex.InnerException.Message);
+
+					if (ex.InnerException.InnerException != null)
+					{
+						Log.Write(LogLevel.EXPERT, true, "\t" + ex.InnerException.InnerException.Message);
+
+						if (ex.InnerException.InnerException.InnerException != null)
+							Log.Write(LogLevel.EXPERT, true, "\t" + ex.InnerException.InnerException.InnerException.Message);
+					}
+				}
+
+				return null;
 			}
 
-			latestRelease = releases.Result[0];
-
-			Log.Write( LogLevel.BASIC, true, String.Format("The latest release is tagged at {0} and is named {1}",
+			Log.Write(LogLevel.BASIC, true, String.Format("The latest release is tagged at {0} and is named {1}",
 										latestRelease.TagName, latestRelease.Name));
 
-			return true;
+			return latestRelease;
 		}
 
 		public static Version GetRemoteData()

@@ -35,9 +35,9 @@ namespace MedocUpdates
 			return this.remoteVersion.CompareTo(this.localVersion);
 		}
 
-		private void frmMUUpdates_Load(object sender, EventArgs e)
+		private async void frmMUUpdates_Load(object sender, EventArgs e)
 		{
-			if(!MUVersion.Init())
+			if(await MUVersion.Init() == null)
 			{
 				Log.Write("frmMUUpdates: Cannot retrieve the latest releases from Github. Check your Internet connection");
 				return;

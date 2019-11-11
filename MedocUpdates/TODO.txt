@@ -83,5 +83,7 @@ Localization
 +Change download progressbar color (or even hightlighted DownloadButton background)
 	Changed DownloadButton background color to M.E.Doc's green
 
-Make the app check it's updates periodically
+-Make the app check it's updates periodically
 	Also make a setting for it
+
+Redo all of the M.E.Doc update checking to async/await?

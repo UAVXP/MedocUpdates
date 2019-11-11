@@ -13,7 +13,7 @@ namespace AppUpdater
 {
 	class Program
 	{
-		static void Main(string[] args)
+		static async Task Main(string[] args)
 		{
 			Log.Init();
 			Log.Write("");
@@ -51,7 +51,7 @@ namespace AppUpdater
 				mainAppProcesses = Process.GetProcessesByName("MedocUpdates");
 			}
 
-			if(!MUVersion.Init())
+			if(await MUVersion.Init() == null)
 			{
 				Log.Write(LogLevel.NORMAL, "AppUpdater: Cannot retrieve the latest releases from Github. Check your Internet connection");
 				return;
