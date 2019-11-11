@@ -125,10 +125,6 @@ namespace AppUpdater
 
 		public static void Write(int logLevel, string logMessage)
 		{
-#if DEBUG
-			LogFallbackInternal(logMessage);
-#endif
-
 			if (!m_bInit)
 			{
 				// If not initialized - something was probably wrong with creating a log directory.

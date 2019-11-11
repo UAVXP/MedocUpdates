@@ -54,10 +54,12 @@ namespace AppUpdater
 		public static Version GetRemoteData()
 		{
 			//string versionStr = latestRelease.TagName.Substring(1); // Remove "v"
-			string versionStr = latestRelease.TagName; // Don't need to remove "v" anymore
+			string versionStr = latestRelease.TagName; // Doesn't need to remove "v" anymore
 
 			Version remoteVersion = new Version(versionStr);
 			//remoteVersion = new Version("11.01.025");
+
+			Log.Write(LogLevel.BASIC, true, "Remote MedocUpdates version is " + remoteVersion);
 
 			return remoteVersion;
 		}

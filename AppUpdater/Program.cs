@@ -16,6 +16,8 @@ namespace AppUpdater
 		static void Main(string[] args)
 		{
 			Log.Init();
+			Log.Write("");
+			Log.Write("AppUpdater: Start");
 
 			// Check if the program is running right now
 			Process[] mainAppProcesses = Process.GetProcessesByName("MedocUpdates");
@@ -109,7 +111,7 @@ namespace AppUpdater
 			switch (remoteVersion.CompareTo(localVersion))
 			{
 			case 0:
-				Console.WriteLine("Versions are equal");
+				Log.Write(LogLevel.BASIC, true, "Versions are equal");
 
 				string forceRestart = args.FirstOrDefault(elem => elem.Equals("-forcerestart"));
 				if (forceRestart != null && forceRestart.Trim().Length > 0)
@@ -120,7 +122,7 @@ namespace AppUpdater
 
 				break;
 			case 1:
-				Console.WriteLine("Online version is newer");
+				Log.Write(LogLevel.BASIC, true, "Online version is newer");
 				
 				if(MUVersion.LatestRelease == null)
 				{
@@ -151,7 +153,7 @@ namespace AppUpdater
 
 				break;
 			case -1:
-				Console.WriteLine("Local version is newer");
+				Log.Write(LogLevel.BASIC, true, "Local version is newer");
 				break;
 			default:
 				Log.Write(LogLevel.NORMAL,
@@ -160,7 +162,7 @@ namespace AppUpdater
 				break;
 			}
 
-			Console.WriteLine("\r\nMedocUpdates is updated.");
+			Log.Write(LogLevel.BASIC, true, "\r\nMedocUpdates has been updated.");
 			Console.ReadLine();
 		}
 	}
