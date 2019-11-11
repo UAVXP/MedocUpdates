@@ -123,7 +123,7 @@ namespace MedocUpdates
 				ForceUpdate();
 				break;
 			case -1:
-				result = MessageBox.Show(Loc.Get("frmMUUpdates.UpdateState.DevBuild", "You have a development build of MedocUpdates\r\n\r\nDo you really want to forcibly update this application?"),
+				result = MessageBox.Show(Loc.Get("frmMUUpdates.UpdateButton.DevBuild", "You have a development build of MedocUpdates\r\n\r\nDo you really want to forcibly update this application?"),
 														"Information", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 				if (result == DialogResult.Yes)
 					ForceUpdate();

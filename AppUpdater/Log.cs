@@ -47,9 +47,9 @@ namespace AppUpdater
 	{
 		private static bool m_bInit = false;
 		private static string m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-		private static string m_logPath = Path.Combine(m_exePath, "mu_logs", String.Format("log_{0}.txt", DateTime.Now.ToString("yyyy-MM-dd")));
-		private static bool m_Enabled = SessionStorage.inside.LogsEnabled;
-		private static int m_logLevel = SessionStorage.inside.LoggingLevel;
+		private static string m_logPath = Path.Combine(m_exePath, "muupdater_logs", String.Format("log_{0}.txt", DateTime.Now.ToString("yyyy-MM-dd")));
+		private static bool m_Enabled = true;
+		private static int m_logLevel = LogLevel.EXPERT;
 
 		public static void Init()
 		{
@@ -68,17 +68,6 @@ namespace AppUpdater
 			{
 				LogFallbackInternal(FormatLogMessage("Log: Cannot create log directory"), FormatLogMessage(ex.Message));
 				return;
-			}
-
-			string logLevelStr = ParsedArgs.GetArgument("loglevel");
-			if (logLevelStr.Length > 0)
-			{
-				int logLevel = m_logLevel;
-				if (int.TryParse(logLevelStr, out logLevel))
-				{
-					m_logLevel = LogLevel.Clamp(logLevel, LogLevel.BASIC, LogLevel.MAXLOGLEVELS - 1);
-					Log.Write("Log: Level was forcibly set to " + LogLevel.GetName(m_logLevel));
-				}
 			}
 
 			m_bInit = true;

@@ -314,7 +314,7 @@
             "value": "Ваша версия не нуждается в обновлении.\r\n\r\nВы действительно хотите принудительно обновить приложение?"
         },
         {
-            "token": "frmMUUpdates.UpdateState.DevBuild",
+            "token": "frmMUUpdates.UpdateButton.DevBuild",
             "value": "У Вас стоит версия MedocUpdates для разработчиков\r\n\r\nВы действительно хотите принудительно обновить приложение?"
         }
     ]

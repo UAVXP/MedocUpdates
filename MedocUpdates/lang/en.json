@@ -314,7 +314,7 @@
             "value": "MedocUpdates is already up-to-date.\r\n\r\nDo you really want to forcibly update this application?"
         },
         {
-            "token": "frmMUUpdates.UpdateState.DevBuild",
+            "token": "frmMUUpdates.UpdateButton.DevBuild",
             "value": "You have a development build of MedocUpdates\r\n\r\nDo you really want to forcibly update this application?"
         }
     ]
