@@ -12,5 +12,5 @@ using System.Reflection;
 	
 	int MinorVersion = (int)Math.Floor((decimal)(DateTime.UtcNow - new DateTime(2019, 10, 1)).TotalDays / 30);
 	int BuildNumber = (int)(DateTime.UtcNow - new DateTime(2019,10,1)).TotalDays;
-    int RevisionNumber = (int)(DateTime.UtcNow - DateTime.Today).TotalSeconds;
+    int RevisionNumber = (int)Math.Abs((DateTime.UtcNow - DateTime.Today).TotalSeconds);
 #>
