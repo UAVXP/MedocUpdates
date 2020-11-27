@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using AppUpdater;
+using System.Net;
 
 namespace MedocUpdates
 {
@@ -27,6 +28,21 @@ namespace MedocUpdates
 			if (System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(entryassembly.Location)).Count() > 1)
 			{
 				MessageBox.Show("Cannot run another instance of this app!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			// Fix for Telegram.Bot not being able to do something on Windows Server 2008 R2
+			try
+			{
+				ServicePointManager.Expect100Continue = true;
+				ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
+														SecurityProtocolType.Tls11 |
+														SecurityProtocolType.Tls12 |
+														SecurityProtocolType.Ssl3;
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("MedocUpdates: Cannot set the security protocol type - TLS/TLS1.1/TLS1.2/SSL3 probably not supported\r\n" + ex.Message);
 				return;
 			}
 
