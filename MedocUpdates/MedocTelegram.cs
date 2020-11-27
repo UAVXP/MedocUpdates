@@ -47,7 +47,8 @@ namespace MedocUpdates
 			botClient.OnInlineResultChosen += BotClient_OnInlineResultChosen;
 			botClient.OnMessage += OnMessageReceived;
 			botClient.OnReceiveError += BotClient_OnReceiveError;
-			
+			botClient.OnReceiveGeneralError += BotClient_OnReceiveGeneralError;
+
 			try
 			{
 				Log.Write(LogLevel.NORMAL, "MedocTelegram: Client begins to receive updates...");
@@ -110,6 +111,12 @@ namespace MedocUpdates
 		{
 			//throw new NotImplementedException();
 			Log.Write(LogLevel.NORMAL, "MedocTelegram: OnReceiveError()\r\n" + e.ApiRequestException.Message);
+		}
+
+		private void BotClient_OnReceiveGeneralError(object sender, ReceiveGeneralErrorEventArgs e)
+		{
+			//throw new NotImplementedException();
+			Log.Write(LogLevel.NORMAL, "MedocTelegram: OnReceiveGeneralError()\r\n" + e.Exception.Message + "\r\n" + e.Exception.StackTrace);
 		}
 
 		private bool IsSubscribed(long chatID)
