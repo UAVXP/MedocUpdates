@@ -1,9 +1,9 @@
 {
-    "language": "Русский",
+    "language": "Українська",
     "tokens": [
         {
             "token": "",
-            "value": "Комментарий"
+            "value": "Коментар"
         },
         {
             "token": "frmMain_Done",
@@ -11,19 +11,19 @@
         },
         {
             "token": "frmMain.trayIcon.Text",
-            "value": "Обновления M.E.Doc"
+            "value": "Оновлення M.E.Doc"
         },
         {
             "token": "frmMain.checkForUpdatesToolStripMenuItem.Text",
-            "value": "Проверить обновления"
+            "value": "Перевірити оновлення"
         },
         {
             "token": "frmMain.delayNotificationsToolStripMenuItem.Text",
-            "value": "Отложить уведомления..."
+            "value": "Відкласти сповіщення..."
         },
         {
             "token": "frmMain.exitToolStripMenuItem.Text",
-            "value": "Выход"
+            "value": "Вийти"
         },
         {
             "token": "frmMain.fileToolStripMenuItem.Text",
@@ -31,7 +31,7 @@
         },
         {
             "token": "frmMain.labelVersion.Text",
-            "value": "ВЕРСИЯ ЗДЕСЬ"
+            "value": "ВЕРСІЯ ТУТ"
         },
         {
             "token": "frmMain.menuStrip1.Text",
@@ -43,11 +43,11 @@
         },
         {
             "token": "frmMain.settingsToolStripMenuItem.Text",
-            "value": "Настройки"
+            "value": "Налаштування"
         },
         {
             "token": "frmMain.labelLocalVersion.Text",
-            "value": "ЛОКАЛЬНАЯ ВЕРСИЯ ЗДЕСЬ"
+            "value": "ЛОКАЛЬНА ВЕРСІЯ ТУТ"
         },
         {
             "token": "frmMain.statusStrip1.Text",
@@ -59,71 +59,71 @@
         },
         {
             "token": "frmMain.Text",
-            "value": "Обновления M.E.Doc"
+            "value": "Оновлення M.E.Doc"
         },
         {
             "token": "frmMain.labelVersion.Text.CheckingRoutine.Checking",
-            "value": "Проверка..."
+            "value": "Перевірка..."
         },
         {
             "token": "frmMain.labelVersion.Text.CheckingRoutine.LatestVersion",
-            "value": "Веб-версия: {0}"
+            "value": "Веб-версія: {0}"
         },
         {
             "token": "frmMain.MessageBox.CheckingRoutine.NoLocalVersion",
-            "value": "Это приложение имеет смысл запускать только на компьютерах с установленным M.E.Doc."
+            "value": "Цей додаток має сенс використовувати тільки на ПК з встановленим M.E.Doc."
         },
         {
             "token": "frmMain.labelLocalVersion.Text.CheckingRoutine.LatestLocalVersion",
-            "value": "Установленная версия: {0}"
+            "value": "Встановлена версія: {0}"
         },
         {
             "token": "frmMain.trayIcon.BalloonTipTitle.CheckingRoutine.UpdateReleased",
-            "value": "Доступно обновление для M.E.Doc!"
+            "value": "Доступне оновлення для M.E.Doc!"
         },
         {
             "token": "frmMain.trayIcon.BalloonTipTitle.CheckingRoutine.NoUpdates",
-            "value": "Обновления отсутствуют"
+            "value": "Оновлення відсутні"
         },
         {
             "token": "frmMain.trayIcon.BalloonTipText.CheckingRoutine.NoUpdates",
-            "value": "Сверните приложение чтобы перестать получать уведомления об отсутствии обновлений\r\n{0}"
+            "value": "Згорніть додаток щоб припинити отримувати сповіщення про відсутність оновлень\r\n{0}"
         },
         {
             "token": "frmMain.telegram.CheckingRoutine.UpdateAvailable",
-            "value": "Доступно обновление с версии {0} по [{1}]({2})"
+            "value": "Доступне оновлення з версії {0} по [{1}]({2})"
         },
         {
             "token": "frmMain.labelVersion.Text.CheckingRoutine.Error",
-            "value": "Что-то пошло не так"
+            "value": "Щось пішло не так"
         },
         {
             "token": "frmMain.Status.CheckingRoutine.CannotConnect",
-            "value": "Невозможно открыть medoc.ua"
+            "value": "Неможливо отримати доступ до medoc.ua"
         },
         {
             "token": "frmMain.trayIcon.BalloonTipTitle.CheckingRoutine.WindowMinimized",
-            "value": "Программа была свёрнута"
+            "value": "Додаток був звернутий"
         },
         {
             "token": "frmMain.trayIcon.BalloonTipText.CheckingRoutine.WindowMinimized",
-            "value": "Вы можете развернуть окно нажатием на иконку в трее"
+            "value": "Ви можете розгорнути вікно натиснувши іконку у треї"
         },
         {
             "token": "DownloadButton.llblDownload.Text",
-            "value": "Загрузить"
+            "value": "Завантажити"
         },
         {
             "token": "DownloadButton.labelVersion.Text",
-            "value": "ВЕРСИЯ"
+            "value": "ВЕРСІЯ"
         },
         {
             "token": "DownloadButton.llblDownloadRun.Text",
-            "value": "Обновить"
+            "value": "Оновити"
         },
         {
             "token": "DownloadButton.MessageBox.ArchiveCorrupted",
-            "value": "Архив {0} повреждён, сейчас предпримется попытка загрузить его заново."
+            "value": "Архів {0} пошкоджено, зараз зробиться спроба завантажити його заново."
         },
         {
             "token": "frmSettings.gbLogLevels.Text",
@@ -131,11 +131,11 @@
         },
         {
             "token": "frmSettings.lblLogLevels.Text",
-            "value": "Уровень логов:"
+            "value": "Рівень логів:"
         },
         {
             "token": "frmSettings.cbLogs.Text",
-            "value": "Включить логирование"
+            "value": "Увімкнути логування"
         },
         {
             "token": "frmSettings.gbTelegram.Text",
@@ -147,67 +147,67 @@
         },
         {
             "token": "frmSettings.btnSave.Text",
-            "value": "Сохранить"
+            "value": "Зберегти"
         },
         {
             "token": "frmSettings.btnCancel.Text",
-            "value": "Отмена"
+            "value": "Відміна"
         },
         {
             "token": "frmSettings.gbDownloads.Text",
-            "value": "Настройки загрузок"
+            "value": "Налаштування завантажень"
         },
         {
             "token": "frmSettings.btnDownloadsPathBrowse.Text",
-            "value": "Обзор..."
+            "value": "Огляд..."
         },
         {
             "token": "frmSettings.lblDownloadPath.Text",
-            "value": "Путь к загрузкам:"
+            "value": "Шлях до завантажень:"
         },
         {
             "token": "frmSettings.cbRemoveUpdateFile.Text",
-            "value": "Удалять файлы .upd после их установки"
+            "value": "Видаляти файли .upd після їх встановлення"
         },
         {
             "token": "frmSettings.Text",
-            "value": "Обновления M.E.Doc - Настройки"
+            "value": "Оновлення M.E.Doc - Налаштування"
         },
         {
             "token": "frmNotificationsDelay.btnDone.Text",
-            "value": "Отложить"
+            "value": "Відкласти"
         },
         {
             "token": "frmNotificationsDelay.btnCancel.Text",
-            "value": "Отмена"
+            "value": "Відміна"
         },
         {
             "token": "frmNotificationsDelay.rbByHour.Text",
-            "value": "каждый час"
+            "value": "кожну годину"
         },
         {
             "token": "frmNotificationsDelay.rbBy5Hours.Text",
-            "value": "каждые 5 часов"
+            "value": "кожні 5 годин"
         },
         {
             "token": "frmNotificationsDelay.rbByManual.Text",
-            "value": "обновлять только вручную"
+            "value": "оновлювати тільки вручну"
         },
         {
             "token": "frmNotificationsDelay.rbByCustom.Text",
-            "value": "пользовательский интервал:"
+            "value": "свій інтервал:"
         },
         {
             "token": "frmNotificationsDelay.gbDelays.Text",
-            "value": "Проверять обновления..."
+            "value": "Перевіряти оновлення..."
         },
         {
             "token": "frmNotificationsDelay.Text",
-            "value": "Обновления M.E.Doc - Интервал обновления"
+            "value": "Оновлення M.E.Doc - Інтервал оновлень"
         },
         {
             "token": "frmFirstRun.label1.Text",
-            "value": "Похоже, Вы запускаете это приложение впервые.\r\nДавайте начнём с настройки основных функций программы."
+            "value": "Схоже, що Ви відкриваєте цей додаток у перший раз.\r\nДавайте почнемо з основних налаштувань додатку."
         },
         {
             "token": "frmFirstRun.lblTelegramToken.Text",
@@ -215,59 +215,59 @@
         },
         {
             "token": "frmFirstRun.lblDownloadPath.Text",
-            "value": "Загрузки:"
+            "value": "Завантаження:"
         },
         {
             "token": "frmFirstRun.lblLogLevels.Text",
-            "value": "Уровень логов:"
+            "value": "Рівень логів:"
         },
         {
             "token": "frmFirstRun.btnCancel.Text",
-            "value": "Выход"
+            "value": "Вийти"
         },
         {
             "token": "frmFirstRun.btnSave.Text",
-            "value": "Далее >"
+            "value": "Далі >"
         },
         {
             "token": "frmFirstRun.btnDownloadsPathBrowse.Text",
-            "value": "Обзор..."
+            "value": "Огляд..."
         },
         {
             "token": "frmFirstRun.label2.Text",
-            "value": "Уровень логов - настраивает уровень логирования ошибок и прочей информации. Логи могут содержать как базовую информацию, так и быть более содержательными (полезно для разработчиков).\r\nЗагрузки - путь к директории, где будут лежать все скачанные файлы установки обновлений. Можно указать папку загрузок Windows по-умолчанию, уже существующую папку с загруженными файлами обновлений, либо иную папку.\r\nТокен Telegram (есть есть) - Можно указать токен бота в Telegram, и тогда приложение будет отсылать через этого бота уведомления всем на него подписавшимся. Можно оставить пустым."
+            "value": "Рівень логів - налаштовує рівень логування помилок та іншої інформації. Логи можуть містити як базову інформацію, так й бути більш змістовними (корисно для розробників).\r\nЗавантаження - шлях до директорії, яка буде містити у собі усі завантажені файлі оновлень M.E.Doc. Можливо вказати теку завантажень Windows за замовчуванням, вже діючу теку з завантаженими файлами оновлень, або іншу теку.\r\nТокен Telegram (якщо є) - Можливо вказати токен бота у Telegram, тоді додаток буде відсилати повідомлення про оновлення M.E.Doc усім, хто підписан на цього бота.Можливо залишити це поле порожнім."
         },
         {
             "token": "frmFirstRun.Text",
-            "value": "Обновления M.E.Doc - Первый запуск"
+            "value": "Оновлення M.E.Doc - Перший запуск"
         },
         {
             "token": "frmSettings.gbLanguage.Text",
-            "value": "Установка языка"
+            "value": "Встановлення мови"
         },
         {
             "token": "frmSettings.lblLanguage.Text",
-            "value": "Язык:"
+            "value": "Мова:"
         },
         {
             "token": "frmSettings.lblLanguageNote.Text",
-            "value": "Заметьте, что язык приложения изменится только после перезагрузки приложения."
+            "value": "Зауважте, що мова додатку зміниться тільки після перезавантаження додатку."
         },
         {
             "token": "frmFirstRun.lblLanguage.Text",
-            "value": "Язык:"
+            "value": "Мова:"
         },
         {
             "token": "frmFirstRun.lblLanguageNote.Text",
-            "value": "Заметьте, что язык приложения изменится только после перезагрузки приложения."
+            "value": "Зауважте, що мова додатку зміниться тільки після перезавантаження додатку."
         },
         {
             "token": "TimeChooser.lblHours.Text",
-            "value": "ч."
+            "value": "г."
         },
         {
             "token": "TimeChooser.lblMinutes.Text",
-            "value": "м."
+            "value": "х."
         },
         {
             "token": "TimeChooser.lblSeconds.Text",
@@ -275,47 +275,47 @@
         },
         {
             "token": "frmMain.helpToolStripMenuItem.Text",
-            "value": "Помощь"
+            "value": "Допомога"
         },
         {
             "token": "frmMain.checkForMedocUpdatesNewVersionToolStripMenuItem.Text",
-            "value": "Обновления MedocUpdates..."
+            "value": "Оновлення MedocUpdates..."
         },
         {
             "token": "frmMUUpdates.button1.Text",
-            "value": "Обновить"
+            "value": "Оновити"
         },
         {
             "token": "frmMUUpdates.lblUpdateStatus.Text",
-            "value": "Невозможно проверить наличие обновлений для MedocUpdates"
+            "value": "Неможливо перевірити наявність оновлень MedocUpdates"
         },
         {
             "token": "frmMUUpdates.Text",
-            "value": "Обновления MedocUpdates"
+            "value": "Оновлення MedocUpdates"
         },
         {
             "token": "frmMUUpdates.UpdateState.NoUpdates",
-            "value": "Для MedocUpdates нет обновлений\r\nВерсия {0}"
+            "value": "Для MedocUpdates немає оновлень\r\nВерсія {0}"
         },
         {
             "token": "frmMUUpdates.UpdateState.NewUpdates",
-            "value": "Обновление готово!\r\n\r\nВерсия обновления: {0}\r\nУстановленная версия: {1}"
+            "value": "Оновлення готове!\r\n\r\nВерсія оновлення: {0}\r\nВстановлена версія: {1}"
         },
         {
             "token": "frmMUUpdates.UpdateState.DevBuild",
-            "value": "Скорее всего, Вы пользуетесь версией программы для разработчиков. Обновлять её не рекомендуется.\r\n\r\nВерсия обновления: {0}\r\nУстановленная версия: {1}"
+            "value": "Скоріш за все, Ви користуєтесь версією додатку, що призначена для розробників. Ми не рекомендуємо її оновлювати.\r\n\r\nВерсія оновлення: {0}\r\nВстановлена версія: {1}"
         },
         {
             "token": "frmMUUpdates.UpdateState.Error",
-            "value": "Что-то пошло не так"
+            "value": "Щось пішло не так"
         },
         {
             "token": "frmMUUpdates.UpdateButton.NoUpdates",
-            "value": "Ваша версия не нуждается в обновлении.\r\n\r\nВы действительно хотите принудительно обновить приложение?"
+            "value": "Ваша версія не потребує оновлення.\r\n\r\nЧи дійсно Ви бажаєте примусово оновити додаток?"
         },
         {
             "token": "frmMUUpdates.UpdateButton.DevBuild",
-            "value": "У Вас стоит версия MedocUpdates для разработчиков\r\n\r\nВы действительно хотите принудительно обновить приложение?"
+            "value": "Ви користуєтесь версією MedocUpdates для розробників\r\n\r\nЧи дійсно Ви бажаєте примусово оновити додаток?"
         }
     ]
 }
