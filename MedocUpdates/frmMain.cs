@@ -129,7 +129,7 @@ namespace MedocUpdates
 
 
 				MedocVersion localversion = localmedoc.LocalVersion;
-				if(!MedocVersion.IsValid(version))
+				if(!MedocVersion.IsValid( localversion ) )
 				{
 					Log.Write("Application cannot get a local version of M.E.Doc installation.");
 					MessageBox.Show(
