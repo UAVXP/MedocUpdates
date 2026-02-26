@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.IO;
 using System.Reflection;
+using Octokit;
 
 namespace AppUpdater
 {
@@ -18,6 +19,11 @@ namespace AppUpdater
 			Log.Init();
 			Log.Write("");
 			Log.Write("AppUpdater: Start");
+
+#if DEBUG
+			Log.Write( "AppUpdater: Don't update if program compiled in Debug mode. Exiting." );
+			Environment.Exit( 0 );
+#endif // DEBUG
 
 			// Check if the program is running right now
 			Process[] mainAppProcesses = Process.GetProcessesByName("MedocUpdates");
