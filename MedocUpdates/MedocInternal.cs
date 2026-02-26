@@ -223,6 +223,11 @@ namespace MedocUpdates
 			string installPath = "";
 			bool installPathFound = GetInstallationPath(out installPath);
 
+#if DEBUG
+			installPathFound = true;
+			installPath = ".";
+#endif // DEBUG
+
 			// Usually client/HKCU
 			string appdataPath = "";
 			bool appdataPathFound = GetAppdataPath(out appdataPath);
@@ -240,7 +245,7 @@ namespace MedocUpdates
 			}
 
 			DateTime lastdt = DateTime.MinValue;
-			string[] files = Directory.GetFiles(logPath, "update_*.log", SearchOption.TopDirectoryOnly);
+			string[] files = Directory.GetFiles(logPath, "update=*.log", SearchOption.TopDirectoryOnly);
 			if(files.Length <= 0)
 			{
 				// Probably never updated?
@@ -406,9 +411,21 @@ namespace MedocUpdates
 			if (!GetLatestLogs(out allLogFiles))
 				return false;
 
-			for (int i = allLogFiles.Length - 1; i >= 0; i--)
+
+			// Order log files by last write time (latest first).
+			string[] orderedFiles = allLogFiles
+				.Where( f => !string.IsNullOrWhiteSpace( f ) && File.Exists( f ) )
+				.OrderByDescending( f => File.GetLastWriteTimeUtc( f ) )
+				.ToArray();
+
+			// If nothing matched (unlikely), fall back to the original list.
+			if ( orderedFiles.Length == 0 )
+				orderedFiles = allLogFiles;
+
+
+			for ( int i = 0; i < orderedFiles.Length; i++ )
 			{
-				string logFile = allLogFiles[i];
+				string logFile = orderedFiles[i];
 				if (logFile.Trim().Length <= 0)
 				{
 					Log.Write(LogLevel.EXPERT, "MedocInternal: Unexpected log list searching error");
